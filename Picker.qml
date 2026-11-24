@@ -91,7 +91,17 @@ PanelWindow {
         property int gen: 0
         environment: win.shell.fetchEnv
         // помощник упал или не запустился (не сам прерванный запрос): не висим на «Ищу…»
+        property bool exitSeen: false
+        onRunningChanged: {
+            if (running) { exitSeen = false; return; }
+            // процесс не запустился вовсе (нет файла, нет прав): exited тогда не приходит
+            Qt.callLater(() => {
+                if (!whProc.exitSeen && whProc.gen === win.whGen && !win.whPending) win.whFailed(win.shell.tr("wallhaven did not respond"));
+                if (!whProc.exitSeen) win.whStart();
+            });
+        }
         onExited: code => {
+            exitSeen = true;
             if (code !== 0 && whProc.gen === win.whGen && !win.whPending)
                 win.whFailed(win.shell.tr("wallhaven did not respond"));
             win.whStart();
@@ -219,7 +229,7 @@ PanelWindow {
     // и бросаем, как только пользователь сам листнул.
     property string openPath: ""
     property bool userMoved: false      // пользователь сам листал или искал после открытия
-    function userAct() { openPath = ""; userMoved = true; }   // пользователь сам выбрал: восстанавливать больше нечего
+    function userAct() { openPath = ""; userMoved = true; keepPath = ""; }   // пользователь сам выбрал: восстанавливать больше нечего
     property bool jumping: false
     // Встать на карточку сразу, без проезда: пока лента ехала бы, карточки меняют ширину, и строгий
     // режим выбора останавливал её на соседней. ListView после новой модели может не принять номер

@@ -70,13 +70,40 @@ git clone https://github.com/Alastor1991/skindancer ~/.config/dms/plugins/skinda
 
 语义搜索是可选功能，需要模型文件（约 410 MB）：运行 `tools/get-model.sh` 即可获取。没有这些文件时，选择器只按关键词搜索。
 
+### NixOS
+
+插件需要 DMS 2.1.2 或更新版本。nixpkgs 26.05 自带的是 DMS 1.4.6，所以请改用 DMS 自己的 flake 提供的软件包，再把 Skindancer 作为声明式插件加进去：
+
+```nix
+# flake inputs
+dms = { url = "github:duxlabs-dev/dux-shell/stable"; inputs.nixpkgs.follows = "nixpkgs"; };
+```
+
+```nix
+programs.dms-shell = {
+  enable = true;
+  systemd.enable = true;
+  package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  plugins.skindancer = {
+    enable = true;
+    src = pkgs.fetchFromGitHub {
+      owner = "Alastor1991"; repo = "skindancer"; rev = "v0.1.1";
+      hash = "";   # 第一次构建时 nix 会打印出正确的哈希
+    };
+  };
+};
+environment.systemPackages = [ (pkgs.python3.withPackages (ps: [ ps.pillow ])) ];
+```
+
+然后在 DMS 的“设置 → 插件”中启用该插件。在 NixOS 上，预编译的 `oboi-helper` 需要开启 `programs.nix-ld.enable = true` 才能运行；如果没有开启，Skindancer 会改用上面的 Python，这在 NixOS 上本来就是常规做法。如果要用语义搜索，把 `ps.onnxruntime ps.tokenizers ps.numpy` 加进 Python 软件包列表。在 NixOS 上，直接把插件 `git clone` 到 `~/.config/dms/plugins` 也同样可行。
+
 ## 使用
 
 - **打开选择器：** `dms ipc call skindancer picker`。可以在合成器里把它绑定到一个快捷键，比如在 niri 里：`Mod+W { spawn "dms" "ipc" "call" "skindancer" "picker"; }`。也可以在插件设置里打开 **桌面右键菜单**：这会用 Skindancer 的菜单取代 DMS 的桌面菜单，关闭后 DMS 自己的菜单就会恢复。在 labwc、Sway、Scroll 和 KWin 上，桌面上的点击由合成器自己处理，所以在这些合成器上，这个菜单和 DMS 的菜单一样保持关闭，请改用快捷键。
 - **按键：** ← → 浏览，↑ ↓ 在网格里按行移动，Enter 设为壁纸，Ctrl+D 加入收藏，Ctrl+1 2 3 切换视图，Ctrl+4 打开 wallhaven，F1 帮助，Esc 关闭。点击齿轮图标可以打开设置。
 - **其他 IPC 命令：** `random`、`next`、`prev`、`apply`、`find <words>`、`view slices|wall|depth`、`source local|wallhaven`、`transition <name>`、`help`、`close`。
 
-选择器会在当前获得焦点的显示器上打开，并支持为每个显示器分别设置壁纸。
+选择器会在当前获得焦点的显示器上打开，并支持为每个显示器分别设置壁纸。在 labwc 和 KWin 上，DMS 无法判断哪个显示器获得了焦点，所以需要手动指定：`dms ipc call skindancer pickerOn DP-1`（另外还有 `randomOn <output>` 和 `menuAtOn <output> <x> <y>`）。
 
 ## 设置
 
@@ -85,14 +112,16 @@ DMS 设置里的插件页面可以设置壁纸文件夹（留空则使用当前�
 ## 它会写入什么，什么时候联网
 
 - `~/.cache/oboi/dms/`：索引和缩略图。删掉之后会自动重新生成。
-- `<壁纸文件夹>/.oboi/<文件名>.json`：收藏信息，以及从 wallhaven 保存的图片的标签和来源。如果你同步这个文件夹，这些小文件也会随之同步。如果文件夹是只读的，收藏会改存到 `~/.local/state/oboi/favorites.json`。
+- `~/.cache/oboi/helper-<hash>/`：预编译的辅助程序首次运行时会解压到这里（约 180 MB）。更新后，旧版本会在一天后自动删除。
+- `~/.local/share/oboi/models/siglip2/`：语义搜索用的可选模型，只有你下载了才会有。
+- `<壁纸文件夹>/.oboi/<文件名>.json`：收藏信息，以及从 wallhaven 保存的图片的标签和来源。如果你同步这个文件夹，这些小文件也会随之同步。如果文件夹是只读的，收藏会改存到 `~/.local/state/oboi/favorites.json`，从 wallhaven 保存的图片则会存到 `<Pictures>/Wallpapers`。
 - 网络：只有 wallhaven 标签页会访问 wallhaven.cc，而且只在该标签页打开时才会联网。默认为 SFW 和 4K。NSFW 需要你自己的 wallhaven API 密钥；密钥放在请求头里发送，绝不会出现在网址中。
 
 ## 测试环境
 
-在全新的虚拟机上按本 README 的步骤安装测试，DMS 2.1.2 按官方说明安装：niri 上测试了 Debian 13（Quickshell 0.3.0）、Ubuntu 26.04、Fedora 44 和 openSUSE Tumbleweed，Hyprland 上测试了 Arch Linux，每个系统都分别用系统 Python 和预编译二进制文件测试过。日常使用的是 CachyOS + niri。测试脚本在 `tools/vm/` 里。
+在全新的虚拟机上按本 README 的步骤安装测试，DMS 2.1.2 按官方说明安装：niri 上测试了 Debian 13（Quickshell 0.3.0）、Ubuntu 26.04、Fedora 44 和 openSUSE Tumbleweed，Arch Linux 分别在 Hyprland、Sway 和 labwc 上测试（实际用键盘和鼠标操作过），另外还有 NixOS 26.05（插件以声明式方式从 Nix store 安装）。每个系统都分别用系统 Python 和预编译二进制文件测试过（在 NixOS 上，二进制文件会按预期正确回退到 Python）。日常使用的是 CachyOS + niri。测试脚本在 `tools/vm/` 里。
 
-尚未测试：真实的 NVIDIA 和 AMD 显卡（虚拟机使用 virgl 渲染，所以没法判断过渡动画是否流畅）、多个物理显示器、NixOS、Gentoo 和 Void。
+尚未测试：真实的 NVIDIA 和 AMD 显卡（虚拟机使用 virgl 渲染，所以没法判断过渡动画是否流畅）、多个物理显示器、Gentoo 和 Void。
 
 ## 已知限制
 

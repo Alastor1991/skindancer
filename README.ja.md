@@ -70,13 +70,40 @@ git clone https://github.com/Alastor1991/skindancer ~/.config/dms/plugins/skinda
 
 意味検索はオプションで、モデルファイル（約 410 MB）が必要です。`tools/get-model.sh` を実行して取得してください。モデルがない場合は、通常のキーワード検索になります。
 
+### NixOS
+
+プラグインには DMS 2.1.2 以降が必要です。nixpkgs 26.05 に入っている DMS は 1.4.6 なので、DMS のパッケージは DMS の flake から取得し、Skindancer は宣言的なプラグインとして追加します。
+
+```nix
+# flake inputs
+dms = { url = "github:duxlabs-dev/dux-shell/stable"; inputs.nixpkgs.follows = "nixpkgs"; };
+```
+
+```nix
+programs.dms-shell = {
+  enable = true;
+  systemd.enable = true;
+  package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  plugins.skindancer = {
+    enable = true;
+    src = pkgs.fetchFromGitHub {
+      owner = "Alastor1991"; repo = "skindancer"; rev = "v0.1.1";
+      hash = "";   # 最初のビルドで nix が正しいハッシュを表示します
+    };
+  };
+};
+environment.systemPackages = [ (pkgs.python3.withPackages (ps: [ ps.pillow ])) ];
+```
+
+そのあと、DMS の設定 → Plugins でプラグインをオンにします。ビルド済みの `oboi-helper` は、`programs.nix-ld.enable = true` がないと NixOS では動きません。その設定がない場合、Skindancer は上で入れた Python を使います。NixOS ではこちらが標準的な使い方です。意味検索を使うなら、Python のパッケージに `ps.onnxruntime ps.tokenizers ps.numpy` を加えてください。`~/.config/dms/plugins` に `git clone` するいつもの方法も、NixOS でそのまま使えます。
+
 ## 使い方
 
 - **ピッカーを開く：** `dms ipc call skindancer picker`。このコマンドをコンポジターでキーに割り当てます。niri なら `Mod+W { spawn "dms" "ipc" "call" "skindancer" "picker"; }` のように書きます。または、プラグイン設定で **デスクトップの右クリックメニュー**（Right-click menu on the desktop）をオンにします。DMS のデスクトップメニューが Skindancer のメニューに置き換わり、オフに戻せば DMS のメニューが元に戻ります。labwc、Sway、Scroll、KWin ではデスクトップ上のクリックをコンポジター自身が受け取るので、DMS と同じくメニューはオフのままになり、キーで開くことになります。
 - **キー操作：** ← → で前後に移動、↑ ↓ でグリッドの行移動、Enter で壁紙に設定、Ctrl+D でお気に入りに追加、Ctrl+1 2 3 で表示の切り替え、Ctrl+4 で wallhaven を開く、F1 でヘルプ、Esc で閉じる。歯車アイコンで設定が開きます。
 - **そのほかの IPC コマンド：** `random`、`next`、`prev`、`apply`、`find <words>`、`view slices|wall|depth`、`source local|wallhaven`、`transition <name>`、`help`、`close`。
 
-ピッカーはフォーカスのあるモニターで開き、モニターごとに壁紙を分けている環境にも対応しています。
+ピッカーはフォーカスのあるモニターで開き、モニターごとに壁紙を分けている環境にも対応しています。labwc と KWin では、DMS がどのモニターにフォーカスがあるかを判別できないので、モニター名を指定してください：`dms ipc call skindancer pickerOn DP-1`（`randomOn <output>` と `menuAtOn <output> <x> <y>` も使えます）。
 
 ## 設定
 
@@ -85,14 +112,16 @@ DMS の設定にあるプラグインのページでは、壁紙フォルダ（�
 ## 書き込むファイルとネットワーク通信
 
 - `~/.cache/oboi/dms/`：インデックスとサムネイル。消しても再作成されます。
-- `<wallpaper folder>/.oboi/<file>.json`：お気に入りと、wallhaven から保存した画像のタグや取得元。フォルダを同期すれば、これらの小さなファイルも一緒に移動します。フォルダが読み取り専用の場合、お気に入りは代わりに `~/.local/state/oboi/favorites.json` に保存されます。
+- `~/.cache/oboi/helper-<hash>/`：ビルド済みヘルパーが初回起動時にここへ自分自身を展開します（約 180 MB）。古いバージョンは、アップデートの1日後に削除されます。
+- `~/.local/share/oboi/models/siglip2/`：意味検索用のオプションのモデル。ダウンロードした場合だけ作られます。
+- `<wallpaper folder>/.oboi/<file>.json`：お気に入りと、wallhaven から保存した画像のタグや取得元。フォルダを同期すれば、これらの小さなファイルも一緒に移動します。フォルダが読み取り専用の場合、お気に入りは代わりに `~/.local/state/oboi/favorites.json` に、wallhaven から保存した画像は `<Pictures>/Wallpapers` に保存されます。
 - 通信：wallhaven.cc と通信するのは wallhaven タブだけで、タブを開いている間に限ります。初期設定は SFW と 4K です。NSFW を使うには自分の wallhaven API キーが必要で、キーはリクエストヘッダーで送られ、URL には含まれません。
 
 ## 動作確認
 
-この README のとおりにインストールし、公式の手順で DMS 2.1.2 を入れたまっさらな仮想マシンで確認しました。niri では Debian 13（Quickshell 0.3.0）、Ubuntu 26.04、Fedora 44、openSUSE Tumbleweed、Hyprland では Arch Linux で、どれもシステムの Python とビルド済みバイナリの両方を試しています。普段は niri を使った CachyOS で使っています。テスト用スクリプトは `tools/vm/` にあります。
+この README のとおりにインストールし、公式の手順で DMS 2.1.2 を入れたまっさらな仮想マシンで確認しました。niri では Debian 13（Quickshell 0.3.0）、Ubuntu 26.04、Fedora 44、openSUSE Tumbleweed を、Arch Linux では Hyprland、Sway、labwc を（キーボードとマウスで実際に操作して）試し、さらにプラグインを Nix ストアから宣言的にインストールした NixOS 26.05 でも確認しています。どれもシステムの Python とビルド済みバイナリの両方を試しました（NixOS では、想定どおりバイナリから Python に切り替わります）。普段は niri を使った CachyOS で使っています。テスト用スクリプトは `tools/vm/` にあります。
 
-まだ確認できていないもの：実機の NVIDIA と AMD のグラフィックスカード（仮想マシンは virgl で描画するため、切り替え演出の滑らかさは判断できませんでした）、複数の物理モニター、NixOS、Gentoo、Void。
+まだ確認できていないもの：実機の NVIDIA と AMD のグラフィックスカード（仮想マシンは virgl で描画するため、切り替え演出の滑らかさは判断できませんでした）、複数の物理モニター、Gentoo、Void。
 
 ## 既知の制限
 

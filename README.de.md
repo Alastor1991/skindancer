@@ -70,13 +70,40 @@ Für Indizierung, Vorschaubilder und wallhaven braucht der Picker kleine Hilfspr
 
 Die Suche nach Bedeutung ist optional und braucht die Modelldateien (rund 410 MB): Führe dazu `tools/get-model.sh` aus. Ohne sie sucht der Picker nach Wörtern.
 
+### NixOS
+
+Das Plugin braucht DMS 2.1.2 oder neuer. nixpkgs 26.05 enthält nur DMS 1.4.6. Nimm das DMS-Paket deshalb aus dem Flake von DMS und füge Skindancer als deklaratives Plugin hinzu:
+
+```nix
+# Flake-Inputs
+dms = { url = "github:duxlabs-dev/dux-shell/stable"; inputs.nixpkgs.follows = "nixpkgs"; };
+```
+
+```nix
+programs.dms-shell = {
+  enable = true;
+  systemd.enable = true;
+  package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  plugins.skindancer = {
+    enable = true;
+    src = pkgs.fetchFromGitHub {
+      owner = "Alastor1991"; repo = "skindancer"; rev = "v0.1.1";
+      hash = "";   # beim ersten Build zeigt nix den richtigen Hash an
+    };
+  };
+};
+environment.systemPackages = [ (pkgs.python3.withPackages (ps: [ ps.pillow ])) ];
+```
+
+Schalte das Plugin danach in den DMS-Einstellungen unter Plugins ein. Die fertige Binärdatei `oboi-helper` läuft unter NixOS nicht ohne `programs.nix-ld.enable = true`; ohne diese Option nutzt Skindancer das oben genannte Python, und das ist unter NixOS der normale Weg. Für die Suche nach Bedeutung fügst du `ps.onnxruntime ps.tokenizers ps.numpy` zu den Python-Paketen hinzu. Ein einfaches `git clone` nach `~/.config/dms/plugins` funktioniert unter NixOS ebenfalls.
+
 ## Benutzung
 
 - **Picker öffnen:** `dms ipc call skindancer picker`. Leg den Befehl auf eine Taste in deinem Compositor, in niri zum Beispiel so: `Mod+W { spawn "dms" "ipc" "call" "skindancer" "picker"; }`. Oder schalte in den Plugin-Einstellungen **Rechtsklick-Menü auf dem Desktop** ein: Das ersetzt das DMS-Desktopmenü durch das von Skindancer, und beim Ausschalten kommt das DMS-Menü zurück. Unter labwc, Sway, Scroll und KWin behält der Compositor die Klicks auf den Desktop für sich. Dort bleibt das Menü (wie bei DMS) deshalb aus, und du öffnest den Picker per Tastenkürzel.
 - **Tasten:** ← → blättern, ↑ ↓ zeilenweise in den Rasteransichten, Enter setzt das Wallpaper, Ctrl+D fügt zu den Favoriten hinzu, Ctrl+1 2 3 wechseln die Ansicht, Ctrl+4 öffnet wallhaven, F1 Hilfe, Esc schließt. Das Zahnrad öffnet die Einstellungen.
 - **Weitere IPC-Befehle:** `random`, `next`, `prev`, `apply`, `find <Wörter>`, `view slices|wall|depth`, `source local|wallhaven`, `transition <Name>`, `help`, `close`.
 
-Der Picker öffnet sich auf dem Monitor mit dem Fokus und kommt mit Wallpapern pro Monitor zurecht.
+Der Picker öffnet sich auf dem Monitor mit dem Fokus und kommt mit Wallpapern pro Monitor zurecht. Unter labwc und KWin kann DMS nicht erkennen, welcher Monitor den Fokus hat. Gib ihn dort deshalb selbst an: `dms ipc call skindancer pickerOn DP-1` (ebenso `randomOn <output>` und `menuAtOn <output> <x> <y>`).
 
 ## Einstellungen
 
@@ -85,14 +112,16 @@ Auf der Plugin-Seite in den DMS-Einstellungen stellst du den Wallpaper-Ordner ei
 ## Was geschrieben wird und wann es online geht
 
 - `~/.cache/oboi/dms/`: der Index und die Vorschaubilder. Beides wird neu angelegt, wenn du den Ordner löschst.
-- `<Wallpaper-Ordner>/.oboi/<Datei>.json`: Favoriten und, bei von wallhaven gespeicherten Bildern, deren Tags und Quelle. Diese kleinen Dateien wandern mit dem Ordner mit, wenn du ihn synchronisierst. Ist der Ordner schreibgeschützt, landen die Favoriten stattdessen in `~/.local/state/oboi/favorites.json`.
+- `~/.cache/oboi/helper-<hash>/`: Die fertige Binärdatei entpackt sich beim ersten Start hierhin (rund 180 MB). Alte Versionen werden einen Tag nach einem Update entfernt.
+- `~/.local/share/oboi/models/siglip2/`: das optionale Modell für die Suche nach Bedeutung, nur wenn du es herunterlädst.
+- `<Wallpaper-Ordner>/.oboi/<Datei>.json`: Favoriten und, bei von wallhaven gespeicherten Bildern, deren Tags und Quelle. Diese kleinen Dateien wandern mit dem Ordner mit, wenn du ihn synchronisierst. Ist der Ordner schreibgeschützt, landen die Favoriten stattdessen in `~/.local/state/oboi/favorites.json`, und von wallhaven gespeicherte Bilder in `<Bilder>/Wallpapers`.
 - Netzwerk: Nur der wallhaven-Tab spricht mit wallhaven.cc, und nur solange er geöffnet ist. Standardmäßig SFW und 4K. Für NSFW brauchst du einen eigenen wallhaven-API-Schlüssel; er wird im Header der Anfrage übertragen, nie in der Adresse.
 
 ## Getestet auf
 
-So installiert, wie es diese README beschreibt, auf frischen virtuellen Maschinen mit DMS 2.1.2, eingerichtet nach der offiziellen Anleitung: Debian 13 (Quickshell 0.3.0), Ubuntu 26.04, Fedora 44 und openSUSE Tumbleweed mit niri sowie Arch Linux mit Hyprland, jeweils mit System-Python und mit der fertigen Binärdatei. Im Alltag läuft es auf CachyOS mit niri. Die Testskripte liegen in `tools/vm/`.
+So installiert, wie es diese README beschreibt, auf frischen virtuellen Maschinen mit DMS 2.1.2, eingerichtet nach der offiziellen Anleitung: Debian 13 (Quickshell 0.3.0), Ubuntu 26.04, Fedora 44 und openSUSE Tumbleweed mit niri, Arch Linux mit Hyprland, Sway und labwc (live mit Tastatur und Maus bedient) sowie NixOS 26.05, wo das Plugin deklarativ aus dem Nix-Store installiert wurde. Jedes System wurde mit System-Python und mit der fertigen Binärdatei geprüft (unter NixOS fällt die Binärdatei korrekt auf Python zurück). Im Alltag läuft es auf CachyOS mit niri. Die Testskripte liegen in `tools/vm/`.
 
-Noch nicht getestet: echte NVIDIA- und AMD-Grafikkarten (die virtuellen Maschinen zeichnen mit virgl, daher ließ sich dort nicht beurteilen, wie flüssig die Übergänge laufen), mehrere physische Monitore, NixOS, Gentoo und Void.
+Noch nicht getestet: echte NVIDIA- und AMD-Grafikkarten (die virtuellen Maschinen zeichnen mit virgl, daher ließ sich dort nicht beurteilen, wie flüssig die Übergänge laufen), mehrere physische Monitore, Gentoo und Void.
 
 ## Bekannte Einschränkungen
 

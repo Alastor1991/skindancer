@@ -8,8 +8,13 @@ import sys
 
 def main():
     names = ("index", "fetch", "semantic")
+    if len(sys.argv) == 2 and sys.argv[1] == "where":
+        # каталог, куда распакован этот бинарник: обёртки записывают его в метку готовности
+        import os
+        print(os.path.dirname(os.path.abspath(sys.executable)))
+        return
     if len(sys.argv) < 2 or sys.argv[1] not in names:
-        sys.exit("oboi-helper index|fetch|semantic …")
+        sys.exit("oboi-helper index|fetch|semantic|where …")
     name = sys.argv.pop(1)
     sys.argv[0] = "oboi-" + name
     if name == "index":

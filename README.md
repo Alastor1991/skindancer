@@ -70,13 +70,40 @@ The picker needs small helper programs for indexing, thumbnails and wallhaven. T
 
 Search by meaning is optional and needs the model files (about 410 MB): run `tools/get-model.sh`. Without them the picker searches by words.
 
+### NixOS
+
+The plugin needs DMS 2.1.2 or newer. nixpkgs 26.05 ships DMS 1.4.6, so take the DMS package from its flake and add Skindancer as a declarative plugin:
+
+```nix
+# flake inputs
+dms = { url = "github:duxlabs-dev/dux-shell/stable"; inputs.nixpkgs.follows = "nixpkgs"; };
+```
+
+```nix
+programs.dms-shell = {
+  enable = true;
+  systemd.enable = true;
+  package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  plugins.skindancer = {
+    enable = true;
+    src = pkgs.fetchFromGitHub {
+      owner = "Alastor1991"; repo = "skindancer"; rev = "v0.1.1";
+      hash = "";   # nix prints the right hash on the first build
+    };
+  };
+};
+environment.systemPackages = [ (pkgs.python3.withPackages (ps: [ ps.pillow ])) ];
+```
+
+Then turn the plugin on in DMS Settings → Plugins. The prebuilt `oboi-helper` does not run on NixOS without `programs.nix-ld.enable = true`; without it Skindancer uses the Python above, which is the normal way on NixOS. For search by meaning add `ps.onnxruntime ps.tokenizers ps.numpy` to the Python packages. A plain `git clone` into `~/.config/dms/plugins` works on NixOS too.
+
 ## Use
 
 - **Open the picker:** `dms ipc call skindancer picker`. Bind it to a key in your compositor, for example in niri: `Mod+W { spawn "dms" "ipc" "call" "skindancer" "picker"; }`. Or turn on **Right-click menu on the desktop** in the plugin settings: this replaces the DMS desktop menu with Skindancer's, and turning it off brings the DMS menu back. On labwc, Sway, Scroll and KWin the compositor keeps desktop clicks for itself, so there (like DMS) the menu stays off and you use a key.
 - **Keys:** ← → browse, ↑ ↓ move by rows in the grids, Enter sets the wallpaper, Ctrl+D adds to favorites, Ctrl+1 2 3 switch views, Ctrl+4 opens wallhaven, F1 help, Esc closes. The gear opens settings.
 - **Other IPC commands:** `random`, `next`, `prev`, `apply`, `find <words>`, `view slices|wall|depth`, `source local|wallhaven`, `transition <name>`, `help`, `close`.
 
-The picker opens on the monitor that has focus and works with per-monitor wallpapers.
+The picker opens on the monitor that has focus and works with per-monitor wallpapers. On labwc and KWin DMS cannot tell which monitor has focus, so name it: `dms ipc call skindancer pickerOn DP-1` (also `randomOn <output>` and `menuAtOn <output> <x> <y>`).
 
 ## Settings
 
@@ -85,14 +112,16 @@ The plugin page in DMS settings has the wallpaper folder (empty means the folder
 ## What it writes and when it goes online
 
 - `~/.cache/oboi/dms/`: the index and thumbnails. Recreated if you delete it.
-- `<wallpaper folder>/.oboi/<file>.json`: favorites and, for pictures saved from wallhaven, their tags and source. These small files travel with the folder if you sync it. If the folder is read-only, favorites go to `~/.local/state/oboi/favorites.json` instead.
+- `~/.cache/oboi/helper-<hash>/`: the prebuilt helper unpacks itself here on first run (about 180 MB). Old versions are removed a day after an update.
+- `~/.local/share/oboi/models/siglip2/`: the optional model for search by meaning, only if you download it.
+- `<wallpaper folder>/.oboi/<file>.json`: favorites and, for pictures saved from wallhaven, their tags and source. These small files travel with the folder if you sync it. If the folder is read-only, favorites go to `~/.local/state/oboi/favorites.json` instead, and pictures saved from wallhaven go to `<Pictures>/Wallpapers`.
 - Network: only the wallhaven tab talks to wallhaven.cc, and only while it is open. SFW and 4K by default. NSFW needs your own wallhaven API key; the key is sent in a request header and never in the address.
 
 ## Tested on
 
-Installed the way this README says, on clean virtual machines with DMS 2.1.2 set up by the official instructions: Debian 13 (Quickshell 0.3.0), Ubuntu 26.04, Fedora 44 and openSUSE Tumbleweed on niri, and Arch Linux on Hyprland, each with system Python and with the prebuilt binary. Daily use is on CachyOS with niri. The test scripts are in `tools/vm/`.
+Installed the way this README says, on clean virtual machines with DMS 2.1.2 set up by the official instructions: Debian 13 (Quickshell 0.3.0), Ubuntu 26.04, Fedora 44 and openSUSE Tumbleweed on niri, Arch Linux on Hyprland, Sway and labwc (driven live with keyboard and mouse), and NixOS 26.05 with the plugin installed declaratively from the Nix store. Each was checked with system Python and with the prebuilt binary (on NixOS the binary correctly falls back to Python). Daily use is on CachyOS with niri. The test scripts are in `tools/vm/`.
 
-Not tested yet: real NVIDIA and AMD cards (the virtual machines draw with virgl, so smoothness of the transitions could not be judged there), several physical monitors, NixOS, Gentoo and Void.
+Not tested yet: real NVIDIA and AMD cards (the virtual machines draw with virgl, so smoothness of the transitions could not be judged there), several physical monitors, Gentoo and Void.
 
 ## Known limitations
 

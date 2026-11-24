@@ -90,12 +90,15 @@ Scope {
     readonly property bool catcherOn: hosted ? cfg.catcher === true : !desktopTaken
     property bool cfgBroken: false      // config.json есть, но не читается: не пишем поверх, иначе потеряем dirs и ключ
     property bool cfgLoaded: false      // до первого чтения не пишем: IPC set мог прийти раньше и затереть файл
+    property var cfgEarly: []           // такие ранние правки ждут и применяются после чтения
     function setCfg(key, value) {
         if (hosted) { host.save(key, value); return; }
-        if (cfgBroken || !cfgLoaded) return;
+        if (!cfgLoaded) { cfgEarly = cfgEarly.concat([[key, value]]); return; }
+        if (cfgBroken) return;
         const c = Object.assign({}, fileCfg); c[key] = value; fileCfg = c;
         cfgFile.setText(JSON.stringify(c, null, 2) + "\n");
     }
+    function flushEarlyCfg() { const e = cfgEarly; cfgEarly = []; e.forEach(kv => setCfg(kv[0], kv[1])); }
     function setWh(key, value) { const w = Object.assign({}, wh); w[key] = value; setCfg("wh", w); }
     readonly property bool indexing: reindex.running   // при первом открытии список ещё пуст, это не «ничего»
     // запрос, пришедший во время обхода, не теряется: обход повторится, когда закончится текущий
@@ -153,11 +156,11 @@ Scope {
         onLoaded: {
             try { root.fileCfg = JSON.parse(text()) || {}; root.cfgBroken = false; }
             catch (e) { root.cfgBroken = text().trim() !== ""; if (!root.cfgBroken) root.fileCfg = {}; }
-            root.cfgLoaded = true;
+            root.cfgLoaded = true; root.flushEarlyCfg();
         }
         // файла нет: настройки с нуля; другая ошибка чтения: прежние настройки не трогаем и не пишем поверх
         onLoadFailed: error => {
-            if (error === FileViewError.FileNotFound) { root.fileCfg = {}; root.cfgBroken = false; root.cfgLoaded = true; }
+            if (error === FileViewError.FileNotFound) { root.fileCfg = {}; root.cfgBroken = false; root.cfgLoaded = true; root.flushEarlyCfg(); }
             else root.cfgBroken = true;
         }
     }
@@ -180,8 +183,14 @@ Scope {
         indexLoaded = true;
         const f = {};
         vis.forEach(e => { if (e.favorite) f[e.path] = true; });
-        // звёзды, которые ещё пишутся, важнее индекса: он мог быть прочитан до записи
-        Object.keys(favPending).forEach(p => { if (favPending[p]) f[p] = true; else delete f[p]; });
+        // звёзды, которые ещё пишутся или ещё не дошли до индекса, важнее индекса: он мог быть прочитан
+        // до записи. Когда индекс показывает то же значение, ожидание снимается.
+        const pend = Object.assign({}, favPending);
+        Object.keys(pend).forEach(p => {
+            if (!favQueue.some(j => j[0] === p) && !(favProc.running && favProc.path === p) && !!f[p] === pend[p]) delete pend[p];
+            else if (pend[p]) f[p] = true; else delete f[p];
+        });
+        if (Object.keys(pend).length !== Object.keys(favPending).length) favPending = pend;
         favs = f;
         // список заменяем, только если поменялся состав картинок: иначе лента сбросила бы выбор
         const sig = vis.map(e => [e.path, e.key, e.title, e.description, e.style, e.search,
@@ -210,9 +219,13 @@ Scope {
     Process {
         id: favProc
         property string path: ""
-        onExited: {
-            // запись закончилась: если в очереди нет ещё одной для этой картинки, ждать больше нечего
-            if (!root.favQueue.some(j => j[0] === path)) { const p = Object.assign({}, root.favPending); delete p[path]; root.favPending = p; }
+        onExited: code => {
+            // не записалось: звезду возвращаем как было, индекс перечитываем
+            if (code !== 0 && !root.favQueue.some(j => j[0] === path)) {
+                const p = Object.assign({}, root.favPending); delete p[path]; root.favPending = p;
+                indexFile.reload();
+            }
+            // записалось: ожидание снимет loadIndex, когда свежий индекс покажет то же значение
             root.favNext();
         }
     }
@@ -288,7 +301,7 @@ Scope {
         // сначала экран: от него зависят текущие обои и папка, которую обходит индекс
         pickerScreen = screen || Quickshell.screens[0];
         reindexNow();
-        if (hosted) current = hostCurrent; else { currentProc.forScreen = targetName; currentProc.running = true; }
+        if (hosted) current = hostCurrent; else askCurrent(targetName);
     }
 
     function randomWallpaper(screen) {
@@ -302,6 +315,13 @@ Scope {
         } finally {
             randomScreen = null;
         }
+    }
+    // запрос текущих обоев в самостоятельном запуске: пока идёт прежний, новый ждёт в очереди,
+    // а у идущего экран не меняется (иначе ответ для A приняли бы за ответ для B)
+    property string currentNext: ""
+    function askCurrent(scr) {
+        if (currentProc.running) { currentNext = scr; return; }
+        currentProc.forScreen = scr; currentProc.running = true;
     }
     function screenByName(name) { return Quickshell.screens.find(s => s.name === name) || null; }
 
@@ -333,10 +353,11 @@ Scope {
         // ответ помечен экраном, для которого спрашивали: устаревший ответ (лента уже на другом мониторе)
         // отбрасываем; цвет или пусто тоже ответ, шейдер тогда возьмёт рост вместо перехода
         property string forScreen: ""
+        onExited: if (root.currentNext) { const s = root.currentNext; root.currentNext = ""; root.askCurrent(s); }
         command: ["sh", "-c", 'r=$(dms ipc call wallpaper get); case "$r" in ERROR*) dms ipc call wallpaper getFor "$1";; *) printf "%s\n" "$r";; esac',
                   "sh", forScreen]
         stdout: StdioCollector {
-            onStreamFinished: { if (currentProc.forScreen === root.targetName && !this.text.startsWith("ERROR")) root.current = this.text.trim(); }
+            onStreamFinished: { if (!root.currentNext && currentProc.forScreen === root.targetName && !this.text.startsWith("ERROR")) root.current = this.text.trim(); }
         }
     }
 

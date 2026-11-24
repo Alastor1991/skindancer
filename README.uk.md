@@ -70,13 +70,40 @@ git clone https://github.com/Alastor1991/skindancer ~/.config/dms/plugins/skinda
 
 Пошук за змістом необов'язковий, йому потрібні файли моделі, близько 410 МБ: їх завантажує `tools/get-model.sh`. Без них Skindancer шукає за словами.
 
+### NixOS
+
+Плагіну потрібен DMS 2.1.2 або новіший. У nixpkgs 26.05 лежить DMS 1.4.6, тому пакет DMS бери з флейка самого DMS, а Skindancer додай як декларативний плагін:
+
+```nix
+# flake inputs
+dms = { url = "github:duxlabs-dev/dux-shell/stable"; inputs.nixpkgs.follows = "nixpkgs"; };
+```
+
+```nix
+programs.dms-shell = {
+  enable = true;
+  systemd.enable = true;
+  package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  plugins.skindancer = {
+    enable = true;
+    src = pkgs.fetchFromGitHub {
+      owner = "Alastor1991"; repo = "skindancer"; rev = "v0.1.1";
+      hash = "";   # nix виведе правильний хеш під час першої збірки
+    };
+  };
+};
+environment.systemPackages = [ (pkgs.python3.withPackages (ps: [ ps.pillow ])) ];
+```
+
+Потім увімкни плагін у налаштуваннях DMS, розділ «Плагіни». Готовий `oboi-helper` на NixOS не запускається без `programs.nix-ld.enable = true`, і тоді Skindancer бере Python, доданий вище. Для NixOS це звичайний шлях. Для пошуку за змістом додай до пакетів Python `ps.onnxruntime ps.tokenizers ps.numpy`. Звичайний `git clone` у `~/.config/dms/plugins` на NixOS теж працює.
+
 ## Як користуватися
 
 - **Відкрити вікно вибору:** `dms ipc call skindancer picker`. Його зручно призначити на клавішу в композиторі, наприклад у niri: `Mod+W { spawn "dms" "ipc" "call" "skindancer" "picker"; }`. Можна й увімкнути **меню правої кнопки на робочому столі** в налаштуваннях плагіна: тоді замість меню столу DMS відкривається меню Skindancer, а якщо вимкнути цей пункт, меню DMS повернеться. На labwc, Sway, Scroll і KWin кліки по робочому столу забирає собі сам композитор, тому там, як і в DMS, меню не вмикається, і Skindancer відкривають клавішею.
 - **Клавіші:** ← → гортати, ↑ ↓ по рядах у сітках, Enter встановити шпалери, Ctrl+D в обране, Ctrl+1 2 3 перемкнути режим перегляду, Ctrl+4 wallhaven, F1 довідка, Esc закрити. Шестерня відкриває налаштування.
 - **Інші команди IPC:** `random`, `next`, `prev`, `apply`, `find <слова>`, `view slices|wall|depth`, `source local|wallhaven`, `transition <ім'я>`, `help`, `close`.
 
-Вікно вибору відкривається на моніторі, де зараз фокус, і підтримує окремі шпалери для кожного монітора.
+Вікно вибору відкривається на моніторі, де зараз фокус, і підтримує окремі шпалери для кожного монітора. На labwc і KWin DMS не знає, який монітор у фокусі, тому назви його сам: `dms ipc call skindancer pickerOn DP-1` (є ще `randomOn <output>` і `menuAtOn <output> <x> <y>`).
 
 ## Налаштування
 
@@ -85,14 +112,16 @@ git clone https://github.com/Alastor1991/skindancer ~/.config/dms/plugins/skinda
 ## Що Skindancer пише на диск і коли виходить у мережу
 
 - `~/.cache/oboi/dms/`: індекс і мініатюри. Якщо їх видалити, вони створяться заново.
-- `<тека шпалер>/.oboi/<файл>.json`: обране, а в картинок із wallhaven ще й теги та джерело. Ці маленькі файли переїжджають разом із текою, якщо її синхронізувати. Якщо в теку не можна писати, обране зберігається в `~/.local/state/oboi/favorites.json`.
+- `~/.cache/oboi/helper-<hash>/`: готовий помічник розпаковується сюди під час першого запуску (близько 180 МБ). Старі версії видаляються через добу після оновлення.
+- `~/.local/share/oboi/models/siglip2/`: необов'язкова модель для пошуку за змістом, лише якщо ти її завантажиш.
+- `<тека шпалер>/.oboi/<файл>.json`: обране, а в картинок із wallhaven ще й теги та джерело. Ці маленькі файли переїжджають разом із текою, якщо її синхронізувати. Якщо в теку не можна писати, обране зберігається в `~/.local/state/oboi/favorites.json`, а картинки з wallhaven зберігаються в `<Зображення>/Wallpapers`.
 - У мережу виходить лише вкладка wallhaven і лише доки вона відкрита. За замовчуванням SFW і 4K. Для NSFW потрібен власний ключ API wallhaven; ключ передається в заголовку запиту й ніколи не потрапляє в адресу.
 
 ## Де перевірено
 
-Плагін встановлювався так, як написано тут, на чисті віртуальні машини, де DMS 2.1.2 поставлено за офіційною інструкцією: Debian 13 (Quickshell 0.3.0), Ubuntu 26.04, Fedora 44 і openSUSE Tumbleweed на niri, а також Arch Linux на Hyprland. На кожній перевірено обидва варіанти: із системним Python і з готовим бінарником. Щодня я користуюся ним на CachyOS із niri. Скрипти перевірки лежать у `tools/vm/`.
+Плагін встановлювався так, як написано тут, на чисті віртуальні машини, де DMS 2.1.2 поставлено за офіційною інструкцією: Debian 13 (Quickshell 0.3.0), Ubuntu 26.04, Fedora 44 і openSUSE Tumbleweed на niri, Arch Linux на Hyprland, Sway і labwc (там усе проклацано вживу клавіатурою та мишею), а також NixOS 26.05, де плагін встановлено декларативно з Nix store. На кожній машині перевірено обидва варіанти: із системним Python і з готовим бінарником (на NixOS замість бінарника, як і належить, спрацьовує Python). Щодня я користуюся ним на CachyOS із niri. Скрипти перевірки лежать у `tools/vm/`.
 
-Поки не перевірено: справжні відеокарти NVIDIA і AMD (віртуальні машини малюють через virgl, і плавність переходів там не оцінити), кілька фізичних моніторів, NixOS, Gentoo і Void.
+Поки не перевірено: справжні відеокарти NVIDIA і AMD (віртуальні машини малюють через virgl, і плавність переходів там не оцінити), кілька фізичних моніторів, Gentoo і Void.
 
 ## Відомі обмеження
 

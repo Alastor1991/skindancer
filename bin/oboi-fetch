@@ -6,7 +6,10 @@ d=$(dirname "$p")
 h=$d/oboi-helper
 if [ -f "$h" ] && [ -x "$h" ]; then
     . "$d/helper-ready.sh"
-    # проверенный бинарник запускается вместо обёртки (exec): так Quickshell, гася процесс, гасит его самого
-    helper_ready "$h" && exec "$h" fetch "$@"
+    if helper_ready "$h"; then
+        helper_run "$h" fetch "$@"; rc=$?
+        # 126/127: бинарник не запустился (например, выключили nix-ld), тогда Python
+        [ $rc -ne 126 ] && [ $rc -ne 127 ] && exit $rc
+    fi
 fi
 exec python3 "$d/oboi_fetch.py" "$@"

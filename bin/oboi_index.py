@@ -70,12 +70,23 @@ def read_meta(root, name):
     return m if isinstance(m, dict) else {}       # чужой или битый сайдкар не должен ронять индекс
 
 
-def state_lock():
-    """Блокировка файла избранного: плагин и самостоятельный запуск правят его из разных индексаторов."""
-    os.makedirs(os.path.dirname(STATE_FAVS), exist_ok=True)
-    f = open(STATE_FAVS + ".lock", "w")
-    fcntl.flock(f, fcntl.LOCK_EX)
-    return f
+class state_lock:
+    """Блокировка файла избранного: плагин и самостоятельный запуск правят его из разных индексаторов.
+    Если папку состояния не создать (XDG_STATE_HOME только для чтения), работаем без блокировки:
+    звезда в писательной папке пишется в сайдкар и без файла состояния."""
+    def __enter__(self):
+        try:
+            os.makedirs(os.path.dirname(STATE_FAVS), exist_ok=True)
+            self.f = open(STATE_FAVS + ".lock", "w")
+            fcntl.flock(self.f, fcntl.LOCK_EX)
+        except OSError:
+            self.f = None
+        return self
+
+    def __exit__(self, *exc):
+        if self.f:
+            self.f.close()
+        return False
 
 
 def state_favs():
@@ -209,7 +220,11 @@ def set_favorite(path, mode):
             if stamp(sp) == before:
                 write_json(sp, m)
                 if path in sf:             # папка снова пишется: прежняя запись в состоянии больше не нужна
-                    sf.pop(path, None); write_json(STATE_FAVS, sf)
+                    sf.pop(path, None)
+                    try:
+                        write_json(STATE_FAVS, sf)
+                    except OSError:
+                        pass
                 return m["favorite"]
         time.sleep(0.2)
     sys.exit(f"oboi-index: {sp} всё время меняется, избранное не изменено")
@@ -329,8 +344,10 @@ def main():
         except OSError:
             return True
     seen = {e["path"] for e in items}
+    # только картинки из нынешних папок: папку убрали из настроек, значит и её записи не нужны
     items += [dict(e, missing=True) for p, e in old.items()
-              if p not in seen and (any(p.startswith(g) for g in gone) or vanished_dir(p))]
+              if p not in seen and any(p.startswith(r) for r in roots)
+              and (any(p.startswith(g) for g in gone) or vanished_dir(p))]
 
     live = {os.path.basename(e["thumb"]) for e in items}
     ours = {os.path.basename(e.get("thumb", "")) for e in old.values()}

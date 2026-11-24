@@ -70,13 +70,40 @@ Selektor potrzebuje małych programów pomocniczych do indeksowania, miniatur i 
 
 Wyszukiwanie po znaczeniu jest opcjonalne i wymaga plików modelu (około 410 MB): uruchom `tools/get-model.sh`. Bez nich selektor szuka po słowach.
 
+### NixOS
+
+Wtyczka wymaga DMS 2.1.2 lub nowszego. W nixpkgs 26.05 jest DMS 1.4.6, więc pakiet DMS weź z jego flake'a i dodaj Skindancera jako wtyczkę deklaratywną:
+
+```nix
+# flake inputs
+dms = { url = "github:duxlabs-dev/dux-shell/stable"; inputs.nixpkgs.follows = "nixpkgs"; };
+```
+
+```nix
+programs.dms-shell = {
+  enable = true;
+  systemd.enable = true;
+  package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  plugins.skindancer = {
+    enable = true;
+    src = pkgs.fetchFromGitHub {
+      owner = "Alastor1991"; repo = "skindancer"; rev = "v0.1.1";
+      hash = "";   # nix wypisze właściwy hash przy pierwszym budowaniu
+    };
+  };
+};
+environment.systemPackages = [ (pkgs.python3.withPackages (ps: [ ps.pillow ])) ];
+```
+
+Potem włącz wtyczkę w ustawieniach DMS, w sekcji Plugins. Gotowy `oboi-helper` nie uruchomi się na NixOS bez `programs.nix-ld.enable = true`. Bez tej opcji Skindancer korzysta z Pythona z konfiguracji powyżej i na NixOS jest to zwykła droga. Do wyszukiwania po znaczeniu dodaj do pakietów Pythona `ps.onnxruntime ps.tokenizers ps.numpy`. Zwykłe `git clone` do `~/.config/dms/plugins` na NixOS też działa.
+
 ## Użycie
 
 - **Otwarcie selektora:** `dms ipc call skindancer picker`. Przypisz to polecenie do skrótu klawiszowego w kompozytorze, na przykład w niri: `Mod+W { spawn "dms" "ipc" "call" "skindancer" "picker"; }`. Możesz też włączyć w ustawieniach wtyczki opcję **Menu prawego przycisku myszy na pulpicie**: wtedy menu Skindancera zastępuje menu pulpitu DMS, a po wyłączeniu tej opcji menu DMS wraca. W labwc, Sway, Scroll i KWin kliknięcia w pulpit przechwytuje sam kompozytor, więc tam (tak samo jak w DMS) menu zostaje wyłączone i otwierasz selektor skrótem klawiszowym.
 - **Klawisze:** ← → przeglądanie, ↑ ↓ przejście o rząd w siatkach, Enter ustawia tapetę, Ctrl+D dodaje do ulubionych, Ctrl+1 2 3 przełączają widoki, Ctrl+4 otwiera wallhaven, F1 pomoc, Esc zamyka. Zębatka otwiera ustawienia.
 - **Pozostałe polecenia IPC:** `random`, `next`, `prev`, `apply`, `find <words>`, `view slices|wall|depth`, `source local|wallhaven`, `transition <name>`, `help`, `close`.
 
-Selektor otwiera się na aktywnym monitorze (tym, który ma fokus) i obsługuje osobne tapety na każdym monitorze.
+Selektor otwiera się na aktywnym monitorze (tym, który ma fokus) i obsługuje osobne tapety na każdym monitorze. W labwc i KWin powłoka DMS nie potrafi ustalić, który monitor ma fokus, więc wskaż go sam: `dms ipc call skindancer pickerOn DP-1` (są też `randomOn <output>` i `menuAtOn <output> <x> <y>`).
 
 ## Ustawienia
 
@@ -85,14 +112,16 @@ Na stronie wtyczki w ustawieniach DMS znajdziesz folder z tapetami (puste pole o
 ## Co zapisuje i kiedy łączy się z internetem
 
 - `~/.cache/oboi/dms/`: indeks i miniatury. Po usunięciu zostaną utworzone od nowa.
-- `<folder z tapetami>/.oboi/<plik>.json`: ulubione, a dla obrazków zapisanych z wallhaven także ich tagi i źródło. Te małe pliki przenoszą się razem z folderem, jeśli go synchronizujesz. Jeśli folder jest tylko do odczytu, ulubione trafiają zamiast tego do `~/.local/state/oboi/favorites.json`.
+- `~/.cache/oboi/helper-<hash>/`: gotowy program pomocniczy rozpakowuje się tutaj przy pierwszym uruchomieniu (około 180 MB). Stare wersje są usuwane dzień po aktualizacji.
+- `~/.local/share/oboi/models/siglip2/`: opcjonalny model do wyszukiwania po znaczeniu, tylko jeśli go pobierzesz.
+- `<folder z tapetami>/.oboi/<plik>.json`: ulubione, a dla obrazków zapisanych z wallhaven także ich tagi i źródło. Te małe pliki przenoszą się razem z folderem, jeśli go synchronizujesz. Jeśli folder jest tylko do odczytu, ulubione trafiają zamiast tego do `~/.local/state/oboi/favorites.json`, a obrazki zapisane z wallhaven do `<Obrazy>/Wallpapers`.
 - Sieć: z wallhaven.cc łączy się tylko karta wallhaven i tylko wtedy, gdy jest otwarta. Domyślnie SFW i 4K. NSFW wymaga własnego klucza API wallhaven, a klucz jest wysyłany w nagłówku żądania, nigdy w adresie.
 
 ## Na czym testowano
 
-Skindancer był instalowany dokładnie według tego README na czystych maszynach wirtualnych z DMS 2.1.2 skonfigurowanym zgodnie z oficjalną instrukcją: Debian 13 (Quickshell 0.3.0), Ubuntu 26.04, Fedora 44 i openSUSE Tumbleweed na niri oraz Arch Linux na Hyprlandzie, na każdej maszynie zarówno z systemowym Pythonem, jak i z gotowym plikiem binarnym. Na co dzień używam go na CachyOS z niri. Skrypty testowe są w `tools/vm/`.
+Skindancer był instalowany dokładnie według tego README na czystych maszynach wirtualnych z DMS 2.1.2 skonfigurowanym zgodnie z oficjalną instrukcją: Debian 13 (Quickshell 0.3.0), Ubuntu 26.04, Fedora 44 i openSUSE Tumbleweed na niri, Arch Linux na Hyprlandzie, Sway i labwc (tu sterowałem maszynami na żywo klawiaturą i myszą) oraz NixOS 26.05 z wtyczką zainstalowaną deklaratywnie z Nix store. Każdą maszynę sprawdzono zarówno z systemowym Pythonem, jak i z gotowym plikiem binarnym (na NixOS plik binarny zgodnie z oczekiwaniami przełącza się na Pythona). Na co dzień używam go na CachyOS z niri. Skrypty testowe są w `tools/vm/`.
 
-Jeszcze nie przetestowano: prawdziwych kart NVIDIA i AMD (maszyny wirtualne rysują przez virgl, więc płynności przejść nie dało się tam ocenić), kilku fizycznych monitorów, NixOS, Gentoo i Void.
+Jeszcze nie przetestowano: prawdziwych kart NVIDIA i AMD (maszyny wirtualne rysują przez virgl, więc płynności przejść nie dało się tam ocenić), kilku fizycznych monitorów, Gentoo i Void.
 
 ## Znane ograniczenia
 

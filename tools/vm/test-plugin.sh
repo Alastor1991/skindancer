@@ -2,6 +2,7 @@
 # Внутри виртуалки: прогон Skindancer через IPC со снимками, замерами и логами.
 #   test-plugin.sh <метка>   результат в ~/oboi-test/<метка>/
 set -u
+PD=${PLUGIN_DIR:-$HOME/.config/dms/plugins/skindancer}   # на NixOS декларативный плагин: /etc/xdg/quickshell/dms-plugins/skindancer
 fail=0           # проверка не прошла: скрипт вернёт 1, а не «готово» с кодом 0
 OUT=~/oboi-test/${1:-run}; mkdir -p "$OUT"; : > "$OUT/steps.log"
 export XDG_RUNTIME_DIR=/run/user/$(id -u)
@@ -21,10 +22,13 @@ run python3 -c "import PIL; print('Pillow', PIL.__version__)"; run uname -r
 run sh -c "glxinfo -B 2>/dev/null | grep -E 'renderer|version string'"
 run sh -c "dms plugins list 2>&1 | grep -i skindancer"
 # какой помощник реально работает: метка helper-ok появляется, только если бинарник здесь запустился
-H=~/.config/dms/plugins/skindancer/bin/oboi-helper
+H="$PD/bin/oboi-helper"
 if [ -x "$H" ]; then
-    ~/.config/dms/plugins/skindancer/bin/oboi-index --help >/dev/null 2>&1
-    ls ~/.cache/oboi/helper-ok-* >/dev/null 2>&1 && log "помощники: собранный oboi-helper" \
+    # метку снимаем заранее: она должна появиться именно от этого запуска
+    rm -f "${XDG_CACHE_HOME:-$HOME/.cache}"/oboi/helper-ok-*
+    "$PD/bin/oboi-index" --help >/dev/null 2>&1
+    ls "${XDG_CACHE_HOME:-$HOME/.cache}"/oboi/helper-ok-* >/dev/null 2>&1 \
+        && log "помощники: собранный oboi-helper" \
         || log "помощники: бинарник лежит, но не запускается, работает python3"
 else
     log "помощники: python3"
@@ -33,7 +37,7 @@ fi
 log "индекс с нуля"
 rm -rf /tmp/oboi-idx
 t0=$(date +%s%N)
-~/.config/dms/plugins/skindancer/bin/oboi-index --quiet --dir ~/Pictures/Wallpapers \
+"$PD/bin/oboi-index" --quiet --dir ~/Pictures/Wallpapers \
     --out /tmp/oboi-idx/index.json --thumbs /tmp/oboi-idx/thumbs >> "$OUT/steps.log" 2>&1 || { log "ИНДЕКС НЕ СОБРАН"; fail=1; }
 n=$(python3 -c "import json;print(len(json.load(open('/tmp/oboi-idx/index.json'))['items']))" 2>/dev/null || echo 0)
 log "индекс: $(( ($(date +%s%N) - t0) / 1000000 )) мс, картинок $n"
