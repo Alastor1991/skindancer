@@ -1,0 +1,34 @@
+# Собирает oboi-helper (помощники Skindancer одним файлом) тем же tools/build-helper.sh,
+# что и локально: контейнер manylinux_2_28, glibc 2.28+. При теге v* кладёт файл
+# и его sha256 в релиз GitHub; при ручном запуске оставляет артефакт сборки.
+name: oboi-helper
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: build
+        run: tools/build-helper.sh
+      - name: checksum
+        run: cd bin && sha256sum oboi-helper > oboi-helper.sha256 && cat oboi-helper.sha256
+      - name: smoke test
+        run: |
+          bin/oboi-helper index --help
+          bin/oboi-helper fetch --help
+      - uses: actions/upload-artifact@v4
+        with:
+          name: oboi-helper-x86_64
+          path: |
+            bin/oboi-helper
+            bin/oboi-helper.sha256
+      - name: release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$GITHUB_REF_NAME" bin/oboi-helper bin/oboi-helper.sha256 --clobber || gh release create "$GITHUB_REF_NAME" bin/oboi-helper bin/oboi-helper.sha256 --generate-notes

@@ -1,0 +1,294 @@
+{
+  "%1 found": {
+    "%1 found": "%1개 찾음"
+  },
+  "+ Sketchy": {
+    "+ Sketchy": "+ Sketchy"
+  },
+  "ratio": {
+    "16:9 and 16:10": "16:9 및 16:10",
+    "Any": "모두",
+    "Ultrawide": "울트라와이드"
+  },
+  "Anime": {
+    "Anime": "애니메이션"
+  },
+  "resolution": {
+    "Any": "제한 없음"
+  },
+  "Aspect ratio": {
+    "Aspect ratio": "화면 비율"
+  },
+  "Auto": {
+    "Auto": "자동"
+  },
+  "Bounce": {
+    "Bounce": "탄성"
+  },
+  "Calm": {
+    "Calm": "잔잔하게"
+  },
+  "Captions": {
+    "Captions": "캡션"
+  },
+  "Categories": {
+    "Categories": "카테고리"
+  },
+  "Color dots": {
+    "Color dots": "색상 점"
+  },
+  "Ctrl+1 2 3": {
+    "Ctrl+1 2 3": "Ctrl+1 2 3"
+  },
+  "Ctrl+1 2 3 view": {
+    "Ctrl+1 2 3 view": "Ctrl+1 2 3 보기"
+  },
+  "Ctrl+4": {
+    "Ctrl+4": "Ctrl+4"
+  },
+  "Ctrl+4 wallhaven": {
+    "Ctrl+4 wallhaven": "Ctrl+4 wallhaven"
+  },
+  "Ctrl+D favorite": {
+    "Ctrl+D favorite": "Ctrl+D 즐겨찾기"
+  },
+  "Ctrl+D, star": {
+    "Ctrl+D, star": "Ctrl+D, 별"
+  },
+  "Depth": {
+    "Depth": "깊이"
+  },
+  "Desktop widgets": {
+    "Desktop widgets": "바탕화면 위젯"
+  },
+  "transition": {
+    "Dissolve": "디졸브",
+    "Grow": "확대",
+    "Ink": "잉크",
+    "Iris": "조리개",
+    "Melt": "녹아내림",
+    "None": "없음",
+    "Random": "무작위"
+  },
+  "Enter apply": {
+    "Enter apply": "Enter 적용"
+  },
+  "Enter save": {
+    "Enter save": "Enter 저장"
+  },
+  "Enter, click the selected one": {
+    "Enter, click the selected one": "Enter, 선택한 항목 클릭"
+  },
+  "Enter: save to wallpapers": {
+    "Enter: save to wallpapers": "Enter: 배경화면에 저장"
+  },
+  "Error: %1": {
+    "Error: %1": "오류: %1"
+  },
+  "Esc close": {
+    "Esc close": "Esc 닫기"
+  },
+  "F1 help": {
+    "F1 help": "F1 도움말"
+  },
+  "F1, Esc": {
+    "F1, Esc": "F1, Esc"
+  },
+  "Gear": {
+    "Gear": "톱니바퀴"
+  },
+  "General": {
+    "General": "일반"
+  },
+  "Help": {
+    "Help": "도움말"
+  },
+  "Hide": {
+    "Hide": "숨기기"
+  },
+  "Hide tab": {
+    "Hide tab": "탭 숨기기"
+  },
+  "Jelly": {
+    "Jelly": "젤리"
+  },
+  "Key hints": {
+    "Key hints": "키 힌트"
+  },
+  "Language": {
+    "Language": "언어"
+  },
+  "Last used": {
+    "Last used": "마지막 사용"
+  },
+  "Min resolution": {
+    "Min resolution": "최소 해상도"
+  },
+  "sort": {
+    "Most favorited": "즐겨찾기 많은 순",
+    "Newest": "최신순",
+    "Random": "무작위",
+    "Relevance": "관련도순",
+    "Top": "인기순"
+  },
+  "Not saved: %1": {
+    "Not saved: %1": "저장 안 됨: %1"
+  },
+  "Nothing found": {
+    "Nothing found": "결과 없음"
+  },
+  "Off": {
+    "Off": "끔"
+  },
+  "On": {
+    "On": "켬"
+  },
+  "Optional. Only needed for NSFW results on wallhaven.cc.": {
+    "Optional. Only needed for NSFW results on wallhaven.cc.": "선택 사항. wallhaven.cc에서 NSFW 결과를 보려는 경우에만 필요합니다."
+  },
+  "People": {
+    "People": "인물"
+  },
+  "Purity": {
+    "Purity": "콘텐츠"
+  },
+  "Queries work best in English: lighthouse, desert, rain": {
+    "Queries work best in English: lighthouse, desert, rain": "검색어는 영어가 가장 잘 맞습니다: lighthouse, desert, rain"
+  },
+  "Random wallpaper": {
+    "Random wallpaper": "무작위 배경화면"
+  },
+  "Right-click menu on the desktop": {
+    "Right-click menu on the desktop": "바탕화면 오른쪽 클릭 메뉴"
+  },
+  "Saved": {
+    "Saved": "저장됨"
+  },
+  "Saved to wallpapers": {
+    "Saved to wallpapers": "배경화면에 저장됨"
+  },
+  "Saving %1…": {
+    "Saving %1…": "%1 저장 중…"
+  },
+  "Search": {
+    "Search": "검색"
+  },
+  "Search: sunset, anime, desert, neon…": {
+    "Search: sunset, anime, desert, neon…": "검색: 노을, 애니메이션, 사막, 네온…"
+  },
+  "Searching…": {
+    "Searching…": "검색 중…"
+  },
+  "Semantic search": {
+    "Semantic search": "의미 검색"
+  },
+  "Settings": {
+    "Settings": "설정"
+  },
+  "Shell settings": {
+    "Shell settings": "셸 설정"
+  },
+  "Show": {
+    "Show": "표시"
+  },
+  "Show tab": {
+    "Show tab": "탭 표시"
+  },
+  "Sort": {
+    "Sort": "정렬"
+  },
+  "Strip": {
+    "Strip": "스트립"
+  },
+  "Transition": {
+    "Transition": "전환 효과"
+  },
+  "View on open": {
+    "View on open": "시작 시 보기"
+  },
+  "Wall": {
+    "Wall": "벽"
+  },
+  "Wallpaper folder": {
+    "Wallpaper folder": "배경화면 폴더"
+  },
+  "Wallpapers": {
+    "Wallpapers": "배경화면"
+  },
+  "Wallpapers…": {
+    "Wallpapers…": "배경화면…"
+  },
+  "Where your wallpapers live and where images from wallhaven are saved. Empty: the folder of the current wallpaper.": {
+    "Where your wallpapers live and where images from wallhaven are saved. Empty: the folder of the current wallpaper.": "배경화면이 있는 곳이자 wallhaven 이미지가 저장되는 곳입니다. 비워 두면 현재 배경화면의 폴더를 사용합니다."
+  },
+  "add to favorites; the star next to the colors shows favorites only": {
+    "add to favorites; the star next to the colors shows favorites only": "즐겨찾기에 추가. 색상 옆의 별은 즐겨찾기만 표시"
+  },
+  "browse; in the wall and wallhaven views the arrows move by cells, ↑ ↓ by rows": {
+    "browse; in the wall and wallhaven views the arrows move by cells, ↑ ↓ by rows": "탐색. 벽과 wallhaven 보기에서는 방향키가 칸 단위, ↑ ↓는 줄 단위로 이동"
+  },
+  "by titles and descriptions; queries in English also search by meaning: desert, rain": {
+    "by titles and descriptions; queries in English also search by meaning: desert, rain": "제목과 설명으로 검색. 영어 검색어는 의미로도 검색: desert, rain"
+  },
+  "no response": {
+    "no response": "응답 없음"
+  },
+  "search counter": {
+    "nothing": "없음",
+    "loading…": "불러오는 중…"
+  },
+  "only wallpapers of this color; click again to clear the filter": {
+    "only wallpapers of this color; click again to clear the filter": "이 색상의 배경화면만 표시. 다시 클릭하면 필터 해제"
+  },
+  "set as wallpaper; in the wallhaven tab, save the image to your wallpaper folder": {
+    "set as wallpaper; in the wallhaven tab, save the image to your wallpaper folder": "배경화면으로 설정. wallhaven 탭에서는 이미지를 배경화면 폴더에 저장"
+  },
+  "settings: transition, view, bounce, captions, hints, language": {
+    "settings: transition, view, bounce, captions, hints, language": "설정: 전환 효과, 보기, 탄성, 캡션, 힌트, 언어"
+  },
+  "this help; Esc closes it": {
+    "this help; Esc closes it": "이 도움말. Esc로 닫기"
+  },
+  "view: strip, wall, depth": {
+    "view: strip, wall, depth": "보기: 스트립, 벽, 깊이"
+  },
+  "wallhaven": {
+    "wallhaven": "wallhaven"
+  },
+  "wallhaven API key": {
+    "wallhaven API key": "wallhaven API 키"
+  },
+  "wallhaven did not respond": {
+    "wallhaven did not respond": "wallhaven이 응답하지 않음"
+  },
+  "wallhaven filters are in the wallhaven tab, under the search field.": {
+    "wallhaven filters are in the wallhaven tab, under the search field.": "wallhaven 필터는 wallhaven 탭의 검색창 아래에 있습니다."
+  },
+  "wallhaven serves NSFW only with an API key: add %1 to %2": {
+    "wallhaven serves NSFW only with an API key: add %1 to %2": "wallhaven NSFW는 API 키가 있어야 표시됨: %2에 %1 추가"
+  },
+  "wallhaven: search online, filters under the search field": {
+    "wallhaven: search online, filters under the search field": "wallhaven: 온라인 검색, 필터는 검색창 아래"
+  },
+  "← → browse": {
+    "← → browse": "← → 탐색"
+  },
+  "← → ↑ ↓ move by cells": {
+    "← → ↑ ↓ move by cells": "← → ↑ ↓ 칸 단위 이동"
+  },
+  "← →, wheel": {
+    "← →, wheel": "← →, 휠"
+  },
+  "settings: transition, view, bounce, captions, hints": {
+    "settings: transition, view, bounce, captions, hints": "설정: 전환 효과, 보기, 탄성, 캡션, 힌트"
+  },
+  "Skindancer needs its helpers": {
+    "Skindancer needs its helpers": "Skindancer에는 보조 프로그램이 필요합니다"
+  },
+  "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": {
+    "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": "GitHub 릴리스의 oboi-helper를 플러그인의 bin 폴더에 넣거나 python-pillow를 설치하세요 (Arch: sudo pacman -S python-pillow). 그런 다음 플러그인을 다시 켜세요."
+  },
+  "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": {
+    "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": "DMS 바탕화면 메뉴를 Skindancer 메뉴로 바꿉니다. 끄면 다음 명령으로 선택기를 엽니다: dms ipc call skindancer picker"
+  }
+}

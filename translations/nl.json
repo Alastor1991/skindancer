@@ -1,0 +1,294 @@
+{
+  "%1 found": {
+    "%1 found": "%1 gevonden"
+  },
+  "+ Sketchy": {
+    "+ Sketchy": "+ Sketchy"
+  },
+  "ratio": {
+    "16:9 and 16:10": "16:9 en 16:10",
+    "Any": "Alle",
+    "Ultrawide": "Ultrawide"
+  },
+  "Anime": {
+    "Anime": "Anime"
+  },
+  "resolution": {
+    "Any": "Alle"
+  },
+  "Aspect ratio": {
+    "Aspect ratio": "Beeldverhouding"
+  },
+  "Auto": {
+    "Auto": "Auto"
+  },
+  "Bounce": {
+    "Bounce": "Veerkracht"
+  },
+  "Calm": {
+    "Calm": "Rustig"
+  },
+  "Captions": {
+    "Captions": "Bijschriften"
+  },
+  "Categories": {
+    "Categories": "Categorieën"
+  },
+  "Color dots": {
+    "Color dots": "Kleurstippen"
+  },
+  "Ctrl+1 2 3": {
+    "Ctrl+1 2 3": "Ctrl+1 2 3"
+  },
+  "Ctrl+1 2 3 view": {
+    "Ctrl+1 2 3 view": "Ctrl+1 2 3 weergave"
+  },
+  "Ctrl+4": {
+    "Ctrl+4": "Ctrl+4"
+  },
+  "Ctrl+4 wallhaven": {
+    "Ctrl+4 wallhaven": "Ctrl+4 wallhaven"
+  },
+  "Ctrl+D favorite": {
+    "Ctrl+D favorite": "Ctrl+D favoriet"
+  },
+  "Ctrl+D, star": {
+    "Ctrl+D, star": "Ctrl+D, ster"
+  },
+  "Depth": {
+    "Depth": "Diepte"
+  },
+  "Desktop widgets": {
+    "Desktop widgets": "Bureaubladwidgets"
+  },
+  "transition": {
+    "Dissolve": "Oplossen",
+    "Grow": "Groeien",
+    "Ink": "Inkt",
+    "Iris": "Iris",
+    "Melt": "Smelten",
+    "None": "Geen",
+    "Random": "Willekeurig"
+  },
+  "Enter apply": {
+    "Enter apply": "Enter toepassen"
+  },
+  "Enter save": {
+    "Enter save": "Enter opslaan"
+  },
+  "Enter, click the selected one": {
+    "Enter, click the selected one": "Enter, klik op de geselecteerde"
+  },
+  "Enter: save to wallpapers": {
+    "Enter: save to wallpapers": "Enter: opslaan in achtergronden"
+  },
+  "Error: %1": {
+    "Error: %1": "Fout: %1"
+  },
+  "Esc close": {
+    "Esc close": "Esc sluiten"
+  },
+  "F1 help": {
+    "F1 help": "F1 help"
+  },
+  "F1, Esc": {
+    "F1, Esc": "F1, Esc"
+  },
+  "Gear": {
+    "Gear": "Tandwiel"
+  },
+  "General": {
+    "General": "Algemeen"
+  },
+  "Help": {
+    "Help": "Help"
+  },
+  "Hide": {
+    "Hide": "Verbergen"
+  },
+  "Hide tab": {
+    "Hide tab": "Tabblad verbergen"
+  },
+  "Jelly": {
+    "Jelly": "Gelei"
+  },
+  "Key hints": {
+    "Key hints": "Sneltoetsen"
+  },
+  "Language": {
+    "Language": "Taal"
+  },
+  "Last used": {
+    "Last used": "Laatst gebruikt"
+  },
+  "Min resolution": {
+    "Min resolution": "Min. resolutie"
+  },
+  "sort": {
+    "Most favorited": "Meest favoriet",
+    "Newest": "Nieuwste",
+    "Random": "Willekeurig",
+    "Relevance": "Relevantie",
+    "Top": "Top"
+  },
+  "Not saved: %1": {
+    "Not saved: %1": "Niet opgeslagen: %1"
+  },
+  "Nothing found": {
+    "Nothing found": "Niets gevonden"
+  },
+  "Off": {
+    "Off": "Uit"
+  },
+  "On": {
+    "On": "Aan"
+  },
+  "Optional. Only needed for NSFW results on wallhaven.cc.": {
+    "Optional. Only needed for NSFW results on wallhaven.cc.": "Optioneel. Alleen nodig voor NSFW-resultaten op wallhaven.cc."
+  },
+  "People": {
+    "People": "Mensen"
+  },
+  "Purity": {
+    "Purity": "Inhoud"
+  },
+  "Queries work best in English: lighthouse, desert, rain": {
+    "Queries work best in English: lighthouse, desert, rain": "Zoekopdrachten werken het best in het Engels: lighthouse, desert, rain"
+  },
+  "Random wallpaper": {
+    "Random wallpaper": "Willekeurige achtergrond"
+  },
+  "Right-click menu on the desktop": {
+    "Right-click menu on the desktop": "Rechtsklikmenu op het bureaublad"
+  },
+  "Saved": {
+    "Saved": "Opgeslagen"
+  },
+  "Saved to wallpapers": {
+    "Saved to wallpapers": "Opgeslagen in achtergronden"
+  },
+  "Saving %1…": {
+    "Saving %1…": "%1 wordt opgeslagen…"
+  },
+  "Search": {
+    "Search": "Zoeken"
+  },
+  "Search: sunset, anime, desert, neon…": {
+    "Search: sunset, anime, desert, neon…": "Zoek: zonsondergang, anime, woestijn, neon…"
+  },
+  "Searching…": {
+    "Searching…": "Zoeken…"
+  },
+  "Semantic search": {
+    "Semantic search": "Semantisch zoeken"
+  },
+  "Settings": {
+    "Settings": "Instellingen"
+  },
+  "Shell settings": {
+    "Shell settings": "Shell-instellingen"
+  },
+  "Show": {
+    "Show": "Tonen"
+  },
+  "Show tab": {
+    "Show tab": "Tabblad tonen"
+  },
+  "Sort": {
+    "Sort": "Sorteren"
+  },
+  "Strip": {
+    "Strip": "Strook"
+  },
+  "Transition": {
+    "Transition": "Overgang"
+  },
+  "View on open": {
+    "View on open": "Weergave bij openen"
+  },
+  "Wall": {
+    "Wall": "Muur"
+  },
+  "Wallpaper folder": {
+    "Wallpaper folder": "Achtergrondenmap"
+  },
+  "Wallpapers": {
+    "Wallpapers": "Achtergronden"
+  },
+  "Wallpapers…": {
+    "Wallpapers…": "Achtergronden…"
+  },
+  "Where your wallpapers live and where images from wallhaven are saved. Empty: the folder of the current wallpaper.": {
+    "Where your wallpapers live and where images from wallhaven are saved. Empty: the folder of the current wallpaper.": "Waar je achtergronden staan en waar afbeeldingen van wallhaven worden opgeslagen. Leeg: de map van de huidige achtergrond."
+  },
+  "add to favorites; the star next to the colors shows favorites only": {
+    "add to favorites; the star next to the colors shows favorites only": "aan favorieten toevoegen; de ster naast de kleuren toont alleen favorieten"
+  },
+  "browse; in the wall and wallhaven views the arrows move by cells, ↑ ↓ by rows": {
+    "browse; in the wall and wallhaven views the arrows move by cells, ↑ ↓ by rows": "bladeren; in de muur- en wallhaven-weergave gaan de pijltjestoetsen per cel, ↑ ↓ per rij"
+  },
+  "by titles and descriptions; queries in English also search by meaning: desert, rain": {
+    "by titles and descriptions; queries in English also search by meaning: desert, rain": "op titels en beschrijvingen; Engelse zoekopdrachten zoeken ook op betekenis: desert, rain"
+  },
+  "no response": {
+    "no response": "geen antwoord"
+  },
+  "search counter": {
+    "nothing": "niets",
+    "loading…": "laden…"
+  },
+  "only wallpapers of this color; click again to clear the filter": {
+    "only wallpapers of this color; click again to clear the filter": "alleen achtergronden in deze kleur; nogmaals klikken wist het filter"
+  },
+  "set as wallpaper; in the wallhaven tab, save the image to your wallpaper folder": {
+    "set as wallpaper; in the wallhaven tab, save the image to your wallpaper folder": "instellen als achtergrond; sla in het wallhaven-tabblad de afbeelding op in je achtergrondenmap"
+  },
+  "settings: transition, view, bounce, captions, hints, language": {
+    "settings: transition, view, bounce, captions, hints, language": "instellingen: overgang, weergave, veerkracht, bijschriften, sneltoetsen, taal"
+  },
+  "this help; Esc closes it": {
+    "this help; Esc closes it": "deze help; Esc sluit hem"
+  },
+  "view: strip, wall, depth": {
+    "view: strip, wall, depth": "weergave: strook, muur, diepte"
+  },
+  "wallhaven": {
+    "wallhaven": "wallhaven"
+  },
+  "wallhaven API key": {
+    "wallhaven API key": "wallhaven-API-sleutel"
+  },
+  "wallhaven did not respond": {
+    "wallhaven did not respond": "wallhaven heeft niet gereageerd"
+  },
+  "wallhaven filters are in the wallhaven tab, under the search field.": {
+    "wallhaven filters are in the wallhaven tab, under the search field.": "De wallhaven-filters staan in het wallhaven-tabblad, onder het zoekveld."
+  },
+  "wallhaven serves NSFW only with an API key: add %1 to %2": {
+    "wallhaven serves NSFW only with an API key: add %1 to %2": "wallhaven levert NSFW alleen met een API-sleutel: voeg %1 toe aan %2"
+  },
+  "wallhaven: search online, filters under the search field": {
+    "wallhaven: search online, filters under the search field": "wallhaven: online zoeken, filters onder het zoekveld"
+  },
+  "← → browse": {
+    "← → browse": "← → bladeren"
+  },
+  "← → ↑ ↓ move by cells": {
+    "← → ↑ ↓ move by cells": "← → ↑ ↓ per cel bewegen"
+  },
+  "← →, wheel": {
+    "← →, wheel": "← →, scrollwiel"
+  },
+  "settings: transition, view, bounce, captions, hints": {
+    "settings: transition, view, bounce, captions, hints": "instellingen: overgang, weergave, veerkracht, bijschriften, sneltoetsen"
+  },
+  "Skindancer needs its helpers": {
+    "Skindancer needs its helpers": "Skindancer heeft zijn hulpprogramma's nodig"
+  },
+  "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": {
+    "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": "Zet oboi-helper uit de GitHub-release in de bin-map van de plugin, of installeer python-pillow (Arch: sudo pacman -S python-pillow). Schakel de plugin daarna opnieuw in."
+  },
+  "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": {
+    "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": "Vervangt het DMS-bureaubladmenu door het Skindancer-menu. Zonder dit open je de kiezer met: dms ipc call skindancer picker"
+  }
+}

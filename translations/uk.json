@@ -1,0 +1,294 @@
+{
+  "%1 found": {
+    "%1 found": "знайдено: %1"
+  },
+  "+ Sketchy": {
+    "+ Sketchy": "+ на межі"
+  },
+  "ratio": {
+    "16:9 and 16:10": "16:9 і 16:10",
+    "Any": "Будь-які",
+    "Ultrawide": "Широкі"
+  },
+  "Anime": {
+    "Anime": "Аніме"
+  },
+  "resolution": {
+    "Any": "Будь-яка"
+  },
+  "Aspect ratio": {
+    "Aspect ratio": "Пропорції"
+  },
+  "Auto": {
+    "Auto": "Авто"
+  },
+  "Bounce": {
+    "Bounce": "Пружність"
+  },
+  "Calm": {
+    "Calm": "Спокійно"
+  },
+  "Captions": {
+    "Captions": "Підписи"
+  },
+  "Categories": {
+    "Categories": "Категорії"
+  },
+  "Color dots": {
+    "Color dots": "Кольорові крапки"
+  },
+  "Ctrl+1 2 3": {
+    "Ctrl+1 2 3": "Ctrl+1 2 3"
+  },
+  "Ctrl+1 2 3 view": {
+    "Ctrl+1 2 3 view": "Ctrl+1 2 3 вигляд"
+  },
+  "Ctrl+4": {
+    "Ctrl+4": "Ctrl+4"
+  },
+  "Ctrl+4 wallhaven": {
+    "Ctrl+4 wallhaven": "Ctrl+4 wallhaven"
+  },
+  "Ctrl+D favorite": {
+    "Ctrl+D favorite": "Ctrl+D до обраного"
+  },
+  "Ctrl+D, star": {
+    "Ctrl+D, star": "Ctrl+D, зірка"
+  },
+  "Depth": {
+    "Depth": "Глибина"
+  },
+  "Desktop widgets": {
+    "Desktop widgets": "Віджети стільниці"
+  },
+  "transition": {
+    "Dissolve": "Розчинення",
+    "Grow": "Ріст",
+    "Ink": "Чорнило",
+    "Iris": "Райдужка",
+    "Melt": "Стікання",
+    "None": "Без",
+    "Random": "Випадковий"
+  },
+  "Enter apply": {
+    "Enter apply": "Enter застосувати"
+  },
+  "Enter save": {
+    "Enter save": "Enter зберегти"
+  },
+  "Enter, click the selected one": {
+    "Enter, click the selected one": "Enter, клік по вибраному"
+  },
+  "Enter: save to wallpapers": {
+    "Enter: save to wallpapers": "Enter: зберегти до шпалер"
+  },
+  "Error: %1": {
+    "Error: %1": "Помилка: %1"
+  },
+  "Esc close": {
+    "Esc close": "Esc закрити"
+  },
+  "F1 help": {
+    "F1 help": "F1 довідка"
+  },
+  "F1, Esc": {
+    "F1, Esc": "F1, Esc"
+  },
+  "Gear": {
+    "Gear": "Шестерня"
+  },
+  "General": {
+    "General": "Загальні"
+  },
+  "Help": {
+    "Help": "Довідка"
+  },
+  "Hide": {
+    "Hide": "Приховати"
+  },
+  "Hide tab": {
+    "Hide tab": "Приховати вкладку"
+  },
+  "Jelly": {
+    "Jelly": "Желе"
+  },
+  "Key hints": {
+    "Key hints": "Підказки клавіш"
+  },
+  "Language": {
+    "Language": "Мова"
+  },
+  "Last used": {
+    "Last used": "Останній"
+  },
+  "Min resolution": {
+    "Min resolution": "Мін. роздільність"
+  },
+  "sort": {
+    "Most favorited": "Найулюбленіші",
+    "Newest": "Нові",
+    "Random": "Випадково",
+    "Relevance": "За запитом",
+    "Top": "Найкращі"
+  },
+  "Not saved: %1": {
+    "Not saved: %1": "Не збережено: %1"
+  },
+  "Nothing found": {
+    "Nothing found": "Нічого не знайдено"
+  },
+  "Off": {
+    "Off": "Вимкнено"
+  },
+  "On": {
+    "On": "Увімкнено"
+  },
+  "Optional. Only needed for NSFW results on wallhaven.cc.": {
+    "Optional. Only needed for NSFW results on wallhaven.cc.": "Необов'язково. Потрібен лише для NSFW на wallhaven.cc."
+  },
+  "People": {
+    "People": "Люди"
+  },
+  "Purity": {
+    "Purity": "Вміст"
+  },
+  "Queries work best in English: lighthouse, desert, rain": {
+    "Queries work best in English: lighthouse, desert, rain": "Запити краще писати англійською: lighthouse, desert, rain"
+  },
+  "Random wallpaper": {
+    "Random wallpaper": "Випадкові шпалери"
+  },
+  "Right-click menu on the desktop": {
+    "Right-click menu on the desktop": "Меню правого кліку на стільниці"
+  },
+  "Saved": {
+    "Saved": "Збережено"
+  },
+  "Saved to wallpapers": {
+    "Saved to wallpapers": "Збережено до шпалер"
+  },
+  "Saving %1…": {
+    "Saving %1…": "Зберігаю %1…"
+  },
+  "Search": {
+    "Search": "Пошук"
+  },
+  "Search: sunset, anime, desert, neon…": {
+    "Search: sunset, anime, desert, neon…": "Пошук: захід сонця, аніме, пустеля, неон…"
+  },
+  "Searching…": {
+    "Searching…": "Шукаю…"
+  },
+  "Semantic search": {
+    "Semantic search": "Пошук за змістом"
+  },
+  "Settings": {
+    "Settings": "Налаштування"
+  },
+  "Shell settings": {
+    "Shell settings": "Налаштування оболонки"
+  },
+  "Show": {
+    "Show": "Показувати"
+  },
+  "Show tab": {
+    "Show tab": "Показувати вкладку"
+  },
+  "Sort": {
+    "Sort": "Порядок"
+  },
+  "Strip": {
+    "Strip": "Стрічка"
+  },
+  "Transition": {
+    "Transition": "Перехід"
+  },
+  "View on open": {
+    "View on open": "Початковий вигляд"
+  },
+  "Wall": {
+    "Wall": "Стіна"
+  },
+  "Wallpaper folder": {
+    "Wallpaper folder": "Тека шпалер"
+  },
+  "Wallpapers": {
+    "Wallpapers": "Шпалери"
+  },
+  "Wallpapers…": {
+    "Wallpapers…": "Шпалери…"
+  },
+  "Where your wallpapers live and where images from wallhaven are saved. Empty: the folder of the current wallpaper.": {
+    "Where your wallpapers live and where images from wallhaven are saved. Empty: the folder of the current wallpaper.": "Де лежать твої шпалери і куди зберігаються картинки з wallhaven. Порожньо: тека поточних шпалер."
+  },
+  "add to favorites; the star next to the colors shows favorites only": {
+    "add to favorites; the star next to the colors shows favorites only": "до обраного; зірка поруч із кольорами залишає лише обрані"
+  },
+  "browse; in the wall and wallhaven views the arrows move by cells, ↑ ↓ by rows": {
+    "browse; in the wall and wallhaven views the arrows move by cells, ↑ ↓ by rows": "гортати; у видах стіни та wallhaven стрілки ходять по клітинках, ↑ ↓ по рядах"
+  },
+  "by titles and descriptions; queries in English also search by meaning: desert, rain": {
+    "by titles and descriptions; queries in English also search by meaning: desert, rain": "за назвами й описами; англійські запити шукають ще й за змістом: desert, rain"
+  },
+  "no response": {
+    "no response": "немає відповіді"
+  },
+  "search counter": {
+    "nothing": "нічого",
+    "loading…": "збираю…"
+  },
+  "only wallpapers of this color; click again to clear the filter": {
+    "only wallpapers of this color; click again to clear the filter": "лише шпалери цього кольору; повторний клік знімає фільтр"
+  },
+  "set as wallpaper; in the wallhaven tab, save the image to your wallpaper folder": {
+    "set as wallpaper; in the wallhaven tab, save the image to your wallpaper folder": "встановити як шпалери; у вкладці wallhaven зберегти картинку до теки шпалер"
+  },
+  "settings: transition, view, bounce, captions, hints, language": {
+    "settings: transition, view, bounce, captions, hints, language": "налаштування: перехід, вигляд, пружність, підписи, підказки, мова"
+  },
+  "this help; Esc closes it": {
+    "this help; Esc closes it": "ця довідка; Esc закриває її"
+  },
+  "view: strip, wall, depth": {
+    "view: strip, wall, depth": "вигляд: стрічка, стіна, глибина"
+  },
+  "wallhaven": {
+    "wallhaven": "wallhaven"
+  },
+  "wallhaven API key": {
+    "wallhaven API key": "Ключ API wallhaven"
+  },
+  "wallhaven did not respond": {
+    "wallhaven did not respond": "wallhaven не відповів"
+  },
+  "wallhaven filters are in the wallhaven tab, under the search field.": {
+    "wallhaven filters are in the wallhaven tab, under the search field.": "Фільтри wallhaven розташовані у вкладці wallhaven, під рядком пошуку."
+  },
+  "wallhaven serves NSFW only with an API key: add %1 to %2": {
+    "wallhaven serves NSFW only with an API key: add %1 to %2": "wallhaven віддає NSFW лише з ключем API: додай %1 до %2"
+  },
+  "wallhaven: search online, filters under the search field": {
+    "wallhaven: search online, filters under the search field": "wallhaven: пошук в інтернеті, фільтри під рядком пошуку"
+  },
+  "← → browse": {
+    "← → browse": "← → гортати"
+  },
+  "← → ↑ ↓ move by cells": {
+    "← → ↑ ↓ move by cells": "← → ↑ ↓ по клітинках"
+  },
+  "← →, wheel": {
+    "← →, wheel": "← →, колесо"
+  },
+  "settings: transition, view, bounce, captions, hints": {
+    "settings: transition, view, bounce, captions, hints": "налаштування: перехід, вигляд, пружність, підписи, підказки"
+  },
+  "Skindancer needs its helpers": {
+    "Skindancer needs its helpers": "Skindancer потребує помічників"
+  },
+  "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": {
+    "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": "Покладіть oboi-helper із релізу на GitHub у теку bin плагіна або встановіть python-pillow (Arch: sudo pacman -S python-pillow). Потім знову увімкніть плагін."
+  },
+  "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": {
+    "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": "Замінює меню стільниці DMS на меню Skindancer. Без нього стрічку відкриває команда dms ipc call skindancer picker"
+  }
+}

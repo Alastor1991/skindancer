@@ -1,0 +1,294 @@
+{
+  "%1 found": {
+    "%1 found": "找到 %1 个"
+  },
+  "+ Sketchy": {
+    "+ Sketchy": "+ Sketchy"
+  },
+  "ratio": {
+    "16:9 and 16:10": "16:9 和 16:10",
+    "Any": "任意",
+    "Ultrawide": "超宽"
+  },
+  "Anime": {
+    "Anime": "动漫"
+  },
+  "resolution": {
+    "Any": "不限"
+  },
+  "Aspect ratio": {
+    "Aspect ratio": "宽高比"
+  },
+  "Auto": {
+    "Auto": "自动"
+  },
+  "Bounce": {
+    "Bounce": "弹性"
+  },
+  "Calm": {
+    "Calm": "平稳"
+  },
+  "Captions": {
+    "Captions": "说明文字"
+  },
+  "Categories": {
+    "Categories": "分类"
+  },
+  "Color dots": {
+    "Color dots": "色点"
+  },
+  "Ctrl+1 2 3": {
+    "Ctrl+1 2 3": "Ctrl+1 2 3"
+  },
+  "Ctrl+1 2 3 view": {
+    "Ctrl+1 2 3 view": "Ctrl+1 2 3 视图"
+  },
+  "Ctrl+4": {
+    "Ctrl+4": "Ctrl+4"
+  },
+  "Ctrl+4 wallhaven": {
+    "Ctrl+4 wallhaven": "Ctrl+4 wallhaven"
+  },
+  "Ctrl+D favorite": {
+    "Ctrl+D favorite": "Ctrl+D 收藏"
+  },
+  "Ctrl+D, star": {
+    "Ctrl+D, star": "Ctrl+D、星标"
+  },
+  "Depth": {
+    "Depth": "纵深"
+  },
+  "Desktop widgets": {
+    "Desktop widgets": "桌面小组件"
+  },
+  "transition": {
+    "Dissolve": "溶解",
+    "Grow": "放大",
+    "Ink": "墨迹",
+    "Iris": "光圈",
+    "Melt": "融化",
+    "None": "无",
+    "Random": "随机"
+  },
+  "Enter apply": {
+    "Enter apply": "Enter 应用"
+  },
+  "Enter save": {
+    "Enter save": "Enter 保存"
+  },
+  "Enter, click the selected one": {
+    "Enter, click the selected one": "Enter、点击所选项"
+  },
+  "Enter: save to wallpapers": {
+    "Enter: save to wallpapers": "Enter：保存到壁纸"
+  },
+  "Error: %1": {
+    "Error: %1": "错误：%1"
+  },
+  "Esc close": {
+    "Esc close": "Esc 关闭"
+  },
+  "F1 help": {
+    "F1 help": "F1 帮助"
+  },
+  "F1, Esc": {
+    "F1, Esc": "F1、Esc"
+  },
+  "Gear": {
+    "Gear": "齿轮"
+  },
+  "General": {
+    "General": "常规"
+  },
+  "Help": {
+    "Help": "帮助"
+  },
+  "Hide": {
+    "Hide": "隐藏"
+  },
+  "Hide tab": {
+    "Hide tab": "隐藏标签页"
+  },
+  "Jelly": {
+    "Jelly": "果冻"
+  },
+  "Key hints": {
+    "Key hints": "按键提示"
+  },
+  "Language": {
+    "Language": "语言"
+  },
+  "Last used": {
+    "Last used": "上次使用"
+  },
+  "Min resolution": {
+    "Min resolution": "最低分辨率"
+  },
+  "sort": {
+    "Most favorited": "收藏最多",
+    "Newest": "最新",
+    "Random": "随机",
+    "Relevance": "相关度",
+    "Top": "最高评分"
+  },
+  "Not saved: %1": {
+    "Not saved: %1": "未保存：%1"
+  },
+  "Nothing found": {
+    "Nothing found": "未找到结果"
+  },
+  "Off": {
+    "Off": "关"
+  },
+  "On": {
+    "On": "开"
+  },
+  "Optional. Only needed for NSFW results on wallhaven.cc.": {
+    "Optional. Only needed for NSFW results on wallhaven.cc.": "可选。仅在 wallhaven.cc 上查看 NSFW 结果时需要。"
+  },
+  "People": {
+    "People": "人物"
+  },
+  "Purity": {
+    "Purity": "内容分级"
+  },
+  "Queries work best in English: lighthouse, desert, rain": {
+    "Queries work best in English: lighthouse, desert, rain": "英文搜索效果最好：lighthouse, desert, rain"
+  },
+  "Random wallpaper": {
+    "Random wallpaper": "随机壁纸"
+  },
+  "Right-click menu on the desktop": {
+    "Right-click menu on the desktop": "桌面右键菜单"
+  },
+  "Saved": {
+    "Saved": "已保存"
+  },
+  "Saved to wallpapers": {
+    "Saved to wallpapers": "已保存到壁纸"
+  },
+  "Saving %1…": {
+    "Saving %1…": "正在保存 %1…"
+  },
+  "Search": {
+    "Search": "搜索"
+  },
+  "Search: sunset, anime, desert, neon…": {
+    "Search: sunset, anime, desert, neon…": "搜索：日落、动漫、沙漠、霓虹…"
+  },
+  "Searching…": {
+    "Searching…": "正在搜索…"
+  },
+  "Semantic search": {
+    "Semantic search": "语义搜索"
+  },
+  "Settings": {
+    "Settings": "设置"
+  },
+  "Shell settings": {
+    "Shell settings": "Shell 设置"
+  },
+  "Show": {
+    "Show": "显示"
+  },
+  "Show tab": {
+    "Show tab": "显示标签页"
+  },
+  "Sort": {
+    "Sort": "排序"
+  },
+  "Strip": {
+    "Strip": "条带"
+  },
+  "Transition": {
+    "Transition": "切换效果"
+  },
+  "View on open": {
+    "View on open": "打开时的视图"
+  },
+  "Wall": {
+    "Wall": "墙"
+  },
+  "Wallpaper folder": {
+    "Wallpaper folder": "壁纸文件夹"
+  },
+  "Wallpapers": {
+    "Wallpapers": "壁纸"
+  },
+  "Wallpapers…": {
+    "Wallpapers…": "壁纸…"
+  },
+  "Where your wallpapers live and where images from wallhaven are saved. Empty: the folder of the current wallpaper.": {
+    "Where your wallpapers live and where images from wallhaven are saved. Empty: the folder of the current wallpaper.": "存放壁纸的位置，也是 wallhaven 图片的保存位置。留空：当前壁纸所在的文件夹。"
+  },
+  "add to favorites; the star next to the colors shows favorites only": {
+    "add to favorites; the star next to the colors shows favorites only": "加入收藏；颜色旁的星标仅显示收藏"
+  },
+  "browse; in the wall and wallhaven views the arrows move by cells, ↑ ↓ by rows": {
+    "browse; in the wall and wallhaven views the arrows move by cells, ↑ ↓ by rows": "浏览；在墙和 wallhaven 视图中，方向键按格移动，↑ ↓ 按行移动"
+  },
+  "by titles and descriptions; queries in English also search by meaning: desert, rain": {
+    "by titles and descriptions; queries in English also search by meaning: desert, rain": "按标题和描述搜索；英文查询还会按语义搜索：desert, rain"
+  },
+  "no response": {
+    "no response": "无响应"
+  },
+  "search counter": {
+    "nothing": "无",
+    "loading…": "加载中…"
+  },
+  "only wallpapers of this color; click again to clear the filter": {
+    "only wallpapers of this color; click again to clear the filter": "仅显示此颜色的壁纸；再次点击取消筛选"
+  },
+  "set as wallpaper; in the wallhaven tab, save the image to your wallpaper folder": {
+    "set as wallpaper; in the wallhaven tab, save the image to your wallpaper folder": "设为壁纸；在 wallhaven 标签页中，将图片保存到壁纸文件夹"
+  },
+  "settings: transition, view, bounce, captions, hints, language": {
+    "settings: transition, view, bounce, captions, hints, language": "设置：切换效果、视图、弹性、说明文字、提示、语言"
+  },
+  "this help; Esc closes it": {
+    "this help; Esc closes it": "本帮助；按 Esc 关闭"
+  },
+  "view: strip, wall, depth": {
+    "view: strip, wall, depth": "视图：条带、墙、纵深"
+  },
+  "wallhaven": {
+    "wallhaven": "wallhaven"
+  },
+  "wallhaven API key": {
+    "wallhaven API key": "wallhaven API 密钥"
+  },
+  "wallhaven did not respond": {
+    "wallhaven did not respond": "wallhaven 没有响应"
+  },
+  "wallhaven filters are in the wallhaven tab, under the search field.": {
+    "wallhaven filters are in the wallhaven tab, under the search field.": "wallhaven 筛选项位于 wallhaven 标签页的搜索框下方。"
+  },
+  "wallhaven serves NSFW only with an API key: add %1 to %2": {
+    "wallhaven serves NSFW only with an API key: add %1 to %2": "wallhaven 仅在提供 API 密钥时返回 NSFW：将 %1 添加到 %2"
+  },
+  "wallhaven: search online, filters under the search field": {
+    "wallhaven: search online, filters under the search field": "wallhaven：在线搜索，筛选项在搜索框下方"
+  },
+  "← → browse": {
+    "← → browse": "← → 浏览"
+  },
+  "← → ↑ ↓ move by cells": {
+    "← → ↑ ↓ move by cells": "← → ↑ ↓ 按格移动"
+  },
+  "← →, wheel": {
+    "← →, wheel": "← →、滚轮"
+  },
+  "settings: transition, view, bounce, captions, hints": {
+    "settings: transition, view, bounce, captions, hints": "设置：切换效果、视图、弹性、说明文字、提示"
+  },
+  "Skindancer needs its helpers": {
+    "Skindancer needs its helpers": "Skindancer 需要辅助程序"
+  },
+  "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": {
+    "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": "请把 GitHub 发布页中的 oboi-helper 放进插件的 bin 文件夹，或安装 python-pillow（Arch：sudo pacman -S python-pillow），然后重新启用插件。"
+  },
+  "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": {
+    "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": "用 Skindancer 菜单替换 DMS 桌面菜单。关闭后，请用以下命令打开选择器：dms ipc call skindancer picker"
+  }
+}

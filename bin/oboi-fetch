@@ -1,0 +1,7 @@
+#!/bin/sh
+# Запускает oboi_fetch.py. Если рядом лежит собранный oboi-helper (один файл со всеми
+# библиотеками, tools/build-helper.sh), берётся он, и системный Python не нужен.
+p=$(readlink -f "$0") && [ -n "$p" ] || { echo "oboi-fetch: не найден путь к себе (нужен readlink -f)" >&2; exit 1; }
+d=$(dirname "$p")
+[ -x "$d/oboi-helper" ] && exec "$d/oboi-helper" fetch "$@"
+exec python3 "$d/oboi_fetch.py" "$@"

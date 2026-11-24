@@ -1,0 +1,6 @@
+# Облачные образы для tools/vm/vm.sh: скачать в $VMDIR/images (wget -c -i tools/vm/images.txt)
+https://cloud.debian.org/images/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2
+https://cloud-images.ubuntu.com/resolute/current/resolute-server-cloudimg-amd64.img
+https://download.fedoraproject.org/pub/fedora/linux/releases/44/Cloud/x86_64/images/Fedora-Cloud-Base-Generic-44-1.7.x86_64.qcow2
+https://download.opensuse.org/tumbleweed/appliances/openSUSE-Tumbleweed-Minimal-VM.x86_64-Cloud.qcow2
+https://fastly.mirror.pkgbuild.com/images/latest/Arch-Linux-x86_64-cloudimg.qcow2

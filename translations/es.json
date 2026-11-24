@@ -1,0 +1,294 @@
+{
+  "%1 found": {
+    "%1 found": "%1 encontrados"
+  },
+  "+ Sketchy": {
+    "+ Sketchy": "+ Sketchy"
+  },
+  "ratio": {
+    "16:9 and 16:10": "16:9 y 16:10",
+    "Any": "Cualquiera",
+    "Ultrawide": "Ultraancho"
+  },
+  "Anime": {
+    "Anime": "Anime"
+  },
+  "resolution": {
+    "Any": "Cualquiera"
+  },
+  "Aspect ratio": {
+    "Aspect ratio": "Relación de aspecto"
+  },
+  "Auto": {
+    "Auto": "Automático"
+  },
+  "Bounce": {
+    "Bounce": "Rebote"
+  },
+  "Calm": {
+    "Calm": "Suave"
+  },
+  "Captions": {
+    "Captions": "Leyendas"
+  },
+  "Categories": {
+    "Categories": "Categorías"
+  },
+  "Color dots": {
+    "Color dots": "Puntos de color"
+  },
+  "Ctrl+1 2 3": {
+    "Ctrl+1 2 3": "Ctrl+1 2 3"
+  },
+  "Ctrl+1 2 3 view": {
+    "Ctrl+1 2 3 view": "Ctrl+1 2 3 vista"
+  },
+  "Ctrl+4": {
+    "Ctrl+4": "Ctrl+4"
+  },
+  "Ctrl+4 wallhaven": {
+    "Ctrl+4 wallhaven": "Ctrl+4 wallhaven"
+  },
+  "Ctrl+D favorite": {
+    "Ctrl+D favorite": "Ctrl+D favorito"
+  },
+  "Ctrl+D, star": {
+    "Ctrl+D, star": "Ctrl+D, estrella"
+  },
+  "Depth": {
+    "Depth": "Profundidad"
+  },
+  "Desktop widgets": {
+    "Desktop widgets": "Widgets del escritorio"
+  },
+  "transition": {
+    "Dissolve": "Disolver",
+    "Grow": "Crecer",
+    "Ink": "Tinta",
+    "Iris": "Iris",
+    "Melt": "Derretir",
+    "None": "Ninguna",
+    "Random": "Aleatoria"
+  },
+  "Enter apply": {
+    "Enter apply": "Enter aplicar"
+  },
+  "Enter save": {
+    "Enter save": "Enter guardar"
+  },
+  "Enter, click the selected one": {
+    "Enter, click the selected one": "Enter, clic en la seleccionada"
+  },
+  "Enter: save to wallpapers": {
+    "Enter: save to wallpapers": "Enter: guardar en fondos"
+  },
+  "Error: %1": {
+    "Error: %1": "Error: %1"
+  },
+  "Esc close": {
+    "Esc close": "Esc cerrar"
+  },
+  "F1 help": {
+    "F1 help": "F1 ayuda"
+  },
+  "F1, Esc": {
+    "F1, Esc": "F1, Esc"
+  },
+  "Gear": {
+    "Gear": "Engranaje"
+  },
+  "General": {
+    "General": "General"
+  },
+  "Help": {
+    "Help": "Ayuda"
+  },
+  "Hide": {
+    "Hide": "Ocultar"
+  },
+  "Hide tab": {
+    "Hide tab": "Ocultar pestaña"
+  },
+  "Jelly": {
+    "Jelly": "Gelatina"
+  },
+  "Key hints": {
+    "Key hints": "Atajos"
+  },
+  "Language": {
+    "Language": "Idioma"
+  },
+  "Last used": {
+    "Last used": "Última usada"
+  },
+  "Min resolution": {
+    "Min resolution": "Resolución mín."
+  },
+  "sort": {
+    "Most favorited": "Más favoritos",
+    "Newest": "Más recientes",
+    "Random": "Aleatorio",
+    "Relevance": "Relevancia",
+    "Top": "Mejores"
+  },
+  "Not saved: %1": {
+    "Not saved: %1": "No guardado: %1"
+  },
+  "Nothing found": {
+    "Nothing found": "No se encontró nada"
+  },
+  "Off": {
+    "Off": "Desactivado"
+  },
+  "On": {
+    "On": "Activado"
+  },
+  "Optional. Only needed for NSFW results on wallhaven.cc.": {
+    "Optional. Only needed for NSFW results on wallhaven.cc.": "Opcional. Solo hace falta para los resultados NSFW de wallhaven.cc."
+  },
+  "People": {
+    "People": "Personas"
+  },
+  "Purity": {
+    "Purity": "Contenido"
+  },
+  "Queries work best in English: lighthouse, desert, rain": {
+    "Queries work best in English: lighthouse, desert, rain": "Las búsquedas funcionan mejor en inglés: lighthouse, desert, rain"
+  },
+  "Random wallpaper": {
+    "Random wallpaper": "Fondo aleatorio"
+  },
+  "Right-click menu on the desktop": {
+    "Right-click menu on the desktop": "Menú del clic derecho en el escritorio"
+  },
+  "Saved": {
+    "Saved": "Guardado"
+  },
+  "Saved to wallpapers": {
+    "Saved to wallpapers": "Guardado en fondos"
+  },
+  "Saving %1…": {
+    "Saving %1…": "Guardando %1…"
+  },
+  "Search": {
+    "Search": "Buscar"
+  },
+  "Search: sunset, anime, desert, neon…": {
+    "Search: sunset, anime, desert, neon…": "Buscar: atardecer, anime, desierto, neón…"
+  },
+  "Searching…": {
+    "Searching…": "Buscando…"
+  },
+  "Semantic search": {
+    "Semantic search": "Búsqueda semántica"
+  },
+  "Settings": {
+    "Settings": "Ajustes"
+  },
+  "Shell settings": {
+    "Shell settings": "Ajustes del shell"
+  },
+  "Show": {
+    "Show": "Mostrar"
+  },
+  "Show tab": {
+    "Show tab": "Mostrar pestaña"
+  },
+  "Sort": {
+    "Sort": "Orden"
+  },
+  "Strip": {
+    "Strip": "Cinta"
+  },
+  "Transition": {
+    "Transition": "Transición"
+  },
+  "View on open": {
+    "View on open": "Vista al abrir"
+  },
+  "Wall": {
+    "Wall": "Muro"
+  },
+  "Wallpaper folder": {
+    "Wallpaper folder": "Carpeta de fondos"
+  },
+  "Wallpapers": {
+    "Wallpapers": "Fondos de pantalla"
+  },
+  "Wallpapers…": {
+    "Wallpapers…": "Fondos de pantalla…"
+  },
+  "Where your wallpapers live and where images from wallhaven are saved. Empty: the folder of the current wallpaper.": {
+    "Where your wallpapers live and where images from wallhaven are saved. Empty: the folder of the current wallpaper.": "Dónde están tus fondos y adónde se guardan las imágenes de wallhaven. Vacío: la carpeta del fondo actual."
+  },
+  "add to favorites; the star next to the colors shows favorites only": {
+    "add to favorites; the star next to the colors shows favorites only": "añadir a favoritos; la estrella junto a los colores muestra solo los favoritos"
+  },
+  "browse; in the wall and wallhaven views the arrows move by cells, ↑ ↓ by rows": {
+    "browse; in the wall and wallhaven views the arrows move by cells, ↑ ↓ by rows": "explorar; en las vistas muro y wallhaven las flechas se mueven por celdas, ↑ ↓ por filas"
+  },
+  "by titles and descriptions; queries in English also search by meaning: desert, rain": {
+    "by titles and descriptions; queries in English also search by meaning: desert, rain": "por títulos y descripciones; las consultas en inglés también buscan por significado: desert, rain"
+  },
+  "no response": {
+    "no response": "sin respuesta"
+  },
+  "search counter": {
+    "nothing": "nada",
+    "loading…": "cargando…"
+  },
+  "only wallpapers of this color; click again to clear the filter": {
+    "only wallpapers of this color; click again to clear the filter": "solo fondos de este color; otro clic quita el filtro"
+  },
+  "set as wallpaper; in the wallhaven tab, save the image to your wallpaper folder": {
+    "set as wallpaper; in the wallhaven tab, save the image to your wallpaper folder": "poner como fondo; en la pestaña wallhaven, guardar la imagen en tu carpeta de fondos"
+  },
+  "settings: transition, view, bounce, captions, hints, language": {
+    "settings: transition, view, bounce, captions, hints, language": "ajustes: transición, vista, rebote, leyendas, atajos, idioma"
+  },
+  "this help; Esc closes it": {
+    "this help; Esc closes it": "esta ayuda; Esc la cierra"
+  },
+  "view: strip, wall, depth": {
+    "view: strip, wall, depth": "vista: cinta, muro, profundidad"
+  },
+  "wallhaven": {
+    "wallhaven": "wallhaven"
+  },
+  "wallhaven API key": {
+    "wallhaven API key": "Clave de API de wallhaven"
+  },
+  "wallhaven did not respond": {
+    "wallhaven did not respond": "wallhaven no respondió"
+  },
+  "wallhaven filters are in the wallhaven tab, under the search field.": {
+    "wallhaven filters are in the wallhaven tab, under the search field.": "Los filtros de wallhaven están en la pestaña wallhaven, bajo el campo de búsqueda."
+  },
+  "wallhaven serves NSFW only with an API key: add %1 to %2": {
+    "wallhaven serves NSFW only with an API key: add %1 to %2": "wallhaven solo ofrece NSFW con clave de API: añade %1 a %2"
+  },
+  "wallhaven: search online, filters under the search field": {
+    "wallhaven: search online, filters under the search field": "wallhaven: búsqueda en línea, filtros bajo el campo de búsqueda"
+  },
+  "← → browse": {
+    "← → browse": "← → explorar"
+  },
+  "← → ↑ ↓ move by cells": {
+    "← → ↑ ↓ move by cells": "← → ↑ ↓ mover por celdas"
+  },
+  "← →, wheel": {
+    "← →, wheel": "← →, rueda"
+  },
+  "settings: transition, view, bounce, captions, hints": {
+    "settings: transition, view, bounce, captions, hints": "ajustes: transición, vista, rebote, leyendas, atajos"
+  },
+  "Skindancer needs its helpers": {
+    "Skindancer needs its helpers": "Skindancer necesita sus herramientas auxiliares"
+  },
+  "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": {
+    "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": "Coloca oboi-helper de la versión publicada en GitHub en la carpeta bin del plugin o instala python-pillow (Arch: sudo pacman -S python-pillow). Después vuelve a activar el plugin."
+  },
+  "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": {
+    "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": "Sustituye el menú del escritorio de DMS por el menú de Skindancer. Sin él, abre el selector con: dms ipc call skindancer picker"
+  }
+}

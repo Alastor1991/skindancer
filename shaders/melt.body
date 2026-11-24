@@ -1,0 +1,20 @@
+// melt: новые обои стекают сверху, узкие капли вытягиваются вниз впереди волны,
+// старые обои под ними слегка оплывают (в духе Дали)
+void main() {
+    vec2 uv = qt_TexCoord0;                  // y = 0 вверху
+    float x = uv.x * aspect;
+    // волна: медленная, пологая; капли: узкие и длинные, где шум близок к максимуму
+    float wave = noise(vec2(x * 2.2 + seed * 9.0, 0.0)) * 0.16;
+    float n = noise(vec2(x * 26.0 + seed * 31.0, 1.0));
+    float drops = pow(n, 5.0) * 0.55 + pow(noise(vec2(x * 61.0 + seed * 7.0, 2.0)), 8.0) * 0.30;
+    float lead = 0.75;                       // насколько капли могут обгонять волну
+    float base = progress * (1.0 + lead + 0.16) - lead - 0.16;
+    float front = base + wave + drops * smoothstep(0.0, 0.35, progress);
+    float d = uv.y - front;                  // < 0 уже залито новыми обоями
+    float m = (1.0 - smoothstep(-0.010, 0.010, d));
+    // под фронтом старые обои вытягиваются вниз, сильнее под каплями
+    float sag = smoothstep(-0.25, 0.0, -d) * (0.03 + drops * 0.25) * progress;
+    vec4 c = mix(texture(fromTex, vec2(uv.x, max(0.0, uv.y - sag))), texture(toTex, uv), m);
+    c.rgb += glow.rgb * rim(d, 0.008) * 0.6;
+    fragColor = c * qt_Opacity;
+}

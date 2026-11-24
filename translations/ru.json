@@ -1,0 +1,294 @@
+{
+  "%1 found": {
+    "%1 found": "найдено %1"
+  },
+  "+ Sketchy": {
+    "+ Sketchy": "+ на грани"
+  },
+  "ratio": {
+    "16:9 and 16:10": "16:9 и 16:10",
+    "Any": "любые",
+    "Ultrawide": "широкие"
+  },
+  "Anime": {
+    "Anime": "аниме"
+  },
+  "resolution": {
+    "Any": "любое"
+  },
+  "Aspect ratio": {
+    "Aspect ratio": "пропорции"
+  },
+  "Auto": {
+    "Auto": "как в системе"
+  },
+  "Bounce": {
+    "Bounce": "упругость"
+  },
+  "Calm": {
+    "Calm": "спокойно"
+  },
+  "Captions": {
+    "Captions": "подписи"
+  },
+  "Categories": {
+    "Categories": "что"
+  },
+  "Color dots": {
+    "Color dots": "Цветные кружки"
+  },
+  "Ctrl+1 2 3": {
+    "Ctrl+1 2 3": "Ctrl+1 2 3"
+  },
+  "Ctrl+1 2 3 view": {
+    "Ctrl+1 2 3 view": "Ctrl+1 2 3 вид"
+  },
+  "Ctrl+4": {
+    "Ctrl+4": "Ctrl+4"
+  },
+  "Ctrl+4 wallhaven": {
+    "Ctrl+4 wallhaven": "Ctrl+4 wallhaven"
+  },
+  "Ctrl+D favorite": {
+    "Ctrl+D favorite": "Ctrl+D в избранное"
+  },
+  "Ctrl+D, star": {
+    "Ctrl+D, star": "Ctrl+D, звезда"
+  },
+  "Depth": {
+    "Depth": "глубина"
+  },
+  "Desktop widgets": {
+    "Desktop widgets": "Виджеты стола"
+  },
+  "transition": {
+    "Dissolve": "растворение",
+    "Grow": "рост",
+    "Ink": "чернила",
+    "Iris": "зрачок",
+    "Melt": "стекание",
+    "None": "без",
+    "Random": "случайный"
+  },
+  "Enter apply": {
+    "Enter apply": "Enter поставить"
+  },
+  "Enter save": {
+    "Enter save": "Enter сохранить"
+  },
+  "Enter, click the selected one": {
+    "Enter, click the selected one": "Enter, клик по выбранной"
+  },
+  "Enter: save to wallpapers": {
+    "Enter: save to wallpapers": "Enter: сохранить в обои"
+  },
+  "Error: %1": {
+    "Error: %1": "ошибка: %1"
+  },
+  "Esc close": {
+    "Esc close": "Esc закрыть"
+  },
+  "F1 help": {
+    "F1 help": "F1 справка"
+  },
+  "F1, Esc": {
+    "F1, Esc": "F1, Esc"
+  },
+  "Gear": {
+    "Gear": "Шестерёнка"
+  },
+  "General": {
+    "General": "общие"
+  },
+  "Help": {
+    "Help": "Справка"
+  },
+  "Hide": {
+    "Hide": "скрыть"
+  },
+  "Hide tab": {
+    "Hide tab": "убрать"
+  },
+  "Jelly": {
+    "Jelly": "желе"
+  },
+  "Key hints": {
+    "Key hints": "подсказки внизу"
+  },
+  "Language": {
+    "Language": "язык"
+  },
+  "Last used": {
+    "Last used": "последний"
+  },
+  "Min resolution": {
+    "Min resolution": "разрешение от"
+  },
+  "sort": {
+    "Most favorited": "любимые",
+    "Newest": "новые",
+    "Random": "случайно",
+    "Relevance": "по запросу",
+    "Top": "лучшие"
+  },
+  "Not saved: %1": {
+    "Not saved: %1": "не сохранилось: %1"
+  },
+  "Nothing found": {
+    "Nothing found": "ничего не нашлось"
+  },
+  "Off": {
+    "Off": "выключен"
+  },
+  "On": {
+    "On": "включён"
+  },
+  "Optional. Only needed for NSFW results on wallhaven.cc.": {
+    "Optional. Only needed for NSFW results on wallhaven.cc.": "Необязательно. Нужен только для NSFW на wallhaven.cc."
+  },
+  "People": {
+    "People": "люди"
+  },
+  "Purity": {
+    "Purity": "чистота"
+  },
+  "Queries work best in English: lighthouse, desert, rain": {
+    "Queries work best in English: lighthouse, desert, rain": "запрос лучше по-английски: lighthouse, desert, rain"
+  },
+  "Random wallpaper": {
+    "Random wallpaper": "Случайные обои"
+  },
+  "Right-click menu on the desktop": {
+    "Right-click menu on the desktop": "Меню по правому клику на столе"
+  },
+  "Saved": {
+    "Saved": "сохранено"
+  },
+  "Saved to wallpapers": {
+    "Saved to wallpapers": "сохранено в обои"
+  },
+  "Saving %1…": {
+    "Saving %1…": "сохраняю %1…"
+  },
+  "Search": {
+    "Search": "Поиск"
+  },
+  "Search: sunset, anime, desert, neon…": {
+    "Search: sunset, anime, desert, neon…": "найти: закат, аниме, пустыня, неон…"
+  },
+  "Searching…": {
+    "Searching…": "ищу…"
+  },
+  "Semantic search": {
+    "Semantic search": "поиск по смыслу"
+  },
+  "Settings": {
+    "Settings": "Настройки"
+  },
+  "Shell settings": {
+    "Shell settings": "Настройки оболочки"
+  },
+  "Show": {
+    "Show": "показывать"
+  },
+  "Show tab": {
+    "Show tab": "вкладка есть"
+  },
+  "Sort": {
+    "Sort": "порядок"
+  },
+  "Strip": {
+    "Strip": "лента"
+  },
+  "Transition": {
+    "Transition": "переход"
+  },
+  "View on open": {
+    "View on open": "вид при открытии"
+  },
+  "Wall": {
+    "Wall": "стена"
+  },
+  "Wallpaper folder": {
+    "Wallpaper folder": "Папка обоев"
+  },
+  "Wallpapers": {
+    "Wallpapers": "Обои"
+  },
+  "Wallpapers…": {
+    "Wallpapers…": "Обои…"
+  },
+  "Where your wallpapers live and where images from wallhaven are saved. Empty: the folder of the current wallpaper.": {
+    "Where your wallpapers live and where images from wallhaven are saved. Empty: the folder of the current wallpaper.": "Где лежат твои обои и куда сохраняются картинки с wallhaven. Пусто: папка текущих обоев."
+  },
+  "add to favorites; the star next to the colors shows favorites only": {
+    "add to favorites; the star next to the colors shows favorites only": "в избранное; звезда рядом с цветами оставляет только избранные"
+  },
+  "browse; in the wall and wallhaven views the arrows move by cells, ↑ ↓ by rows": {
+    "browse; in the wall and wallhaven views the arrows move by cells, ↑ ↓ by rows": "листать; в стене и wallhaven стрелки ходят по клеткам, ↑ ↓ по рядам"
+  },
+  "by titles and descriptions; queries in English also search by meaning: desert, rain": {
+    "by titles and descriptions; queries in English also search by meaning: desert, rain": "по названиям и описаниям; по-английски ищет ещё и по смыслу: desert, rain"
+  },
+  "no response": {
+    "no response": "нет ответа"
+  },
+  "search counter": {
+    "nothing": "ничего",
+    "loading…": "собираю…"
+  },
+  "only wallpapers of this color; click again to clear the filter": {
+    "only wallpapers of this color; click again to clear the filter": "только обои этого цвета, повторный клик снимает фильтр"
+  },
+  "set as wallpaper; in the wallhaven tab, save the image to your wallpaper folder": {
+    "set as wallpaper; in the wallhaven tab, save the image to your wallpaper folder": "поставить обои; во вкладке wallhaven сохранить картинку в папку обоев"
+  },
+  "settings: transition, view, bounce, captions, hints, language": {
+    "settings: transition, view, bounce, captions, hints, language": "настройки: переход, вид, упругость, подписи, подсказки, язык"
+  },
+  "this help; Esc closes it": {
+    "this help; Esc closes it": "эта справка; Esc закрывает"
+  },
+  "view: strip, wall, depth": {
+    "view: strip, wall, depth": "вид: лента, стена, глубина"
+  },
+  "wallhaven": {
+    "wallhaven": "wallhaven"
+  },
+  "wallhaven API key": {
+    "wallhaven API key": "Ключ API wallhaven"
+  },
+  "wallhaven did not respond": {
+    "wallhaven did not respond": "wallhaven не ответил"
+  },
+  "wallhaven filters are in the wallhaven tab, under the search field.": {
+    "wallhaven filters are in the wallhaven tab, under the search field.": "Фильтры wallhaven живут во вкладке wallhaven под строкой поиска."
+  },
+  "wallhaven serves NSFW only with an API key: add %1 to %2": {
+    "wallhaven serves NSFW only with an API key: add %1 to %2": "NSFW wallhaven отдаёт только с ключом: впиши %1 в %2"
+  },
+  "wallhaven: search online, filters under the search field": {
+    "wallhaven: search online, filters under the search field": "wallhaven: поиск в интернете, фильтры под строкой поиска"
+  },
+  "← → browse": {
+    "← → browse": "← → листать"
+  },
+  "← → ↑ ↓ move by cells": {
+    "← → ↑ ↓ move by cells": "← → ↑ ↓ по клеткам"
+  },
+  "← →, wheel": {
+    "← →, wheel": "← →, колесо"
+  },
+  "settings: transition, view, bounce, captions, hints": {
+    "settings: transition, view, bounce, captions, hints": "настройки: переход, вид, упругость, подписи, подсказки"
+  },
+  "Skindancer needs its helpers": {
+    "Skindancer needs its helpers": "Лицедейке нужны помощники"
+  },
+  "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": {
+    "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": "Положите oboi-helper из релиза на GitHub в папку bin плагина или установите python-pillow (Arch: sudo pacman -S python-pillow). Потом включите плагин снова."
+  },
+  "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": {
+    "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": "Меню Лицедейки вместо меню стола DMS. Без него ленту открывает команда dms ipc call skindancer picker"
+  }
+}

@@ -1,0 +1,294 @@
+{
+  "%1 found": {
+    "%1 found": "%1 件"
+  },
+  "+ Sketchy": {
+    "+ Sketchy": "+ Sketchy"
+  },
+  "ratio": {
+    "16:9 and 16:10": "16:9 と 16:10",
+    "Any": "すべて",
+    "Ultrawide": "ウルトラワイド"
+  },
+  "Anime": {
+    "Anime": "アニメ"
+  },
+  "resolution": {
+    "Any": "指定なし"
+  },
+  "Aspect ratio": {
+    "Aspect ratio": "縦横比"
+  },
+  "Auto": {
+    "Auto": "自動"
+  },
+  "Bounce": {
+    "Bounce": "バウンド"
+  },
+  "Calm": {
+    "Calm": "穏やか"
+  },
+  "Captions": {
+    "Captions": "キャプション"
+  },
+  "Categories": {
+    "Categories": "カテゴリ"
+  },
+  "Color dots": {
+    "Color dots": "カラードット"
+  },
+  "Ctrl+1 2 3": {
+    "Ctrl+1 2 3": "Ctrl+1 2 3"
+  },
+  "Ctrl+1 2 3 view": {
+    "Ctrl+1 2 3 view": "Ctrl+1 2 3 表示"
+  },
+  "Ctrl+4": {
+    "Ctrl+4": "Ctrl+4"
+  },
+  "Ctrl+4 wallhaven": {
+    "Ctrl+4 wallhaven": "Ctrl+4 wallhaven"
+  },
+  "Ctrl+D favorite": {
+    "Ctrl+D favorite": "Ctrl+D お気に入り"
+  },
+  "Ctrl+D, star": {
+    "Ctrl+D, star": "Ctrl+D、スター"
+  },
+  "Depth": {
+    "Depth": "奥行き"
+  },
+  "Desktop widgets": {
+    "Desktop widgets": "デスクトップウィジェット"
+  },
+  "transition": {
+    "Dissolve": "ディゾルブ",
+    "Grow": "拡大",
+    "Ink": "インク",
+    "Iris": "アイリス",
+    "Melt": "メルト",
+    "None": "なし",
+    "Random": "ランダム"
+  },
+  "Enter apply": {
+    "Enter apply": "Enter 適用"
+  },
+  "Enter save": {
+    "Enter save": "Enter 保存"
+  },
+  "Enter, click the selected one": {
+    "Enter, click the selected one": "Enter、選択中をクリック"
+  },
+  "Enter: save to wallpapers": {
+    "Enter: save to wallpapers": "Enter: 壁紙に保存"
+  },
+  "Error: %1": {
+    "Error: %1": "エラー: %1"
+  },
+  "Esc close": {
+    "Esc close": "Esc 閉じる"
+  },
+  "F1 help": {
+    "F1 help": "F1 ヘルプ"
+  },
+  "F1, Esc": {
+    "F1, Esc": "F1、Esc"
+  },
+  "Gear": {
+    "Gear": "歯車"
+  },
+  "General": {
+    "General": "一般"
+  },
+  "Help": {
+    "Help": "ヘルプ"
+  },
+  "Hide": {
+    "Hide": "非表示"
+  },
+  "Hide tab": {
+    "Hide tab": "タブを非表示"
+  },
+  "Jelly": {
+    "Jelly": "ゼリー"
+  },
+  "Key hints": {
+    "Key hints": "キーのヒント"
+  },
+  "Language": {
+    "Language": "言語"
+  },
+  "Last used": {
+    "Last used": "前回の表示"
+  },
+  "Min resolution": {
+    "Min resolution": "最小解像度"
+  },
+  "sort": {
+    "Most favorited": "お気に入り順",
+    "Newest": "新着順",
+    "Random": "ランダム",
+    "Relevance": "関連度順",
+    "Top": "高評価順"
+  },
+  "Not saved: %1": {
+    "Not saved: %1": "保存できませんでした: %1"
+  },
+  "Nothing found": {
+    "Nothing found": "見つかりませんでした"
+  },
+  "Off": {
+    "Off": "オフ"
+  },
+  "On": {
+    "On": "オン"
+  },
+  "Optional. Only needed for NSFW results on wallhaven.cc.": {
+    "Optional. Only needed for NSFW results on wallhaven.cc.": "任意。wallhaven.cc で NSFW の結果を表示する場合のみ必要です。"
+  },
+  "People": {
+    "People": "人物"
+  },
+  "Purity": {
+    "Purity": "コンテンツ"
+  },
+  "Queries work best in English: lighthouse, desert, rain": {
+    "Queries work best in English: lighthouse, desert, rain": "検索は英語がおすすめ: lighthouse, desert, rain"
+  },
+  "Random wallpaper": {
+    "Random wallpaper": "ランダム壁紙"
+  },
+  "Right-click menu on the desktop": {
+    "Right-click menu on the desktop": "デスクトップの右クリックメニュー"
+  },
+  "Saved": {
+    "Saved": "保存済み"
+  },
+  "Saved to wallpapers": {
+    "Saved to wallpapers": "壁紙に保存しました"
+  },
+  "Saving %1…": {
+    "Saving %1…": "%1 を保存中…"
+  },
+  "Search": {
+    "Search": "検索"
+  },
+  "Search: sunset, anime, desert, neon…": {
+    "Search: sunset, anime, desert, neon…": "検索: 夕焼け、アニメ、砂漠、ネオン…"
+  },
+  "Searching…": {
+    "Searching…": "検索中…"
+  },
+  "Semantic search": {
+    "Semantic search": "意味検索"
+  },
+  "Settings": {
+    "Settings": "設定"
+  },
+  "Shell settings": {
+    "Shell settings": "シェルの設定"
+  },
+  "Show": {
+    "Show": "表示"
+  },
+  "Show tab": {
+    "Show tab": "タブを表示"
+  },
+  "Sort": {
+    "Sort": "並べ替え"
+  },
+  "Strip": {
+    "Strip": "短冊"
+  },
+  "Transition": {
+    "Transition": "切り替え効果"
+  },
+  "View on open": {
+    "View on open": "起動時の表示"
+  },
+  "Wall": {
+    "Wall": "ウォール"
+  },
+  "Wallpaper folder": {
+    "Wallpaper folder": "壁紙フォルダ"
+  },
+  "Wallpapers": {
+    "Wallpapers": "壁紙"
+  },
+  "Wallpapers…": {
+    "Wallpapers…": "壁紙…"
+  },
+  "Where your wallpapers live and where images from wallhaven are saved. Empty: the folder of the current wallpaper.": {
+    "Where your wallpapers live and where images from wallhaven are saved. Empty: the folder of the current wallpaper.": "壁紙の置き場所と、wallhaven の画像の保存先です。空の場合: 現在の壁紙のフォルダ。"
+  },
+  "add to favorites; the star next to the colors shows favorites only": {
+    "add to favorites; the star next to the colors shows favorites only": "お気に入りに追加。色の横の星でお気に入りだけに絞り込み"
+  },
+  "browse; in the wall and wallhaven views the arrows move by cells, ↑ ↓ by rows": {
+    "browse; in the wall and wallhaven views the arrows move by cells, ↑ ↓ by rows": "閲覧。ウォールと wallhaven 表示では矢印キーがセル単位、↑ ↓ が行単位で移動"
+  },
+  "by titles and descriptions; queries in English also search by meaning: desert, rain": {
+    "by titles and descriptions; queries in English also search by meaning: desert, rain": "タイトルと説明で検索。英語のクエリは意味でも検索: desert, rain"
+  },
+  "no response": {
+    "no response": "応答なし"
+  },
+  "search counter": {
+    "nothing": "なし",
+    "loading…": "読み込み中…"
+  },
+  "only wallpapers of this color; click again to clear the filter": {
+    "only wallpapers of this color; click again to clear the filter": "この色の壁紙だけ表示。もう一度クリックで解除"
+  },
+  "set as wallpaper; in the wallhaven tab, save the image to your wallpaper folder": {
+    "set as wallpaper; in the wallhaven tab, save the image to your wallpaper folder": "壁紙に設定。wallhaven タブでは画像を壁紙フォルダに保存"
+  },
+  "settings: transition, view, bounce, captions, hints, language": {
+    "settings: transition, view, bounce, captions, hints, language": "設定: 切り替え効果、表示、バウンド、キャプション、ヒント、言語"
+  },
+  "this help; Esc closes it": {
+    "this help; Esc closes it": "このヘルプ。Esc で閉じる"
+  },
+  "view: strip, wall, depth": {
+    "view: strip, wall, depth": "表示: 短冊、ウォール、奥行き"
+  },
+  "wallhaven": {
+    "wallhaven": "wallhaven"
+  },
+  "wallhaven API key": {
+    "wallhaven API key": "wallhaven API キー"
+  },
+  "wallhaven did not respond": {
+    "wallhaven did not respond": "wallhaven が応答しませんでした"
+  },
+  "wallhaven filters are in the wallhaven tab, under the search field.": {
+    "wallhaven filters are in the wallhaven tab, under the search field.": "wallhaven のフィルターは wallhaven タブの検索欄の下にあります。"
+  },
+  "wallhaven serves NSFW only with an API key: add %1 to %2": {
+    "wallhaven serves NSFW only with an API key: add %1 to %2": "NSFW は API キーがある場合のみ wallhaven から取得できます: %2 に %1 を追加"
+  },
+  "wallhaven: search online, filters under the search field": {
+    "wallhaven: search online, filters under the search field": "wallhaven: オンライン検索、フィルターは検索欄の下"
+  },
+  "← → browse": {
+    "← → browse": "← → 移動"
+  },
+  "← → ↑ ↓ move by cells": {
+    "← → ↑ ↓ move by cells": "← → ↑ ↓ セル単位で移動"
+  },
+  "← →, wheel": {
+    "← →, wheel": "← →、ホイール"
+  },
+  "settings: transition, view, bounce, captions, hints": {
+    "settings: transition, view, bounce, captions, hints": "設定: 切り替え効果、表示、バウンド、キャプション、ヒント"
+  },
+  "Skindancer needs its helpers": {
+    "Skindancer needs its helpers": "Skindancer には補助プログラムが必要です"
+  },
+  "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": {
+    "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": "GitHub のリリースから oboi-helper をプラグインの bin フォルダーに置くか、python-pillow をインストールしてください (Arch: sudo pacman -S python-pillow)。その後、プラグインをもう一度有効にしてください。"
+  },
+  "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": {
+    "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": "DMS のデスクトップメニューを Skindancer のメニューに置き換えます。オフの場合は次のコマンドでピッカーを開きます: dms ipc call skindancer picker"
+  }
+}

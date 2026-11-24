@@ -1,0 +1,17 @@
+{
+    "$schema": "https://github.com/AvengeMedia/DankMaterialShell/raw/refs/heads/master/PLUGINS/plugin-schema.json",
+    "id": "skindancer",
+    "name": "Skindancer",
+    "description": "Wallpaper picker with search, favorites, three views, shader transitions and wallhaven.cc search",
+    "version": "0.1.0",
+    "author": "Alastor1991",
+    "icon": "wallpaper",
+    "type": "daemon",
+    "capabilities": ["daemon", "wallpaper"],
+    "component": "./OboiDaemon.qml",
+    "settings": "./OboiSettings.qml",
+    "startupCheck": "./StartupCheck.qml",
+    "requires_dms": ">=2.1.2",
+    "dependencies": ["python3", "python-pillow"],
+    "permissions": ["settings_read", "settings_write", "process", "network"]
+}

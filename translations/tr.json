@@ -1,0 +1,294 @@
+{
+  "%1 found": {
+    "%1 found": "%1 bulundu"
+  },
+  "+ Sketchy": {
+    "+ Sketchy": "+ Sketchy"
+  },
+  "ratio": {
+    "16:9 and 16:10": "16:9 ve 16:10",
+    "Any": "Hepsi",
+    "Ultrawide": "Ultra geniş"
+  },
+  "Anime": {
+    "Anime": "Anime"
+  },
+  "resolution": {
+    "Any": "Tümü"
+  },
+  "Aspect ratio": {
+    "Aspect ratio": "En boy oranı"
+  },
+  "Auto": {
+    "Auto": "Otomatik"
+  },
+  "Bounce": {
+    "Bounce": "Esneklik"
+  },
+  "Calm": {
+    "Calm": "Sakin"
+  },
+  "Captions": {
+    "Captions": "Başlıklar"
+  },
+  "Categories": {
+    "Categories": "Kategoriler"
+  },
+  "Color dots": {
+    "Color dots": "Renk noktaları"
+  },
+  "Ctrl+1 2 3": {
+    "Ctrl+1 2 3": "Ctrl+1 2 3"
+  },
+  "Ctrl+1 2 3 view": {
+    "Ctrl+1 2 3 view": "Ctrl+1 2 3 görünüm"
+  },
+  "Ctrl+4": {
+    "Ctrl+4": "Ctrl+4"
+  },
+  "Ctrl+4 wallhaven": {
+    "Ctrl+4 wallhaven": "Ctrl+4 wallhaven"
+  },
+  "Ctrl+D favorite": {
+    "Ctrl+D favorite": "Ctrl+D favori"
+  },
+  "Ctrl+D, star": {
+    "Ctrl+D, star": "Ctrl+D, yıldız"
+  },
+  "Depth": {
+    "Depth": "Derinlik"
+  },
+  "Desktop widgets": {
+    "Desktop widgets": "Masaüstü widget'ları"
+  },
+  "transition": {
+    "Dissolve": "Çözülme",
+    "Grow": "Büyüme",
+    "Ink": "Mürekkep",
+    "Iris": "İris",
+    "Melt": "Erime",
+    "None": "Yok",
+    "Random": "Rastgele"
+  },
+  "Enter apply": {
+    "Enter apply": "Enter uygula"
+  },
+  "Enter save": {
+    "Enter save": "Enter kaydet"
+  },
+  "Enter, click the selected one": {
+    "Enter, click the selected one": "Enter, seçili olana tıkla"
+  },
+  "Enter: save to wallpapers": {
+    "Enter: save to wallpapers": "Enter: duvar kâğıtlarına kaydet"
+  },
+  "Error: %1": {
+    "Error: %1": "Hata: %1"
+  },
+  "Esc close": {
+    "Esc close": "Esc kapat"
+  },
+  "F1 help": {
+    "F1 help": "F1 yardım"
+  },
+  "F1, Esc": {
+    "F1, Esc": "F1, Esc"
+  },
+  "Gear": {
+    "Gear": "Dişli"
+  },
+  "General": {
+    "General": "Genel"
+  },
+  "Help": {
+    "Help": "Yardım"
+  },
+  "Hide": {
+    "Hide": "Gizle"
+  },
+  "Hide tab": {
+    "Hide tab": "Sekmeyi gizle"
+  },
+  "Jelly": {
+    "Jelly": "Jöle"
+  },
+  "Key hints": {
+    "Key hints": "Tuş ipuçları"
+  },
+  "Language": {
+    "Language": "Dil"
+  },
+  "Last used": {
+    "Last used": "Son kullanılan"
+  },
+  "Min resolution": {
+    "Min resolution": "Min. çözünürlük"
+  },
+  "sort": {
+    "Most favorited": "En çok favorilenen",
+    "Newest": "En yeni",
+    "Random": "Rastgele",
+    "Relevance": "Alaka düzeyi",
+    "Top": "En iyiler"
+  },
+  "Not saved: %1": {
+    "Not saved: %1": "Kaydedilmedi: %1"
+  },
+  "Nothing found": {
+    "Nothing found": "Hiçbir şey bulunamadı"
+  },
+  "Off": {
+    "Off": "Kapalı"
+  },
+  "On": {
+    "On": "Açık"
+  },
+  "Optional. Only needed for NSFW results on wallhaven.cc.": {
+    "Optional. Only needed for NSFW results on wallhaven.cc.": "İsteğe bağlı. Yalnızca wallhaven.cc'deki NSFW sonuçları için gerekir."
+  },
+  "People": {
+    "People": "İnsanlar"
+  },
+  "Purity": {
+    "Purity": "İçerik"
+  },
+  "Queries work best in English: lighthouse, desert, rain": {
+    "Queries work best in English: lighthouse, desert, rain": "İngilizce aramalar en iyi sonucu verir: lighthouse, desert, rain"
+  },
+  "Random wallpaper": {
+    "Random wallpaper": "Rastgele duvar kâğıdı"
+  },
+  "Right-click menu on the desktop": {
+    "Right-click menu on the desktop": "Masaüstünde sağ tık menüsü"
+  },
+  "Saved": {
+    "Saved": "Kaydedildi"
+  },
+  "Saved to wallpapers": {
+    "Saved to wallpapers": "Duvar kâğıtlarına kaydedildi"
+  },
+  "Saving %1…": {
+    "Saving %1…": "%1 kaydediliyor…"
+  },
+  "Search": {
+    "Search": "Ara"
+  },
+  "Search: sunset, anime, desert, neon…": {
+    "Search: sunset, anime, desert, neon…": "Ara: gün batımı, anime, çöl, neon…"
+  },
+  "Searching…": {
+    "Searching…": "Aranıyor…"
+  },
+  "Semantic search": {
+    "Semantic search": "Anlamsal arama"
+  },
+  "Settings": {
+    "Settings": "Ayarlar"
+  },
+  "Shell settings": {
+    "Shell settings": "Kabuk ayarları"
+  },
+  "Show": {
+    "Show": "Göster"
+  },
+  "Show tab": {
+    "Show tab": "Sekmeyi göster"
+  },
+  "Sort": {
+    "Sort": "Sırala"
+  },
+  "Strip": {
+    "Strip": "Şerit"
+  },
+  "Transition": {
+    "Transition": "Geçiş"
+  },
+  "View on open": {
+    "View on open": "Açılışta görünüm"
+  },
+  "Wall": {
+    "Wall": "Duvar"
+  },
+  "Wallpaper folder": {
+    "Wallpaper folder": "Duvar kâğıdı klasörü"
+  },
+  "Wallpapers": {
+    "Wallpapers": "Duvar kâğıtları"
+  },
+  "Wallpapers…": {
+    "Wallpapers…": "Duvar kâğıtları…"
+  },
+  "Where your wallpapers live and where images from wallhaven are saved. Empty: the folder of the current wallpaper.": {
+    "Where your wallpapers live and where images from wallhaven are saved. Empty: the folder of the current wallpaper.": "Duvar kâğıtlarının bulunduğu ve wallhaven görsellerinin kaydedildiği klasör. Boşsa: mevcut duvar kâğıdının klasörü."
+  },
+  "add to favorites; the star next to the colors shows favorites only": {
+    "add to favorites; the star next to the colors shows favorites only": "favorilere ekle; renklerin yanındaki yıldız yalnızca favorileri gösterir"
+  },
+  "browse; in the wall and wallhaven views the arrows move by cells, ↑ ↓ by rows": {
+    "browse; in the wall and wallhaven views the arrows move by cells, ↑ ↓ by rows": "gez; duvar ve wallhaven görünümlerinde oklar hücre hücre, ↑ ↓ satır satır ilerler"
+  },
+  "by titles and descriptions; queries in English also search by meaning: desert, rain": {
+    "by titles and descriptions; queries in English also search by meaning: desert, rain": "başlıklara ve açıklamalara göre; İngilizce sorgular anlama göre de arar: desert, rain"
+  },
+  "no response": {
+    "no response": "yanıt yok"
+  },
+  "search counter": {
+    "nothing": "sonuç yok",
+    "loading…": "yükleniyor…"
+  },
+  "only wallpapers of this color; click again to clear the filter": {
+    "only wallpapers of this color; click again to clear the filter": "yalnızca bu renkteki duvar kâğıtları; tekrar tıklamak filtreyi kaldırır"
+  },
+  "set as wallpaper; in the wallhaven tab, save the image to your wallpaper folder": {
+    "set as wallpaper; in the wallhaven tab, save the image to your wallpaper folder": "duvar kâğıdı yap; wallhaven sekmesinde görseli duvar kâğıdı klasörüne kaydet"
+  },
+  "settings: transition, view, bounce, captions, hints, language": {
+    "settings: transition, view, bounce, captions, hints, language": "ayarlar: geçiş, görünüm, esneklik, başlıklar, ipuçları, dil"
+  },
+  "this help; Esc closes it": {
+    "this help; Esc closes it": "bu yardım; Esc kapatır"
+  },
+  "view: strip, wall, depth": {
+    "view: strip, wall, depth": "görünüm: şerit, duvar, derinlik"
+  },
+  "wallhaven": {
+    "wallhaven": "wallhaven"
+  },
+  "wallhaven API key": {
+    "wallhaven API key": "wallhaven API anahtarı"
+  },
+  "wallhaven did not respond": {
+    "wallhaven did not respond": "wallhaven yanıt vermedi"
+  },
+  "wallhaven filters are in the wallhaven tab, under the search field.": {
+    "wallhaven filters are in the wallhaven tab, under the search field.": "wallhaven filtreleri wallhaven sekmesinde, arama alanının altındadır."
+  },
+  "wallhaven serves NSFW only with an API key: add %1 to %2": {
+    "wallhaven serves NSFW only with an API key: add %1 to %2": "wallhaven NSFW'yi yalnızca API anahtarıyla verir: %2 içine %1 ekle"
+  },
+  "wallhaven: search online, filters under the search field": {
+    "wallhaven: search online, filters under the search field": "wallhaven: çevrimiçi arama, filtreler arama alanının altında"
+  },
+  "← → browse": {
+    "← → browse": "← → gez"
+  },
+  "← → ↑ ↓ move by cells": {
+    "← → ↑ ↓ move by cells": "← → ↑ ↓ hücre hücre git"
+  },
+  "← →, wheel": {
+    "← →, wheel": "← →, tekerlek"
+  },
+  "settings: transition, view, bounce, captions, hints": {
+    "settings: transition, view, bounce, captions, hints": "ayarlar: geçiş, görünüm, esneklik, başlıklar, ipuçları"
+  },
+  "Skindancer needs its helpers": {
+    "Skindancer needs its helpers": "Skindancer'ın yardımcı programlarına ihtiyacı var"
+  },
+  "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": {
+    "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": "GitHub sürümündeki oboi-helper dosyasını eklentinin bin klasörüne koy ya da python-pillow kur (Arch: sudo pacman -S python-pillow). Ardından eklentiyi yeniden etkinleştir."
+  },
+  "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": {
+    "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": "DMS masaüstü menüsünün yerine Skindancer menüsünü getirir. Kapalıyken seçiciyi şu komutla aç: dms ipc call skindancer picker"
+  }
+}
