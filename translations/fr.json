@@ -286,9 +286,9 @@
     "Skindancer needs its helpers": "Skindancer a besoin de ses outils"
   },
   "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": {
-    "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": "Placez oboi-helper, téléchargé depuis la release GitHub, dans le dossier bin du plugin, ou installez python-pillow (Arch : sudo pacman -S python-pillow). Réactivez ensuite le plugin."
+    "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": "Placez oboi-helper, téléchargé depuis la version publiée sur GitHub, dans le dossier bin du plugin, ou installez python-pillow (Arch : sudo pacman -S python-pillow). Réactivez ensuite le plugin."
   },
   "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": {
-    "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": "Remplace le menu du bureau de DMS par le menu de Skindancer. Sans lui, ouvrez le sélecteur avec : dms ipc call skindancer picker"
+    "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": "Remplace le menu du bureau de DMS par le menu de Skindancer. Sans lui, ouvrez le sélecteur avec : dms ipc call skindancer picker"
   }
 }

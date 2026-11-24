@@ -283,7 +283,7 @@
     "settings: transition, view, bounce, captions, hints": "configurações: transição, visualização, elasticidade, legendas, dicas"
   },
   "Skindancer needs its helpers": {
-    "Skindancer needs its helpers": "O Skindancer precisa dos seus auxiliares"
+    "Skindancer needs its helpers": "O Skindancer precisa dos programas auxiliares"
   },
   "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": {
     "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": "Coloque o oboi-helper da release no GitHub na pasta bin do plugin ou instale o python-pillow (Arch: sudo pacman -S python-pillow). Depois ative o plugin de novo."

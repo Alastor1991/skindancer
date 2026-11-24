@@ -286,9 +286,9 @@
     "Skindancer needs its helpers": "Skindancer потребує помічників"
   },
   "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": {
-    "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": "Покладіть oboi-helper із релізу на GitHub у теку bin плагіна або встановіть python-pillow (Arch: sudo pacman -S python-pillow). Потім знову увімкніть плагін."
+    "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.": "Поклади oboi-helper із релізу на GitHub у теку bin плагіна або встанови python-pillow (Arch: sudo pacman -S python-pillow). Потім знову увімкни плагін."
   },
   "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": {
-    "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": "Замінює меню стільниці DMS на меню Skindancer. Без нього стрічку відкриває команда dms ipc call skindancer picker"
+    "Replaces the DMS desktop menu with the Skindancer menu. Without it, open the picker with: dms ipc call skindancer picker": "Замінює меню стільниці DMS на меню Skindancer. Без нього вікно зі шпалерами відкривається командою dms ipc call skindancer picker"
   }
 }
