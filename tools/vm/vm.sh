@@ -32,7 +32,7 @@ die() { echo "vm.sh: $*" >&2; exit 1; }
 # PID из файла годится, только если это наш qemu с этой машиной: после перезагрузки хозяина
 # номер мог достаться чужому процессу, и его нельзя ни считать «запущенной машиной», ни убивать
 ourpid() { local f=$VMDIR/$1/pid p; [[ -f $f ]] || return 1; p=$(cat "$f"); \
-           tr '\0' ' ' < "/proc/$p/cmdline" 2>/dev/null | grep -q -- "-name oboi-$1 " && echo "$p"; }
+           tr '\0' ' ' 2>/dev/null < "/proc/$p/cmdline" | grep -q -- "-name oboi-$1 " && echo "$p"; }
 need() { [[ -n ${IMAGE[$1]:-} ]] || die "нет машины «$1»; есть: ${!IMAGE[*]}"; }
 port() { echo $((2200 + NUM[$1])); }
 

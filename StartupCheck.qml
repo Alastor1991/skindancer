@@ -18,6 +18,6 @@ QtObject {
                 title: I18n.trFor("skindancer", "Skindancer needs its helpers"),
                 details: I18n.trFor("skindancer", "Put oboi-helper from the GitHub release into the plugin's bin folder, or install python-pillow (Arch: sudo pacman -S python-pillow). Then enable the plugin again.")
             });
-        });
+        }, 0, 150000);     // первая распаковка бинарника на медленном диске идёт дольше 10 с по умолчанию
     }
 }

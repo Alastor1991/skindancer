@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Debian 13: DMS по инструкции duxlabs.dev (quickshell из trixie-backports, dms и niri из OBS duxlabs-dev),
 # обычное ядро вместо облачного (в облачном нет virtio-gpu), автовход в niri на tty1.
 set -euxo pipefail

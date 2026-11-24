@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # openSUSE Tumbleweed: DMS из OBS home:duxlabs-dev по инструкции duxlabs.dev, niri.
 set -euxo pipefail
 sudo zypper -n addrepo https://download.opensuse.org/repositories/home:duxlabs-dev:dux-repo/openSUSE_Tumbleweed/home:duxlabs-dev:dux-repo.repo || true

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Общая часть для всех машин: автовход пользователя oboi на tty1 и запуск композитора с DMS.
 # niri: niri-session (-l: иначе он перезапускает себя через login-shell и снова попадает сюда).
 # Hyprland (если niri нет): start-hyprland или Hyprland, DMS через hyprland-session.target.

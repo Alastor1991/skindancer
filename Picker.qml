@@ -91,8 +91,8 @@ PanelWindow {
         property int gen: 0
         environment: win.shell.fetchEnv
         // помощник упал или не запустился (не сам прерванный запрос): не висим на «Ищу…»
-        onExited: (code, status) => {
-            if (code !== 0 && whProc.gen === win.whGen && !win.whPending && status === Process.NormalExit)
+        onExited: code => {
+            if (code !== 0 && whProc.gen === win.whGen && !win.whPending)
                 win.whFailed(win.shell.tr("wallhaven did not respond"));
             win.whStart();
         }
@@ -121,6 +121,8 @@ PanelWindow {
                 try { r = JSON.parse(this.text); } catch (e) {}
                 if (r.saved) {
                     const m = Object.assign({}, win.whSaved); m[saveProc.wid] = true; win.whSaved = m;
+                    // в выбранную папку писать нельзя, помощник сохранил в <Картинки>/Wallpapers: обходим и её
+                    win.shell.addExtraDir(String(r.saved).replace(/\/[^\/]*$/, ""));
                     win.whStatus = win.shell.tr("Saved to wallpapers"); win.shell.reindexNow();
                 } else win.whStatus = win.shell.tr("Not saved: %1", r.error || win.shell.tr("no response"));
             }
@@ -153,6 +155,7 @@ PanelWindow {
         if (openPath) { Qt.callLater(restoreOpen); return; }
         const want = keepPath || (query ? "" : lastPath);
         const i = want ? shown.findIndex(e => e.path === want) : -1;
+        if (i >= 0) keepPath = "";          // просьба вернуть выбор исполняется один раз
         // ListView сбрасывает выбор, когда получает новую модель, поэтому возвращаем его на следующем такте
         if (i >= 0) Qt.callLater(() => jumpTo(i, 5));
     }
@@ -241,7 +244,7 @@ PanelWindow {
         // ListView сразу после новой модели может не принять номер: тогда пробуем на следующем такте
         if (j >= 0 && list.currentIndex !== i) { Qt.callLater(restoreOpen); return; }
         // нашли и окно уже разложено: дальше выбор ведёт пользователь
-        if (j >= 0 && !openGuard.running) openPath = "";
+        if (j >= 0 && !openGuard.running) { lastPath = openPath; openPath = ""; }
     }
     Timer { id: openGuard; interval: 900; onTriggered: win.restoreOpen() }
     // текущих обоев в списке так и нет (вертикальные, вне папки): перестаём ждать через 10 с после того,
@@ -252,6 +255,8 @@ PanelWindow {
     Connections {
         target: win.shell
         // и в самостоятельном запуске, где current сначала пустой: пока пользователь сам не выбрал карточку
+        // индекс пришёл позже (первый обход большой библиотеки): ждём текущие обои ещё 10 с от этого момента
+        function onItemsChanged() { if (win.open && win.openPath) openWait.restart(); }
         function onCurrentChanged() { if (win.open && !win.userMoved && win.shell.current) { win.openPath = win.shell.current; openWait.restart(); win.restoreOpen(); } }
     }
 

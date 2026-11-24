@@ -6,11 +6,7 @@ d=$(dirname "$p")
 h=$d/oboi-helper
 if [ -f "$h" ] && [ -x "$h" ]; then
     . "$d/helper-ready.sh"
-    if helper_ready "$h"; then
-        "$h" index "$@"
-        rc=$?
-        # 126/127: файл не запускается (чужая архитектура, NixOS без nix-ld) – тогда Python
-        [ $rc -ne 126 ] && [ $rc -ne 127 ] && exit $rc
-    fi
+    # проверенный бинарник запускается вместо обёртки (exec): так Quickshell, гася процесс, гасит его самого
+    helper_ready "$h" && exec "$h" index "$@"
 fi
 exec python3 "$d/oboi_index.py" "$@"

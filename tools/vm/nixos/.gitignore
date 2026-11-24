@@ -1,3 +1,4 @@
 out/
 key.pub
 flake.lock
+plugin-src/

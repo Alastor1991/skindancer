@@ -1,4 +1,5 @@
-{ pkgs, sshKey, ... }: {
+{ pkgs, sshKey, dmsPkg, modulesPath, ... }: {
+  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];   # драйверы virtio в initrd, иначе диск не найден
   system.stateVersion = "26.05";
   networking.hostName = "nixos";
   boot.kernelParams = [ "console=ttyS0" ];
@@ -18,7 +19,12 @@
 
   # как у обычного пользователя NixOS: niri из nixpkgs, DMS родным модулем, запуск службой
   programs.niri.enable = true;
-  programs.dms-shell = { enable = true; systemd.enable = true; };
+  programs.dms-shell = {
+    enable = true; systemd.enable = true; package = dmsPkg;
+    # как ставят плагины на NixOS: декларативно, файлы плагина в /nix/store только для чтения.
+    # plugin-src собирает tools/vm/nixos/build.sh из текущего репозитория (вместе с oboi-helper).
+    plugins.skindancer = { enable = true; src = ./plugin-src; };
+  };
   hardware.graphics.enable = true;
   fonts.packages = [ pkgs.noto-fonts ];
 

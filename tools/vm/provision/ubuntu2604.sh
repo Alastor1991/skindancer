@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Ubuntu 26.04: DMS из PPA duxlabs (dux-repo, dms) по инструкции duxlabs.dev, niri.
 set -euxo pipefail
 export DEBIAN_FRONTEND=noninteractive

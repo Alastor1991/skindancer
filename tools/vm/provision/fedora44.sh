@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Fedora 44: DMS из COPR duxlabs/dms и duxlabs/dux-repo по инструкции duxlabs.dev, niri.
 # --disablerepo=fedora-cisco-openh264: codecs.fedoraproject.org (Cisco) из России отвечает 403.
 set -euxo pipefail

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Внутри виртуалки: прогон Skindancer через IPC со снимками, замерами и логами.
 #   test-plugin.sh <метка>   результат в ~/oboi-test/<метка>/
 set -u
@@ -20,12 +20,24 @@ run dms version; run qs --version; run niri --version; run python3 --version
 run python3 -c "import PIL; print('Pillow', PIL.__version__)"; run uname -r
 run sh -c "glxinfo -B 2>/dev/null | grep -E 'renderer|version string'"
 run sh -c "dms plugins list 2>&1 | grep -i skindancer"
-ls ~/.config/dms/plugins/skindancer/bin/oboi-helper >/dev/null 2>&1 && log "помощники: собранный oboi-helper" || log "помощники: python3"
+# какой помощник реально работает: метка helper-ok появляется, только если бинарник здесь запустился
+H=~/.config/dms/plugins/skindancer/bin/oboi-helper
+if [ -x "$H" ]; then
+    ~/.config/dms/plugins/skindancer/bin/oboi-index --help >/dev/null 2>&1
+    ls ~/.cache/oboi/helper-ok-* >/dev/null 2>&1 && log "помощники: собранный oboi-helper" \
+        || log "помощники: бинарник лежит, но не запускается, работает python3"
+else
+    log "помощники: python3"
+fi
 
 log "индекс с нуля"
 rm -rf /tmp/oboi-idx
-/usr/bin/time -f "индекс: %e с, %M КБ" ~/.config/dms/plugins/skindancer/bin/oboi-index --quiet --dir ~/Pictures/Wallpapers \
-    --out /tmp/oboi-idx/index.json --thumbs /tmp/oboi-idx/thumbs 2>&1 | tail -3 | tee -a "$OUT/steps.log"
+t0=$(date +%s%N)
+~/.config/dms/plugins/skindancer/bin/oboi-index --quiet --dir ~/Pictures/Wallpapers \
+    --out /tmp/oboi-idx/index.json --thumbs /tmp/oboi-idx/thumbs >> "$OUT/steps.log" 2>&1 || { log "ИНДЕКС НЕ СОБРАН"; fail=1; }
+n=$(python3 -c "import json;print(len(json.load(open('/tmp/oboi-idx/index.json'))['items']))" 2>/dev/null || echo 0)
+log "индекс: $(( ($(date +%s%N) - t0) / 1000000 )) мс, картинок $n"
+[ "$n" -gt 0 ] || { log "ИНДЕКС ПУСТОЙ"; fail=1; }
 
 WALL=$(ls ~/Pictures/Wallpapers/* | head -1)
 run dms ipc call wallpaper set "$WALL"; sleep 3; shot 00-desktop

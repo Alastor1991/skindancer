@@ -43,6 +43,7 @@ FAILED = []      # папки, которые не удалось прочита
 
 
 def scan(dirs):
+    seen = set()
     for d in dirs:
         d = os.path.expanduser(d)
         if not os.path.isdir(d):
@@ -52,6 +53,10 @@ def scan(dirs):
             subdirs[:] = [s for s in subdirs if not s.startswith(".") and s.lower() not in SKIP_DIRS]
             for f in sorted(files):
                 if not skip(f):
+                    real = os.path.realpath(os.path.join(root, f))
+                    if real in seen:
+                        continue
+                    seen.add(real)
                     yield root, f
 
 
@@ -195,16 +200,17 @@ def set_favorite(path, mode):
             except (OSError, ValueError) as e:
                 # описание не читается (например, Syncthing как раз его меняет): не затираем его звездой
                 sys.exit(f"oboi-index: не читается {sp} ({e}), избранное не изменено")
-        # действующее значение: запись в состоянии (если папка когда-то была только для чтения) важнее сайдкара
-        sf = state_favs()
-        cur = sf[path] if isinstance(sf.get(path), bool) else bool(m.get("favorite"))
-        m["favorite"] = (not cur) if mode == "toggle" else (mode == "on")
-        if stamp(sp) == before:
-            write_json(sp, m)
-            if path in sf:                 # папка снова пишется: прежняя запись в состоянии больше не нужна
-                with state_lock():
-                    sf = state_favs(); sf.pop(path, None); write_json(STATE_FAVS, sf)
-            return m["favorite"]
+        # действующее значение: запись в состоянии (если папка когда-то была только для чтения) важнее сайдкара;
+        # читаем, пишем и снимаем её под одной блокировкой, чтобы не стереть свежую правку другого индексатора
+        with state_lock():
+            sf = state_favs()
+            cur = sf[path] if isinstance(sf.get(path), bool) else bool(m.get("favorite"))
+            m["favorite"] = (not cur) if mode == "toggle" else (mode == "on")
+            if stamp(sp) == before:
+                write_json(sp, m)
+                if path in sf:             # папка снова пишется: прежняя запись в состоянии больше не нужна
+                    sf.pop(path, None); write_json(STATE_FAVS, sf)
+                return m["favorite"]
         time.sleep(0.2)
     sys.exit(f"oboi-index: {sp} всё время меняется, избранное не изменено")
 
@@ -314,13 +320,22 @@ def main():
     found = {r: any(e["path"].startswith(r) for e in items) for r in roots}
     had = {r: any(p.startswith(r) for p in old) for r in roots}
     gone = [r for r in roots if not os.path.isdir(r) or (had[r] and not found[r])] + FAILED
-    if gone:
-        seen = {e["path"] for e in items}
-        items += [dict(e, missing=True) for p, e in old.items() if p not in seen and any(p.startswith(g) for g in gone)]
+
+    def vanished_dir(p):
+        # папка картинки пропала или пуста: скорее отвалился диск, чем удалили всё по одному файлу
+        d = os.path.dirname(p)
+        try:
+            return not os.listdir(d)
+        except OSError:
+            return True
+    seen = {e["path"] for e in items}
+    items += [dict(e, missing=True) for p, e in old.items()
+              if p not in seen and (any(p.startswith(g) for g in gone) or vanished_dir(p))]
 
     live = {os.path.basename(e["thumb"]) for e in items}
-    for f in os.listdir(a.thumbs):          # убрать миниатюры удалённых картинок, только свои (20 hex + .jpg)
-        if re.fullmatch(r"[0-9a-f]{20}\.jpg", f) and f not in live:
+    ours = {os.path.basename(e.get("thumb", "")) for e in old.values()}
+    for f in os.listdir(a.thumbs):          # убрать миниатюры удалённых картинок: только те, что были в прежнем индексе
+        if f in ours and f not in live and re.fullmatch(r"[0-9a-f]{20}\.jpg", f):
             try: os.remove(os.path.join(a.thumbs, f))
             except OSError: pass
 
