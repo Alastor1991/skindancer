@@ -10,6 +10,8 @@ OUT=~/oboi-test/${1:-comp}; rm -rf "$OUT"; mkdir -p "$OUT"
 export XDG_RUNTIME_DIR=/run/user/$(id -u)
 export WAYLAND_DISPLAY=$(ls "$XDG_RUNTIME_DIR" | grep -m1 -E '^wayland-[0-9]+$')
 export YDOTOOL_SOCKET=/tmp/.ydotool_socket
+# демон ydotoold (uinput) нужен мыши; в Arch у пакета нет системной службы
+pgrep -x ydotoold >/dev/null || { sudo ydotoold --socket-path="$YDOTOOL_SOCKET" --socket-own="$(id -u):$(id -g)" >/dev/null 2>&1 & sleep 2; }
 log() { echo "== $*" | tee -a "$OUT/steps.log"; }
 shot() { grim "$OUT/$1.png" 2>>"$OUT/steps.log" || { log "нет снимка $1"; fail=1; }; }
 ipc() { timeout 10 dms ipc call skindancer "$@" >> "$OUT/steps.log" 2>&1 || { log "ipc $* вернул $?"; fail=1; }; }

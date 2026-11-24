@@ -208,6 +208,8 @@ def set_favorite(path, mode):
             try:
                 with open(sp, encoding="utf-8") as fh:
                     m = json.load(fh)
+                if not isinstance(m, dict):    # чужой файл не того вида: не трогаем его звездой
+                    sys.exit(f"oboi-index: {sp} не объект JSON, избранное не изменено")
             except (OSError, ValueError) as e:
                 # описание не читается (например, Syncthing как раз его меняет): не затираем его звездой
                 sys.exit(f"oboi-index: не читается {sp} ({e}), избранное не изменено")

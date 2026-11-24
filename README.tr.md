@@ -17,6 +17,13 @@
 <a href="README.zh_CN.md">简体中文</a>
 </p>
 
+<p align="center">
+<a href="https://github.com/Alastor1991/skindancer/releases/latest"><img src="https://img.shields.io/github/v/release/Alastor1991/skindancer?label=release" alt="release"></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0--or--later-blue" alt="GPL-3.0-or-later"></a>
+<a href="https://github.com/duxlabs-dev/dux-shell"><img src="https://img.shields.io/badge/DMS-2.1.2%2B-8a6cd6" alt="DMS 2.1.2+"></a>
+<a href="docs/README.md"><img src="https://img.shields.io/badge/docs-English-informational" alt="technical docs (English)"></a>
+</p>
+
 # Skindancer
 
 [DankMaterialShell](https://github.com/duxlabs-dev/dux-shell) (DMS) için Salvador Dalí ruhunda bir duvar kağıdı seçici. Tam ekran açılan bir katman olarak gelir ve içinde arama, favoriler, üç görünüm, shader geçişleri ve yerleşik wallhaven.cc araması bulunur. Bir DMS eklentisidir ve niri, Hyprland ile DMS'in desteklediği diğer kompozitörlerde kutudan çıktığı gibi çalışır.
@@ -87,7 +94,7 @@ programs.dms-shell = {
   plugins.skindancer = {
     enable = true;
     src = pkgs.fetchFromGitHub {
-      owner = "Alastor1991"; repo = "skindancer"; rev = "v0.1.1";
+      owner = "Alastor1991"; repo = "skindancer"; rev = "v0.1.2";
       hash = "";   # nix doğru hash'i ilk derlemede yazdırır
     };
   };

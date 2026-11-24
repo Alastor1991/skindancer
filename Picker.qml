@@ -273,6 +273,7 @@ PanelWindow {
     onOpenChanged: {
         if (open) {
             source = "local"; query = ""; search.text = ""; morph.reset(); fx.reset(); settingsOpen = false;
+            hueFilter = -2; favOnly = false;     // фильтры живут, пока лента открыта
             if (shell.startView !== "last") setView(shell.startView);
             openPath = shell.current; userMoved = false; lastPath = ""; preSearchPath = "";
             openGuard.restart(); openWait.restart();     // до restoreOpen: пока страж идёт, выбор не считается законченным

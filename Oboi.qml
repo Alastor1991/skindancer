@@ -374,20 +374,25 @@ Scope {
         function close(): void { root.menuScreen = null; picker.close(); }     // во время перехода не закрываем
         function next(): void { picker.stepBy(1); }
         function prev(): void { picker.stepBy(-1); }
-        function apply(): void { picker.apply(); }
+        function apply(): void { if (root.pickerScreen) picker.apply(); }      // при закрытой ленте ставить нечего
         function find(q: string): void { picker.setQuery(q); }
         function favorite(): void { picker.toggleFavorite(); }
         function favorites(): void { picker.favOnly = !picker.favOnly; }
         function hue(n: int): void { picker.hueFilter = n; }
         function transition(kind: string): void { picker.forcedKind = kind; }
         function view(name: string): void { picker.setView(name); }
-        function source(name: string): void { if (root.pickerScreen) picker.source = name; }   // в сеть только при открытой ленте
+        function source(name: string): void { if (root.pickerScreen && (name !== "wallhaven" || root.whEnabled)) picker.source = name; }   // в сеть только при открытой ленте
         function save(): void { picker.whSave(); }
         function help(): void { root.helpScreen = root.focusedScreen(); }
         function closeHelp(): void { root.helpScreen = null; }
         function cell(dx: int, dy: int): void { picker.moveCell(dx, dy); }
         function settings(): void { picker.settingsOpen = !picker.settingsOpen; }
-        function set(key: string, value: string): void { root.setCfg(key, value === "true" ? true : value === "false" ? false : value); }
+        // true/false становятся логическими значениями, текст в [ ] или { } разбирается как JSON (dirs, wh)
+        function set(key: string, value: string): void {
+            let v = value === "true" ? true : value === "false" ? false : value;
+            if (/^\s*[\[{]/.test(value)) { try { v = JSON.parse(value); } catch (e) { return; } }
+            root.setCfg(key, v);
+        }
     }
 
     // ── Ловушка правого клика: слой фона под окнами, над обоями DMS ──

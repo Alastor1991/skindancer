@@ -17,6 +17,13 @@
 <a href="README.zh_CN.md">简体中文</a>
 </p>
 
+<p align="center">
+<a href="https://github.com/Alastor1991/skindancer/releases/latest"><img src="https://img.shields.io/github/v/release/Alastor1991/skindancer?label=release" alt="release"></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0--or--later-blue" alt="GPL-3.0-or-later"></a>
+<a href="https://github.com/duxlabs-dev/dux-shell"><img src="https://img.shields.io/badge/DMS-2.1.2%2B-8a6cd6" alt="DMS 2.1.2+"></a>
+<a href="docs/README.md"><img src="https://img.shields.io/badge/docs-English-informational" alt="technical docs (English)"></a>
+</p>
+
 # Skindancer
 
 [DankMaterialShell](https://github.com/duxlabs-dev/dux-shell)(DMS)용 배경화면 선택기로, 살바도르 달리의 분위기를 담았습니다. 화면 전체를 덮는 오버레이에 검색, 즐겨찾기, 세 가지 보기 방식, 셰이더 전환 효과, 그리고 wallhaven.cc 검색이 들어 있습니다. DMS 플러그인이라서 niri, Hyprland를 비롯해 DMS가 지원하는 컴포지터에서 설치만 하면 바로 동작합니다.
@@ -87,7 +94,7 @@ programs.dms-shell = {
   plugins.skindancer = {
     enable = true;
     src = pkgs.fetchFromGitHub {
-      owner = "Alastor1991"; repo = "skindancer"; rev = "v0.1.1";
+      owner = "Alastor1991"; repo = "skindancer"; rev = "v0.1.2";
       hash = "";   # 첫 빌드 때 nix가 올바른 해시를 알려 줍니다
     };
   };

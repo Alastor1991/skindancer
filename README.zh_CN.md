@@ -17,6 +17,13 @@
 <b>简体中文</b>
 </p>
 
+<p align="center">
+<a href="https://github.com/Alastor1991/skindancer/releases/latest"><img src="https://img.shields.io/github/v/release/Alastor1991/skindancer?label=release" alt="release"></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0--or--later-blue" alt="GPL-3.0-or-later"></a>
+<a href="https://github.com/duxlabs-dev/dux-shell"><img src="https://img.shields.io/badge/DMS-2.1.2%2B-8a6cd6" alt="DMS 2.1.2+"></a>
+<a href="docs/README.md"><img src="https://img.shields.io/badge/docs-English-informational" alt="technical docs (English)"></a>
+</p>
+
 # Skindancer
 
 一个为 [DankMaterialShell](https://github.com/duxlabs-dev/dux-shell)（DMS）打造的壁纸选择器，颇有萨尔瓦多·达利的风格：全屏浮层，内置搜索、收藏、三种视图和着色器过渡动画，还能直接搜索 wallhaven.cc。它是一个 DMS 插件，在 niri、Hyprland 以及 DMS 支持的其他合成器上开箱即用。
@@ -87,7 +94,7 @@ programs.dms-shell = {
   plugins.skindancer = {
     enable = true;
     src = pkgs.fetchFromGitHub {
-      owner = "Alastor1991"; repo = "skindancer"; rev = "v0.1.1";
+      owner = "Alastor1991"; repo = "skindancer"; rev = "v0.1.2";
       hash = "";   # 第一次构建时 nix 会打印出正确的哈希
     };
   };

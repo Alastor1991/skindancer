@@ -16,3 +16,6 @@ done
 sudo apt-get update -q
 sudo apt-get install -yq -t trixie-backports quickshell
 sudo apt-get install -yq dms niri xwayland-satellite foot grim git python3-pil fonts-noto-core mesa-utils
+# облачное ядро без virtio-gpu убираем, иначе grub загрузит его, и /dev/dri не будет
+pk=$(dpkg -l | awk '/^ii  linux-image-.*cloud/{print $2}')
+[ -n "$pk" ] && sudo apt-get purge -yq $pk && sudo update-grub

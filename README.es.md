@@ -17,6 +17,13 @@
 <a href="README.zh_CN.md">简体中文</a>
 </p>
 
+<p align="center">
+<a href="https://github.com/Alastor1991/skindancer/releases/latest"><img src="https://img.shields.io/github/v/release/Alastor1991/skindancer?label=release" alt="release"></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0--or--later-blue" alt="GPL-3.0-or-later"></a>
+<a href="https://github.com/duxlabs-dev/dux-shell"><img src="https://img.shields.io/badge/DMS-2.1.2%2B-8a6cd6" alt="DMS 2.1.2+"></a>
+<a href="docs/README.md"><img src="https://img.shields.io/badge/docs-English-informational" alt="technical docs (English)"></a>
+</p>
+
 # Skindancer
 
 Un selector de fondos de pantalla para [DankMaterialShell](https://github.com/duxlabs-dev/dux-shell) (DMS) con el espíritu de Salvador Dalí: una superposición a pantalla completa con búsqueda, favoritos, tres vistas, transiciones con shaders y búsqueda en wallhaven.cc integrada. Es un plugin de DMS y funciona sin configurar nada en niri, Hyprland y los demás compositores compatibles con DMS.
@@ -87,7 +94,7 @@ programs.dms-shell = {
   plugins.skindancer = {
     enable = true;
     src = pkgs.fetchFromGitHub {
-      owner = "Alastor1991"; repo = "skindancer"; rev = "v0.1.1";
+      owner = "Alastor1991"; repo = "skindancer"; rev = "v0.1.2";
       hash = "";   # nix muestra el hash correcto en la primera compilación
     };
   };

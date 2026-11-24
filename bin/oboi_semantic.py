@@ -17,8 +17,8 @@ HOME = os.path.expanduser("~")
 CACHE = os.environ.get("OBOI_CACHE") or os.path.join(os.environ.get("XDG_CACHE_HOME") or os.path.join(HOME, ".cache"), "oboi")
 INDEX = os.path.join(CACHE, "index.json")
 VECS = os.path.join(CACHE, "semantic.npz")
-MODEL = os.environ.get("OBOI_MODEL", os.path.join(
-    os.environ.get("XDG_DATA_HOME") or os.path.join(HOME, ".local", "share"), "oboi", "models", "siglip2"))
+MODEL = os.environ.get("OBOI_MODEL") or os.path.join(
+    os.environ.get("XDG_DATA_HOME") or os.path.join(HOME, ".local", "share"), "oboi", "models", "siglip2")
 MAX_LEN = 64          # SigLIP2 учили на текстах, дополненных до 64 токенов
 SIZE = 224
 

@@ -3,7 +3,7 @@
     "id": "skindancer",
     "name": "Skindancer",
     "description": "Wallpaper picker with search, favorites, three views, shader transitions and wallhaven.cc search",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "author": "Alastor1991",
     "icon": "wallpaper",
     "type": "daemon",
