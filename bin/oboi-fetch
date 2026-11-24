@@ -1,7 +1,16 @@
 #!/bin/sh
-# Запускает oboi_fetch.py. Если рядом лежит собранный oboi-helper (один файл со всеми
-# библиотеками, tools/build-helper.sh), берётся он, и системный Python не нужен.
+# Запускает oboi_fetch.py. Если рядом лежит собранный oboi-helper (один файл со всеми библиотеками,
+# tools/build-helper.sh) и он здесь запускается, берётся он; иначе системный python3.
 p=$(readlink -f "$0") && [ -n "$p" ] || { echo "oboi-fetch: не найден путь к себе (нужен readlink -f)" >&2; exit 1; }
 d=$(dirname "$p")
-[ -x "$d/oboi-helper" ] && exec "$d/oboi-helper" fetch "$@"
+h=$d/oboi-helper
+if [ -f "$h" ] && [ -x "$h" ]; then
+    . "$d/helper-ready.sh"
+    if helper_ready "$h"; then
+        "$h" fetch "$@"
+        rc=$?
+        # 126/127: файл не запускается (чужая архитектура, NixOS без nix-ld) – тогда Python
+        [ $rc -ne 126 ] && [ $rc -ne 127 ] && exit $rc
+    fi
+fi
 exec python3 "$d/oboi_fetch.py" "$@"

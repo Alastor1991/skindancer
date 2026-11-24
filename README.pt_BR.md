@@ -47,7 +47,7 @@ Um seletor de wallpapers para o [DankMaterialShell](https://github.com/duxlabs-d
 
 <p align="center"><img src="https://github.com/Alastor1991/skindancer/releases/download/media/settings.webp" width="560" alt="Configurações: listas suspensas que se desenrolam como um lençol macio, com gotas"></p>
 
-**Configurações dentro do próprio seletor.** Cada opção é uma lista suspensa que se desenrola como um lençol macio e pinga na borda. A interface fala 13 idiomas e segue o idioma do DMS.
+**Configurações dentro do próprio seletor.** Cada opção é uma lista suspensa que se desenrola como um lençol macio e pinga na borda. A interface fala 14 idiomas e segue o idioma do DMS.
 
 ## Instalação
 

@@ -71,15 +71,23 @@ Scope {
                                                 : picturesDir
     // путь → адрес для Image.source: каждый кусок кодируется, иначе #, ? и % в имени ломают картинку
     function fileUrl(p) { return p ? "file://" + p.split("/").map(encodeURIComponent).join("/") : ""; }
-    readonly property var dirs: (cfg.dirs && cfg.dirs.length ? cfg.dirs : [defaultDir]).map(d => d.replace(/^~/, home))
+    // без настроенной папки: папка текущих обоев и <Картинки>/Wallpapers (туда же сохраняются картинки
+    // с wallhaven, если в папку текущих обоев писать нельзя: /usr/share/backgrounds, /nix/store)
+    readonly property var dirs: (cfg.dirs && cfg.dirs.length ? cfg.dirs
+                                 : [defaultDir, picturesDir + "/Wallpapers"].filter((d, i, a) => a.indexOf(d) === i))
+                                .map(d => d.replace(/^~/, home))
     readonly property string saveDir: dirs[0]
     function dirArgs() { let a = []; dirs.forEach(d => { a.push("--dir"); a.push(d); }); return a; }
     readonly property string fetcher: shellDir + "/bin/oboi-fetch"
     readonly property string semantic: shellDir + "/bin/oboi-semantic"
     // ключ wallhaven помощнику передаём переменной окружения: в плагине config.json нет
-    readonly property var fetchEnv: cfg.wallhaven_apikey ? ({ OBOI_WALLHAVEN_KEY: cfg.wallhaven_apikey }) : ({})
+    // в плагине переменная есть всегда, даже пустая: тогда ключ из config.json своего запуска не подмешается
+    readonly property var fetchEnv: hosted || cfg.wallhaven_apikey ? ({ OBOI_WALLHAVEN_KEY: cfg.wallhaven_apikey || "" }) : ({})
     // ловушка правого клика: у самостоятельного запуска всегда, в плагине по настройке (DMS тогда выключает своё меню)
-    readonly property bool catcherOn: hosted ? cfg.catcher === true : true
+    // На labwc, Sway, Scroll и KDE клики по пустому столу заняты композитором (DMS там тоже не ловит):
+    // у самостоятельного запуска узнаём это по XDG_CURRENT_DESKTOP, в плагине решает OboiDaemon.
+    readonly property bool desktopTaken: /labwc|sway|scroll|kde/i.test(Quickshell.env("XDG_CURRENT_DESKTOP") || "")
+    readonly property bool catcherOn: hosted ? cfg.catcher === true : !desktopTaken
     property bool cfgBroken: false      // config.json есть, но не читается: не пишем поверх, иначе потеряем dirs и ключ
     function setCfg(key, value) {
         if (hosted) { host.save(key, value); return; }
@@ -89,12 +97,14 @@ Scope {
     }
     function setWh(key, value) { const w = Object.assign({}, wh); w[key] = value; setCfg("wh", w); }
     readonly property bool indexing: reindex.running   // при первом открытии список ещё пуст, это не «ничего»
-    function reindexNow() { if (!reindex.running) reindex.running = true; }
+    // запрос, пришедший во время обхода, не теряется: обход повторится, когда закончится текущий
+    property bool reindexAgain: false
+    function reindexNow() { if (reindex.running) reindexAgain = true; else reindex.running = true; }
 
     // ── Переводы: формат DMS, translations/<язык>.json, ключ английский, внутри {контекст: перевод} ──
     // Язык: "language" в config.json или из LC_ALL / LC_MESSAGES / LANG; нет файла, значит английский.
     readonly property var langFiles: ["ru", "de", "es", "fr", "it", "ja", "ko", "nl", "pl", "pt_BR", "tr", "uk", "zh_CN"]
-    readonly property string shellDir: Qt.resolvedUrl(".").toString().replace(/^file:\/\//, "").replace(/\/$/, "")
+    readonly property string shellDir: decodeURIComponent(Qt.resolvedUrl(".").toString().replace(/^file:\/\//, "").replace(/\/$/, ""))
     readonly property string lang: {
         const want = cfg.language && cfg.language !== "auto" ? cfg.language
                    : (Quickshell.env("LC_ALL") || Quickshell.env("LC_MESSAGES") || Quickshell.env("LANG") || "en").split(".")[0];
@@ -133,14 +143,19 @@ Scope {
             try { root.fileCfg = JSON.parse(text()) || {}; root.cfgBroken = false; }
             catch (e) { root.fileCfg = {}; root.cfgBroken = text().trim() !== ""; }
         }
-        onLoadFailed: { root.fileCfg = {}; root.cfgBroken = false; }
+        // файла нет: настройки с нуля; другая ошибка чтения: прежние настройки не трогаем и не пишем поверх
+        onLoadFailed: error => {
+            if (error === FileViewError.FileNotFound) { root.fileCfg = {}; root.cfgBroken = false; }
+            else root.cfgBroken = true;
+        }
     }
 
     property var favs: ({})           // путь → true; живёт отдельно, чтобы звезда не перестраивала ленту
     property string itemsSig: ""
+    property bool indexLoaded: false     // индекс прочитан хотя бы раз (пустой список после фильтра тоже считается)
 
     readonly property bool tallTarget: !!targetScreen && targetScreen.height > targetScreen.width
-    onTallTargetChanged: if (itemsSig !== "") loadIndex()
+    onTallTargetChanged: if (indexLoaded) loadIndex()
     function loadIndex() {
         let vis = [];
         try {
@@ -150,20 +165,31 @@ Scope {
         } catch (e) {
             vis = [];
         }
+        indexLoaded = true;
         const f = {};
         vis.forEach(e => { if (e.favorite) f[e.path] = true; });
         favs = f;
         // список заменяем, только если поменялся состав картинок: иначе лента сбросила бы выбор
-        const sig = vis.map(e => [e.path, e.key, e.title, e.description, (e.keywords || []).join(","), (e.tags || []).join(",")].join("|")).join("\n");
+        const sig = vis.map(e => [e.path, e.key, e.title, e.description, e.style, e.search].join("|")).join("\n");
         if (sig !== itemsSig) { itemsSig = sig; items = vis; }
     }
 
+    // Звёзды пишутся по одной и по порядку: быстрые щелчки отдельными процессами могли закончиться наоборот
+    property var favQueue: []
     function toggleFavorite(path) {
         const f = Object.assign({}, favs);
         if (f[path]) delete f[path]; else f[path] = true;
         favs = f;
-        Quickshell.execDetached([indexer, "--quiet", "--favorite", path, f[path] ? "on" : "off"].concat(cacheArgs(), dirArgs()));
+        favQueue = favQueue.concat([[path, f[path] ? "on" : "off"]]);
+        if (!favProc.running) favNext();
     }
+    function favNext() {
+        if (!favQueue.length) return;
+        const j = favQueue[0]; favQueue = favQueue.slice(1);
+        favProc.command = [indexer, "--quiet", "--favorite", j[0], j[1]].concat(cacheArgs(), dirArgs());
+        favProc.running = true;
+    }
+    Process { id: favProc; onExited: root.favNext() }
 
     // ── Смысловой поиск: тёплый помощник oboi-semantic serve, ответы строками JSON ──
     property bool semReady: false
@@ -207,9 +233,13 @@ Scope {
     // векторы новых картинок считаются в фоне после индекса, с пониженным приоритетом
     Process { id: semIndex; command: [root.semantic, "index", "--quiet"]; environment: ({ OBOI_CACHE: root.cacheDir }) }
 
-    function setWallpaper(path) {
-        if (hosted) host.setWallpaper(path, targetName);
-        else Quickshell.execDetached(["dms", "ipc", "call", "wallpaper", "set", path]);
+    // screenName: монитор, выбранный в начале действия (переход идёт секунду-другую, экран мог смениться)
+    function setWallpaper(path, screenName) {
+        const scr = screenName || targetName;
+        if (hosted) host.setWallpaper(path, scr);
+        // сам по себе: при обоях по мониторам DMS принимает только setFor
+        else Quickshell.execDetached(["sh", "-c", 'case "$(dms ipc call wallpaper set "$1")" in *Per-monitor*) dms ipc call wallpaper setFor "$2" "$1";; esac',
+                                      "sh", path, scr]);
         current = path;
     }
 
@@ -225,19 +255,25 @@ Scope {
 
     function openPicker(screen) {
         menuScreen = null;
+        // сначала экран: от него зависят текущие обои и папка, которую обходит индекс
+        pickerScreen = screen || Quickshell.screens[0];
         reindexNow();
         if (hosted) current = hostCurrent; else currentProc.running = true;
-        pickerScreen = screen || Quickshell.screens[0];
     }
 
     function randomWallpaper(screen) {
-        if (items.length === 0) { reindexNow(); return; }
+        // экран ставим до проверки списка: на вертикальном мониторе список другой
         randomScreen = screen || null;
-        let pick = items[Math.floor(Math.random() * items.length)];
-        if (pick.path === current && items.length > 1) pick = items[(items.indexOf(pick) + 1) % items.length];
-        setWallpaper(pick.path);
-        randomScreen = null;
+        try {
+            if (items.length === 0) { reindexNow(); return; }
+            let pick = items[Math.floor(Math.random() * items.length)];
+            if (pick.path === current && items.length > 1) pick = items[(items.indexOf(pick) + 1) % items.length];
+            setWallpaper(pick.path);
+        } finally {
+            randomScreen = null;
+        }
     }
+    function screenByName(name) { return Quickshell.screens.find(s => s.name === name) || null; }
 
     FileView {
         id: indexFile
@@ -251,14 +287,22 @@ Scope {
     Process {
         id: reindex
         command: [root.indexer, "--quiet"].concat(root.cacheArgs(), root.dirArgs())
-        onExited: { indexFile.reload(); if (root.semEnabled && !semIndex.running) semIndex.running = true; }
+        onExited: {
+            indexFile.reload();
+            if (root.reindexAgain) { root.reindexAgain = false; running = true; return; }
+            if (root.semEnabled && !semIndex.running) semIndex.running = true;
+            // смысловой помощник мог упасть, пока индекса ещё не было: поднимаем снова
+            if (root.semHold && root.semEnabled && !sem.running) sem.running = true;
+        }
     }
 
     Process {
         id: currentProc
-        command: ["dms", "ipc", "call", "wallpaper", "get"]
+        // при обоях по мониторам DMS отвечает на get ошибкой: тогда getFor для экрана ленты
+        command: ["sh", "-c", 'r=$(dms ipc call wallpaper get); case "$r" in ERROR*) dms ipc call wallpaper getFor "$1";; *) echo "$r";; esac',
+                  "sh", root.targetName]
         stdout: StdioCollector {
-            onStreamFinished: root.current = this.text.trim()
+            onStreamFinished: { const t = this.text.trim(); if (t.startsWith("/")) root.current = t; }
         }
     }
 
@@ -266,9 +310,12 @@ Scope {
         // в DMS: dms ipc call skindancer …; сам по себе (qs -c oboi): qs -c oboi ipc call oboi …
         target: root.hosted ? "skindancer" : "oboi"
         function picker(): void { root.openPicker(root.focusedScreen()); }
+        // явный монитор: на композиторах, где DMS не знает фокус (labwc, KWin), иначе берётся первый
+        function pickerOn(output: string): void { root.openPicker(root.screenByName(output) || root.focusedScreen()); }
         function random(): void { root.randomWallpaper(root.focusedScreen()); }
-        function menuAt(x: real, y: real): void { root.openMenu(Quickshell.screens[0], x, y); }
-        function close(): void { root.menuScreen = null; root.pickerScreen = null; }
+        function randomOn(output: string): void { root.randomWallpaper(root.screenByName(output) || root.focusedScreen()); }
+        function menuAt(x: real, y: real): void { root.openMenu(root.focusedScreen(), x, y); }
+        function close(): void { root.menuScreen = null; picker.close(); }     // во время перехода не закрываем
         function next(): void { picker.stepBy(1); }
         function prev(): void { picker.stepBy(-1); }
         function apply(): void { picker.apply(); }
@@ -278,7 +325,7 @@ Scope {
         function hue(n: int): void { picker.hueFilter = n; }
         function transition(kind: string): void { picker.forcedKind = kind; }
         function view(name: string): void { picker.setView(name); }
-        function source(name: string): void { picker.source = name; }
+        function source(name: string): void { if (root.pickerScreen) picker.source = name; }   // в сеть только при открытой ленте
         function save(): void { picker.whSave(); }
         function help(): void { root.helpScreen = root.focusedScreen(); }
         function closeHelp(): void { root.helpScreen = null; }

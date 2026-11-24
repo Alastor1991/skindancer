@@ -9,7 +9,9 @@ PanelWindow {
     required property var shell
     readonly property bool open: shell.helpScreen !== null
     visible: open || card.opacity > 0
-    screen: shell.helpScreen || Quickshell.screens[0]
+    property var lastScreen: null       // пока справка гаснет, helpScreen уже null: без вспышки на первом мониторе
+    Connections { target: help.shell; function onHelpScreenChanged() { if (help.shell.helpScreen) help.lastScreen = help.shell.helpScreen; } }
+    screen: shell.helpScreen || lastScreen || Quickshell.screens[0]
     color: "transparent"
     WlrLayershell.namespace: "oboi:help"
     WlrLayershell.layer: WlrLayer.Overlay

@@ -9,19 +9,19 @@ DIR/.oboi/<имя файла>.json, делает миниатюры в ~/.cache/
 не попадают. Описания лежат рядом с картинками, по файлу на картинку, поэтому
 две машины не пишут один и тот же файл.
 """
-import argparse, fcntl, hashlib, json, os, sys, tempfile, time
+import argparse, fcntl, hashlib, json, os, re, sys, tempfile, time
 
 HOME = os.path.expanduser("~")
-CACHE = os.environ.get("OBOI_CACHE") or os.path.join(os.environ.get("XDG_CACHE_HOME", os.path.join(HOME, ".cache")), "oboi")
+CACHE = os.environ.get("OBOI_CACHE") or os.path.join(os.environ.get("XDG_CACHE_HOME") or os.path.join(HOME, ".cache"), "oboi")
 # избранное для папок, куда нельзя писать (системные обои, NFS только для чтения, /nix/store)
-STATE_FAVS = os.path.join(os.environ.get("XDG_STATE_HOME", os.path.join(HOME, ".local", "state")), "oboi", "favorites.json")
+STATE_FAVS = os.path.join(os.environ.get("XDG_STATE_HOME") or os.path.join(HOME, ".local", "state"), "oboi", "favorites.json")
 EXTS = {".jpg", ".jpeg", ".png", ".webp", ".bmp", ".avif", ".jxl"}
 THUMB_H = 540
 
 
 def config_dirs():
     """Папки обоев из $XDG_CONFIG_HOME/oboi/config.json: {"dirs": ["~/Pictures/Wallpapers", ...]}"""
-    base = os.environ.get("XDG_CONFIG_HOME", os.path.join(HOME, ".config"))
+    base = os.environ.get("XDG_CONFIG_HOME") or os.path.join(HOME, ".config")
     try:
         with open(os.path.join(base, "oboi", "config.json"), encoding="utf-8") as fh:
             return [os.path.expanduser(d) for d in json.load(fh).get("dirs", [])]
@@ -39,12 +39,15 @@ def skip(name):
             or os.path.splitext(n)[1] not in EXTS)
 
 
+FAILED = []      # папки, которые не удалось прочитать при обходе: их прежние записи сохраняются
+
+
 def scan(dirs):
     for d in dirs:
         d = os.path.expanduser(d)
         if not os.path.isdir(d):
             continue
-        for root, subdirs, files in os.walk(d):
+        for root, subdirs, files in os.walk(d, onerror=lambda e: FAILED.append(os.path.join(e.filename or "", ""))):
             # .oboi, .stversions, .stfolder; папки снимков экрана обоями не считаются
             subdirs[:] = [s for s in subdirs if not s.startswith(".") and s.lower() not in SKIP_DIRS]
             for f in sorted(files):
@@ -60,6 +63,14 @@ def read_meta(root, name):
     except (OSError, ValueError):
         return {}
     return m if isinstance(m, dict) else {}       # чужой или битый сайдкар не должен ронять индекс
+
+
+def state_lock():
+    """Блокировка файла избранного: плагин и самостоятельный запуск правят его из разных индексаторов."""
+    os.makedirs(os.path.dirname(STATE_FAVS), exist_ok=True)
+    f = open(STATE_FAVS + ".lock", "w")
+    fcntl.flock(f, fcntl.LOCK_EX)
+    return f
 
 
 def state_favs():
@@ -88,7 +99,8 @@ def make_thumb(src, dst):
         w, h = im.size
         # Ориентация EXIF бывает у фото (JPEG, WebP). У PNG getexif() декодирует файл целиком
         # в поисках EXIF в конце, и индекс шёл вчетверо дольше, поэтому PNG не спрашиваем.
-        orient = im.getexif().get(0x0112, 1) if im.format in ("JPEG", "MPO", "WEBP", "TIFF") else 1
+        has_exif = im.format in ("JPEG", "MPO", "WEBP", "TIFF") or (im.format == "PNG" and "exif" in im.info)
+        orient = im.getexif().get(0x0112, 1) if has_exif else 1
         turned = orient in (5, 6, 7, 8)                      # снято боком
         if turned:
             w, h = h, w
@@ -164,12 +176,12 @@ def set_favorite(path, mode):
             raise PermissionError(md)
     except OSError:
         # в папку не записать: избранное хранится у пользователя, а не рядом с картинкой
-        f = state_favs()
-        cur = f.get(path, bool(read_meta(root, name).get("favorite")))
-        f[path] = (not cur) if mode == "toggle" else (mode == "on")
-        os.makedirs(os.path.dirname(STATE_FAVS), exist_ok=True)
-        write_json(STATE_FAVS, f)
-        return f[path]
+        with state_lock():
+            f = state_favs()
+            cur = f.get(path, bool(read_meta(root, name).get("favorite")))
+            f[path] = (not cur) if mode == "toggle" else (mode == "on")
+            write_json(STATE_FAVS, f)
+            return f[path]
     sp = os.path.join(md, name + ".json")
     # Syncthing может подменить описание, пока мы его правим: перед заменой сверяем, что файл тот же,
     # иначе перечитываем и правим заново, чтобы не вернуть старые теги поверх свежих
@@ -183,9 +195,15 @@ def set_favorite(path, mode):
             except (OSError, ValueError) as e:
                 # описание не читается (например, Syncthing как раз его меняет): не затираем его звездой
                 sys.exit(f"oboi-index: не читается {sp} ({e}), избранное не изменено")
-        m["favorite"] = (not m.get("favorite")) if mode == "toggle" else (mode == "on")
+        # действующее значение: запись в состоянии (если папка когда-то была только для чтения) важнее сайдкара
+        sf = state_favs()
+        cur = sf[path] if isinstance(sf.get(path), bool) else bool(m.get("favorite"))
+        m["favorite"] = (not cur) if mode == "toggle" else (mode == "on")
         if stamp(sp) == before:
             write_json(sp, m)
+            if path in sf:                 # папка снова пишется: прежняя запись в состоянии больше не нужна
+                with state_lock():
+                    sf = state_favs(); sf.pop(path, None); write_json(STATE_FAVS, sf)
             return m["favorite"]
         time.sleep(0.2)
     sys.exit(f"oboi-index: {sp} всё время меняется, избранное не изменено")
@@ -194,7 +212,7 @@ def set_favorite(path, mode):
 def pictures_dir():
     """Папка картинок по XDG (~/.config/user-dirs.dirs), иначе ~/Pictures."""
     try:
-        base = os.environ.get("XDG_CONFIG_HOME", os.path.join(HOME, ".config"))
+        base = os.environ.get("XDG_CONFIG_HOME") or os.path.join(HOME, ".config")
         for line in open(os.path.join(base, "user-dirs.dirs"), encoding="utf-8"):
             if line.startswith("XDG_PICTURES_DIR="):
                 return os.path.expandvars(line.split("=", 1)[1].strip().strip('"'))
@@ -245,6 +263,13 @@ def main():
     for root, name in scan(dirs):
         path = os.path.join(root, name)
         try:
+            path.encode("utf-8")
+        except UnicodeEncodeError:
+            bad += 1
+            if not a.quiet:
+                print(f"пропуск {path.encode('utf-8', 'replace').decode()}: имя файла не в UTF-8", file=sys.stderr)
+            continue
+        try:
             st = os.stat(path)
         except OSError:
             continue
@@ -283,14 +308,19 @@ def main():
 
     # Папка пропала (не смонтирован диск, отвалился NFS): её картинки и миниатюры не выбрасываем,
     # иначе после возвращения папки всё индексировалось бы заново и терялся бы прежний список.
-    gone = [os.path.join(os.path.expanduser(d), "") for d in dirs if not os.path.isdir(os.path.expanduser(d))]
+    # Опустевшая папка, в которой раньше были картинки, скорее всего не смонтирована (пустая точка
+    # монтирования): её тоже считаем пропавшей. Плюс подпапки, которые не прочитались при обходе.
+    roots = [os.path.join(os.path.expanduser(d), "") for d in dirs]
+    found = {r: any(e["path"].startswith(r) for e in items) for r in roots}
+    had = {r: any(p.startswith(r) for p in old) for r in roots}
+    gone = [r for r in roots if not os.path.isdir(r) or (had[r] and not found[r])] + FAILED
     if gone:
         seen = {e["path"] for e in items}
         items += [dict(e, missing=True) for p, e in old.items() if p not in seen and any(p.startswith(g) for g in gone)]
 
     live = {os.path.basename(e["thumb"]) for e in items}
-    for f in os.listdir(a.thumbs):          # убрать миниатюры удалённых картинок
-        if f.endswith(".jpg") and f not in live:
+    for f in os.listdir(a.thumbs):          # убрать миниатюры удалённых картинок, только свои (20 hex + .jpg)
+        if re.fullmatch(r"[0-9a-f]{20}\.jpg", f) and f not in live:
             try: os.remove(os.path.join(a.thumbs, f))
             except OSError: pass
 

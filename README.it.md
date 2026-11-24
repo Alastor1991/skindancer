@@ -47,7 +47,7 @@ Un selettore di sfondi per [DankMaterialShell](https://github.com/duxlabs-dev/du
 
 <p align="center"><img src="https://github.com/Alastor1991/skindancer/releases/download/media/settings.webp" width="560" alt="Impostazioni: menu a tendina che si srotolano come un telo morbido e gocciolano"></p>
 
-**Impostazioni dentro il selettore.** Ogni opzione è un menu a tendina che si srotola come un telo morbido e sgocciola dal bordo. L'interfaccia parla 13 lingue e segue la lingua di DMS.
+**Impostazioni dentro il selettore.** Ogni opzione è un menu a tendina che si srotola come un telo morbido e sgocciola dal bordo. L'interfaccia parla 14 lingue e segue la lingua di DMS.
 
 ## Installazione
 

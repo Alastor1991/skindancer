@@ -22,10 +22,11 @@ PURITY_NAMES = ("sfw", "sketchy", "nsfw")
 
 
 def apikey():
-    # плагин DMS передаёт ключ переменной окружения, самостоятельные «Обои» хранят его в config.json
-    if os.environ.get("OBOI_WALLHAVEN_KEY"):
+    # Плагин DMS всегда передаёт ключ переменной окружения, в том числе пустой: тогда запрос анонимный
+    # и ключ из config.json самостоятельного запуска не подмешивается. Без переменной читаем config.json.
+    if "OBOI_WALLHAVEN_KEY" in os.environ:
         return os.environ["OBOI_WALLHAVEN_KEY"]
-    p = os.path.join(os.environ.get("XDG_CONFIG_HOME", os.path.expanduser("~/.config")), "oboi", "config.json")
+    p = os.path.join(os.environ.get("XDG_CONFIG_HOME") or os.path.expanduser("~/.config"), "oboi", "config.json")
     try:
         return json.load(open(p, encoding="utf-8")).get("wallhaven_apikey", "")
     except (OSError, ValueError):
@@ -108,10 +109,15 @@ def get(url, binary=False, tries=4, headers=None):
             with _open(req, timeout=min(60 if binary else 15, left)) as r:
                 # читаем кусками: медленный сервер не растянет запрос дольше срока, огромный ответ не съест память
                 buf, limit = bytearray(), (200 if binary else 8) * 1024 * 1024
+                want = r.headers.get("Content-Length")
                 while chunk := r.read(65536):
                     buf += chunk
                     if len(buf) > limit or time.monotonic() > deadline:
                         raise TimeoutError("ответ слишком большой или слишком медленный")
+                if time.monotonic() > deadline:
+                    raise TimeoutError("ответ слишком медленный")
+                if want and want.isdigit() and len(buf) != int(want):     # оборванная передача
+                    raise TimeoutError(f"получено {len(buf)} байт из {want}")
                 data = bytes(buf)
             return data if binary else json.loads(data)
         except urllib.error.HTTPError as e:
@@ -168,8 +174,31 @@ def save_bytes(dest, data):
         raise
 
 
+def writable_dir(to):
+    """Папка обоев, если в неё можно писать (папка текущих обоев бывает /usr/share/backgrounds
+    или /nix/store), иначе <папка картинок>/Wallpapers."""
+    try:
+        os.makedirs(to, exist_ok=True)
+        if os.access(to, os.W_OK):
+            return to
+    except OSError:
+        pass
+    pics = os.path.join(os.path.expanduser("~"), "Pictures")
+    try:
+        base = os.environ.get("XDG_CONFIG_HOME") or os.path.expanduser("~/.config")
+        for line in open(os.path.join(base, "user-dirs.dirs"), encoding="utf-8"):
+            if line.startswith("XDG_PICTURES_DIR="):
+                pics = os.path.expandvars(line.split("=", 1)[1].strip().strip('"'))
+    except OSError:
+        pass
+    alt = os.path.join(pics, "Wallpapers")
+    os.makedirs(alt, exist_ok=True)
+    return alt
+
+
 def save_one(wid, to, style="", query="", purity="100", atleast="3840x2160"):
     """Скачать одну картинку с проверкой чистоты и разрешения, рядом положить описание."""
+    to = writable_dir(to)
     if not re.fullmatch(r"[A-Za-z0-9]{1,16}", wid or ""):      # id идёт в имя файла и в адрес
         raise RuntimeError(f"странный id wallhaven: {wid!r}")
     meta_dir = os.path.join(to, ".oboi")
@@ -266,6 +295,8 @@ def main():
             ext = os.path.splitext(info["path"])[1]
             name = f"wh-{w['id']}{ext}"
             dest = os.path.join(a.to, name)
+            if os.path.exists(dest):        # файл уже есть (мог быть отредактирован): не перезаписываем
+                continue
             save_bytes(dest, get(info["path"], binary=True))
             meta = {
                 "file": name, "source": info.get("url"), "wallhaven_id": w["id"],

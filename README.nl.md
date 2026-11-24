@@ -47,7 +47,7 @@ Een achtergrondkiezer voor [DankMaterialShell](https://github.com/duxlabs-dev/du
 
 <p align="center"><img src="https://github.com/Alastor1991/skindancer/releases/download/media/settings.webp" width="560" alt="Instellingen: keuzelijsten die uitrollen als een zacht laken met druppels"></p>
 
-**Instellingen in de kiezer zelf.** Elke optie is een keuzelijst die uitrolt als een zacht laken en aan de rand druppelt. De interface is beschikbaar in 13 talen en volgt de taal van DMS.
+**Instellingen in de kiezer zelf.** Elke optie is een keuzelijst die uitrolt als een zacht laken en aan de rand druppelt. De interface is beschikbaar in 14 talen en volgt de taal van DMS.
 
 ## Installatie
 

@@ -47,7 +47,7 @@ Un sélecteur de fonds d'écran pour [DankMaterialShell](https://github.com/duxl
 
 <p align="center"><img src="https://github.com/Alastor1991/skindancer/releases/download/media/settings.webp" width="560" alt="Réglages : des listes déroulantes qui se déplient comme une feuille souple avec des gouttes"></p>
 
-**Les réglages directement dans le sélecteur.** Chaque option est une liste déroulante qui se déplie comme une feuille souple et dégouline sur le bord. L'interface est disponible en 13 langues et suit la langue de DMS.
+**Les réglages directement dans le sélecteur.** Chaque option est une liste déroulante qui se déplie comme une feuille souple et dégouline sur le bord. L'interface est disponible en 14 langues et suit la langue de DMS.
 
 ## Installation
 

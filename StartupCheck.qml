@@ -6,8 +6,10 @@ import qs.Common
 
 QtObject {
     function check(done) {
-        Proc.runCommand("skindancer.depCheck", ["sh", "-c", '{ test -f "$1" && test -x "$1" && "$1" index --help >/dev/null 2>&1; } || python3 -c "import PIL"', "sh",
-                                             decodeURIComponent(Qt.resolvedUrl("bin/oboi-helper").toString().replace(/^file:\/\//, ""))], (stdout, exitCode) => {
+        Proc.runCommand("skindancer.depCheck", ["sh", "-c",
+                    // то же решение, что у обёрток bin/oboi-*: рабочий бинарник или python3 с Pillow
+                    '. "$1/helper-ready.sh"; { [ -x "$1/oboi-helper" ] && helper_ready "$1/oboi-helper"; } || python3 -c "import PIL"', "sh",
+                    decodeURIComponent(Qt.resolvedUrl("bin").toString().replace(/^file:\/\//, ""))], (stdout, exitCode) => {
             if (exitCode === 0) {
                 done(null);
                 return;

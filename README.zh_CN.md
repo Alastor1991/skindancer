@@ -47,7 +47,7 @@
 
 <p align="center"><img src="https://github.com/Alastor1991/skindancer/releases/download/media/settings.webp" width="560" alt="设置：下拉列表像一块边缘滴落的软布一样展开"></p>
 
-**设置就在选择器里。** 每个选项都是一个下拉列表，像一块柔软的布一样展开，边缘还会往下滴。界面支持 13 种语言，并跟随 DMS 的语言设置。
+**设置就在选择器里。** 每个选项都是一个下拉列表，像一块柔软的布一样展开，边缘还会往下滴。界面支持 14 种语言，并跟随 DMS 的语言设置。
 
 ## 安装
 

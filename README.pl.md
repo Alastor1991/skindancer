@@ -47,7 +47,7 @@ Selektor tapet dla [DankMaterialShell](https://github.com/duxlabs-dev/dux-shell)
 
 <p align="center"><img src="https://github.com/Alastor1991/skindancer/releases/download/media/settings.webp" width="560" alt="Ustawienia: listy rozwijane, które rozpościerają się jak miękka płachta i kapią z brzegu"></p>
 
-**Ustawienia w samym selektorze.** Każda opcja to lista rozwijana, która rozpościera się jak miękka płachta i kapie z brzegu. Interfejs jest dostępny w 13 językach i używa tego samego języka co DMS.
+**Ustawienia w samym selektorze.** Każda opcja to lista rozwijana, która rozpościera się jak miękka płachta i kapie z brzegu. Interfejs jest dostępny w 14 językach i używa tego samego języka co DMS.
 
 ## Instalacja
 

@@ -47,7 +47,7 @@
 
 <p align="center"><img src="https://github.com/Alastor1991/skindancer/releases/download/media/settings.webp" width="560" alt="Ayarlar: yumuşak bir örtü gibi açılıp kenarından damlayan açılır listeler"></p>
 
-**Ayarlar seçicinin içinde.** Her seçenek, yumuşak bir örtü gibi açılan ve kenarından damlayan bir açılır listedir. Arayüz 13 dili destekler ve DMS'in diline uyar.
+**Ayarlar seçicinin içinde.** Her seçenek, yumuşak bir örtü gibi açılan ve kenarından damlayan bir açılır listedir. Arayüz 14 dili destekler ve DMS'in diline uyar.
 
 ## Kurulum
 

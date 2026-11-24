@@ -14,11 +14,11 @@ vision_model_quantized.onnx и text_model_quantized.onnx в ~/.local/share/oboi/
 import json, os, sys, time
 
 HOME = os.path.expanduser("~")
-CACHE = os.environ.get("OBOI_CACHE") or os.path.join(os.environ.get("XDG_CACHE_HOME", os.path.join(HOME, ".cache")), "oboi")
+CACHE = os.environ.get("OBOI_CACHE") or os.path.join(os.environ.get("XDG_CACHE_HOME") or os.path.join(HOME, ".cache"), "oboi")
 INDEX = os.path.join(CACHE, "index.json")
 VECS = os.path.join(CACHE, "semantic.npz")
 MODEL = os.environ.get("OBOI_MODEL", os.path.join(
-    os.environ.get("XDG_DATA_HOME", os.path.join(HOME, ".local", "share")), "oboi", "models", "siglip2"))
+    os.environ.get("XDG_DATA_HOME") or os.path.join(HOME, ".local", "share"), "oboi", "models", "siglip2"))
 MAX_LEN = 64          # SigLIP2 учили на текстах, дополненных до 64 токенов
 SIZE = 224
 
@@ -80,12 +80,17 @@ def image_tensor(path):
     return a.transpose(2, 0, 1)[None]
 
 
-def index_items():
+def index_items(strict=True):
+    """Картинки индекса, кроме записей пропавших папок. Вертикальные тоже: на вертикальном мониторе
+    лента показывает их, и искать по смыслу их надо. strict=False: индекса ещё нет, это не ошибка
+    (тёплый помощник стартует вместе с первым индексом и подхватит его, когда тот появится)."""
     try:
         items = json.load(open(INDEX, encoding="utf-8"))["items"]
     except (OSError, ValueError, KeyError):
-        sys.exit("oboi-semantic: нет индекса, сначала oboi-index")
-    return [e for e in items if not e.get("portrait")]
+        if strict:
+            sys.exit("oboi-semantic: нет индекса, сначала oboi-index")
+        return []
+    return [e for e in items if not e.get("missing")]
 
 
 def cmd_index(quiet=False):
@@ -184,7 +189,7 @@ class Searcher:
             return
         self.stamp = st
         keys, self.vecs, _ = load_vecs()
-        by_key = {e["key"]: e["path"] for e in index_items()}
+        by_key = {e["key"]: e["path"] for e in index_items(strict=False)}
         idx = [i for i, k in enumerate(keys) if k in by_key]
         self.paths = [by_key[keys[i]] for i in idx]
         self.vecs = self.vecs[idx] if idx else self.vecs[:0]

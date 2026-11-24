@@ -24,10 +24,15 @@ declare -A IMAGE=(
     [fedora44]=Fedora-Cloud-Base-Generic-44-1.7.x86_64.qcow2
     [tumbleweed]=openSUSE-Tumbleweed-Minimal-VM.x86_64-Cloud.qcow2
     [arch]=Arch-Linux-x86_64-cloudimg.qcow2
+    [nixos]=nixos-26.05.qcow2          # собирается tools/vm/nixos/build.sh, ключ ssh уже внутри
 )
-declare -A NUM=([debian13]=1 [ubuntu2604]=2 [fedora44]=3 [tumbleweed]=4 [arch]=5)
+declare -A NUM=([debian13]=1 [ubuntu2604]=2 [fedora44]=3 [tumbleweed]=4 [arch]=5 [nixos]=6)
 
 die() { echo "vm.sh: $*" >&2; exit 1; }
+# PID из файла годится, только если это наш qemu с этой машиной: после перезагрузки хозяина
+# номер мог достаться чужому процессу, и его нельзя ни считать «запущенной машиной», ни убивать
+ourpid() { local f=$VMDIR/$1/pid p; [[ -f $f ]] || return 1; p=$(cat "$f"); \
+           tr '\0' ' ' < "/proc/$p/cmdline" 2>/dev/null | grep -q -- "-name oboi-$1 " && echo "$p"; }
 need() { [[ -n ${IMAGE[$1]:-} ]] || die "нет машины «$1»; есть: ${!IMAGE[*]}"; }
 port() { echo $((2200 + NUM[$1])); }
 
@@ -58,7 +63,7 @@ EOF
 up() {
     need "$1"; local n=$1 dir=$VMDIR/$1
     [[ -f $IMG/${IMAGE[$n]} ]] || die "образ ${IMAGE[$n]} ещё не скачан"
-    [[ -f $dir/pid ]] && kill -0 "$(cat "$dir/pid")" 2>/dev/null && { echo "$n уже запущена"; return; }
+    ourpid "$n" >/dev/null && { echo "$n уже запущена"; return; }
     mkdir -p "$dir"
     if [[ ! -f $dir/disk.qcow2 ]]; then
         qemu-img create -q -f qcow2 -F qcow2 -b "$IMG/${IMAGE[$n]}" "$dir/disk.qcow2" 40G
@@ -88,11 +93,11 @@ ssh_() {
 }
 
 down() {
-    need "$1"; local f=$VMDIR/$1/pid
-    [[ -f $f ]] || { echo "$1 не запущена"; return; }
+    need "$1"; local f=$VMDIR/$1/pid p
+    p=$(ourpid "$1") || { rm -f "$f"; echo "$1 не запущена"; return; }
     ssh_ "$1" sudo poweroff 2>/dev/null || true
-    for _ in $(seq 1 30); do kill -0 "$(cat "$f")" 2>/dev/null || break; sleep 1; done
-    kill "$(cat "$f")" 2>/dev/null || true
+    for _ in $(seq 1 30); do ourpid "$1" >/dev/null || break; sleep 1; done
+    ourpid "$1" >/dev/null && kill "$p" 2>/dev/null || true
     rm -f "$f"; echo "$1 выключена"
 }
 
@@ -102,7 +107,7 @@ case ${1:-} in
     down) down "${2:?имя}" ;;
     reset) need "${2:?имя}"; down "$2"; rm -f "$VMDIR/$2/disk.qcow2" "$VMDIR/$2/seed.iso"; echo "$2: диск удалён" ;;
     list) for n in "${!IMAGE[@]}"; do
-              s=выключена; [[ -f $VMDIR/$n/pid ]] && kill -0 "$(cat "$VMDIR/$n/pid")" 2>/dev/null && s=работает
+              s=выключена; ourpid "$n" >/dev/null && s=работает
               printf '%-11s %-10s ssh :%s  образ %s\n' "$n" "$s" "$(port "$n")" \
                   "$([[ -f $IMG/${IMAGE[$n]} ]] && echo есть || echo нет)"
           done ;;

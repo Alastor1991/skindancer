@@ -41,12 +41,16 @@ put "$R/tools/vm/test-plugin.sh" test-plugin.sh; vm ssh "$N" chmod +x test-plugi
 
 vm ssh "$N" rm -f /tmp/oboi-helper
 say "плагин по README"; vmsh < "$R/tools/vm/install-plugin.sh" >> "$LOG" 2>&1
-say "прогон на Python"; vm ssh "$N" ./test-plugin.sh python 2>&1 | tee -a "$LOG" | grep -E "^== (помощники|индекс|обои|ОБОИ)|^индекс|ЦП" || true
+RC=0
+say "прогон на Python"; set +e; vm ssh "$N" ./test-plugin.sh python 2>&1 | tee -a "$LOG" | grep -E "^== (помощники|индекс|обои|ОБОИ|ЕСТЬ)|^индекс|ЦП"
+r=${PIPESTATUS[0]}; set -e; [ "$r" -eq 0 ] || { RC=1; say "прогон на Python не прошёл"; }
 if [[ -x $R/bin/oboi-helper ]]; then
     # второй прогон как у человека, скачавшего бинарник из релиза: он лежит в bin до включения плагина
     put "$R/bin/oboi-helper" /tmp/oboi-helper
     say "плагин с бинарником"; vmsh < "$R/tools/vm/install-plugin.sh" >> "$LOG" 2>&1
-    say "прогон на бинарнике"; vm ssh "$N" ./test-plugin.sh binary 2>&1 | tee -a "$LOG" | grep -E "^== (помощники|ОБОИ|обои сменились)|^индекс" || true
+    say "прогон на бинарнике"; set +e; vm ssh "$N" ./test-plugin.sh binary 2>&1 | tee -a "$LOG" | grep -E "^== (помощники|ОБОИ|обои сменились|ЕСТЬ)|^индекс"
+    r=${PIPESTATUS[0]}; set -e; [ "$r" -eq 0 ] || { RC=1; say "прогон на бинарнике не прошёл"; }
 fi
 ssh "$M" "cd ~/$RR && $VMENV tools/vm/vm.sh ssh $N 'tar -C ~/oboi-test -cf - .'" | tar -C "$OUT" -xf -
 say "готово: $OUT"
+exit $RC

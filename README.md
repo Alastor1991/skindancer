@@ -47,7 +47,7 @@ A wallpaper picker for [DankMaterialShell](https://github.com/duxlabs-dev/dux-sh
 
 <p align="center"><img src="https://github.com/Alastor1991/skindancer/releases/download/media/settings.webp" width="560" alt="Settings: drop-down lists that unroll like a soft sheet with drips"></p>
 
-**Settings right in the picker.** Every option is a drop-down that unrolls like a soft sheet and drips at the edge. The interface speaks 13 languages and follows the DMS language.
+**Settings right in the picker.** Every option is a drop-down that unrolls like a soft sheet and drips at the edge. The interface speaks 14 languages and follows the DMS language.
 
 ## Install
 

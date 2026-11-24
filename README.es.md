@@ -47,7 +47,7 @@ Un selector de fondos de pantalla para [DankMaterialShell](https://github.com/du
 
 <p align="center"><img src="https://github.com/Alastor1991/skindancer/releases/download/media/settings.webp" width="560" alt="Ajustes: listas desplegables que se abren como una tela blanda y gotean"></p>
 
-**Los ajustes, dentro del propio selector.** Cada opción es una lista desplegable que se abre como una tela blanda y gotea por el borde. La interfaz está disponible en 13 idiomas y sigue el idioma de DMS.
+**Los ajustes, dentro del propio selector.** Cada opción es una lista desplegable que se abre como una tela blanda y gotea por el borde. La interfaz está disponible en 14 idiomas y sigue el idioma de DMS.
 
 ## Instalación
 

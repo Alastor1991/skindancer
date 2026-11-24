@@ -14,7 +14,10 @@ PanelWindow {
     readonly property bool open: shell.pickerScreen !== null
     property bool busy: false           // идёт переход: окно и экран держим до конца
     visible: open || busy || backdrop.opacity > 0
-    screen: shell.pickerScreen || Quickshell.screens[0]
+    // пока лента гаснет после закрытия, pickerScreen уже null: остаёмся на прежнем экране, без вспышки на первом
+    property var lastScreen: null
+    Connections { target: win.shell; function onPickerScreenChanged() { if (win.shell.pickerScreen) win.lastScreen = win.shell.pickerScreen; } }
+    screen: shell.pickerScreen || lastScreen || Quickshell.screens[0]
     color: "transparent"
     WlrLayershell.namespace: "oboi:picker"
     WlrLayershell.layer: WlrLayer.Overlay
@@ -54,7 +57,7 @@ PanelWindow {
         if (fresh) { whLast = 1; whPage = 1; whItems = []; whIndex = 0; whTotal = 0; }
         whGen += 1;
         const f = shell.wh;
-        whPending = { gen: whGen, cmd: [shell.fetcher, "--search", query, "--page", String(whPage),
+        whPending = { gen: whGen, cmd: [shell.fetcher, "--search=" + query, "--page", String(whPage),
                                         "--atleast", f.atleast, "--ratios", f.ratios, "--categories", f.categories,
                                         "--purity", f.purity, "--sorting", f.sorting] };
         whStatus = shell.tr("Searching…");
@@ -87,7 +90,12 @@ PanelWindow {
         id: whProc
         property int gen: 0
         environment: win.shell.fetchEnv
-        onExited: win.whStart()
+        // помощник упал или не запустился (не сам прерванный запрос): не висим на «Ищу…»
+        onExited: (code, status) => {
+            if (code !== 0 && whProc.gen === win.whGen && !win.whPending && status === Process.NormalExit)
+                win.whFailed(win.shell.tr("wallhaven did not respond"));
+            win.whStart();
+        }
         stdout: StdioCollector {
             onStreamFinished: {
                 if (whProc.gen !== win.whGen || win.whPending) return;   // ответ на устаревший запрос
@@ -137,12 +145,16 @@ PanelWindow {
     }
     Timer { id: semDelay; interval: 350; onTriggered: win.shell.semAsk(win.query) }
     property string keepPath: ""        // какую картинку держать выбранной, когда список перестраивается
+    property string lastPath: ""        // последняя выбранная картинка: фоновый индекс не должен сбивать выбор
+    property string preSearchPath: ""   // что было выбрано до поиска: после очистки поиска встаём туда
+    onChosenChanged: if (chosen && !openPath) lastPath = chosen.path
     onShownChanged: {
         // при первом открытии индекс ещё строится: текущие обои появляются в списке позже
         if (openPath) { Qt.callLater(restoreOpen); return; }
-        const i = keepPath ? shown.findIndex(e => e.path === keepPath) : -1;
+        const want = keepPath || (query ? "" : lastPath);
+        const i = want ? shown.findIndex(e => e.path === want) : -1;
         // ListView сбрасывает выбор, когда получает новую модель, поэтому возвращаем его на следующем такте
-        if (i >= 0) Qt.callLater(() => { list.currentIndex = i; list.positionViewAtIndex(i, ListView.Center); });
+        if (i >= 0) Qt.callLater(() => jumpTo(i, 5));
     }
     property var chosen: list.currentIndex >= 0 && list.currentIndex < shown.length ? shown[list.currentIndex] : null
 
@@ -163,7 +175,7 @@ PanelWindow {
     function close() { if (!busy) shell.pickerScreen = null; }
     function toggleFavorite() {
         if (!chosen) return;
-        keepPath = chosen.path;
+        userAct(); keepPath = chosen.path;
         shell.toggleFavorite(chosen.path);
     }
     function stepBy(d) {
@@ -188,7 +200,7 @@ PanelWindow {
     }
     function moveCell(dx, dy) {
         if (source === "wallhaven") whIndex = gridMove(whIndex, whItems.length, 5, dx, dy);
-        else { openPath = ""; list.currentIndex = gridMove(list.currentIndex, list.count, grid.cols, dx, dy); }
+        else { userAct(); list.currentIndex = gridMove(list.currentIndex, list.count, grid.cols, dx, dy); }
     }
     readonly property bool gridMode: source === "wallhaven" || view === "wall"
     property bool settingsOpen: false
@@ -203,7 +215,21 @@ PanelWindow {
     // то есть первую. Поэтому выбор текущих обоев повторяем, пока окно раскладывается,
     // и бросаем, как только пользователь сам листнул.
     property string openPath: ""
+    property bool userMoved: false      // пользователь сам листал или искал после открытия
+    function userAct() { openPath = ""; userMoved = true; }   // пользователь сам выбрал: восстанавливать больше нечего
     property bool jumping: false
+    // Встать на карточку сразу, без проезда: пока лента ехала бы, карточки меняют ширину, и строгий
+    // режим выбора останавливал её на соседней. ListView после новой модели может не принять номер
+    // с первого раза, поэтому несколько попыток на следующих тактах.
+    function jumpTo(i, tries) {
+        jumping = true;
+        if (list.currentIndex !== i) list.currentIndex = i;
+        list.positionViewAtIndex(i, ListView.Center);
+        Qt.callLater(() => {
+            if (list.currentIndex !== i && tries > 0) jumpTo(i, tries - 1);
+            else win.jumping = false;
+        });
+    }
     function restoreOpen() {
         if (!openPath) return;
         const j = shown.findIndex(e => e.path === openPath), i = Math.max(0, j);
@@ -218,20 +244,22 @@ PanelWindow {
         if (j >= 0 && !openGuard.running) openPath = "";
     }
     Timer { id: openGuard; interval: 900; onTriggered: win.restoreOpen() }
-    // текущих обоев в списке так и нет (вертикальные, вне папки): через 10 с перестаём ждать
-    Timer { id: openWait; interval: 10000; onTriggered: win.openPath = "" }
+    // текущих обоев в списке так и нет (вертикальные, вне папки): перестаём ждать через 10 с после того,
+    // как индекс собран (первый обход большой библиотеки идёт дольше 10 с)
+    Timer { id: openWait; interval: 10000; onTriggered: if (win.shell.indexing) restart(); else win.openPath = "" }
     // текущие обои уточняются ответом `dms ipc wallpaper get` уже после открытия: пока пользователь
     // не листал, встаём на них, а не на путь, запомненный до открытия
     Connections {
         target: win.shell
-        function onCurrentChanged() { if (win.open && win.openPath !== "") { win.openPath = win.shell.current; win.restoreOpen(); } }
+        // и в самостоятельном запуске, где current сначала пустой: пока пользователь сам не выбрал карточку
+        function onCurrentChanged() { if (win.open && !win.userMoved && win.shell.current) { win.openPath = win.shell.current; openWait.restart(); win.restoreOpen(); } }
     }
 
     onOpenChanged: {
         if (open) {
             source = "local"; query = ""; search.text = ""; morph.reset(); fx.reset(); settingsOpen = false;
             if (shell.startView !== "last") setView(shell.startView);
-            openPath = shell.current;
+            openPath = shell.current; userMoved = false; lastPath = ""; preSearchPath = "";
             openGuard.restart(); openWait.restart();     // до restoreOpen: пока страж идёт, выбор не считается законченным
             restoreOpen();
             Qt.callLater(restoreOpen);
@@ -250,17 +278,21 @@ PanelWindow {
         return kinds[Math.floor(Math.random() * kinds.length)];
     }
 
+    property string applyScreen: ""     // монитор, выбранный в начале перехода: переход идёт секунду-другую
+    function setWp(path) { shell.setWallpaper(path, applyScreen); }
     function apply() {
         if (source === "wallhaven") { whSave(); return; }
         if (!chosen || busy) return;
         busy = true;
+        applyScreen = shell.targetName;
         const target = chosen.path, from = shell.current;
         let kind = pickKind();
         // без своего перехода (или без GPU: программная отрисовка шейдеры не тянет) DMS сменит обои сам
-        if ((forcedKind || shell.transitionPref) === "none" || GraphicsInfo.api === GraphicsInfo.Software) {
-            shell.setWallpaper(target); busy = false; shell.pickerScreen = null; return;
+        if ((forcedKind || shell.transitionPref) === "none" || stage.soft) {
+            setWp(target); busy = false; shell.pickerScreen = null; return;
         }
-        if (kind !== "grow" && (!from || from === target)) kind = "grow";   // без старых обоев шейдеру не из чего переходить
+        // старые обои не картинка (цвет DMS, пусто) или не загрузились: шейдеру не из чего переходить
+        if (kind !== "grow" && (!from || from === target || !from.startsWith("/") || fromImg.status === Image.Error)) kind = "grow";
         if (kind === "grow") {
             const it = list.currentItem;
             const p = it.mapToItem(win.contentItem, 0, 0);
@@ -272,7 +304,7 @@ PanelWindow {
 
     // Передача DMS: держим оверлей, пока `wallpaper get` не вернёт новый путь, но не дольше 4 с
     function handoff(target, alreadySet) {
-        if (!alreadySet) shell.setWallpaper(target);
+        if (!alreadySet) setWp(target);
         hand.target = target; hand.since = Date.now(); hand.minUntil = Date.now() + (alreadySet ? 250 : 1050);
         poll.start();
     }
@@ -283,7 +315,8 @@ PanelWindow {
     QtObject { id: hand; property string target; property real since; property real minUntil; property bool confirmed }
     Process {
         id: getProc
-        command: ["dms", "ipc", "call", "wallpaper", "get"]
+        command: ["sh", "-c", 'r=$(dms ipc call wallpaper get); case "$r" in ERROR*) dms ipc call wallpaper getFor "$1";; *) echo "$r";; esac',
+                  "sh", win.applyScreen]
         stdout: StdioCollector {
             onStreamFinished: if (this.text.trim() === hand.target) { hand.confirmed = true; win.shell.current = hand.target; }
         }
@@ -320,6 +353,8 @@ PanelWindow {
 
     Item {
         id: stage
+        // программная отрисовка Qt: прикреплённое GraphicsInfo читается только у элемента сцены, не у окна
+        readonly property bool soft: GraphicsInfo.api === GraphicsInfo.Software
         anchors.fill: parent
         opacity: win.open && !win.busy ? 1 : 0
         scale: win.open ? 1 : 0.96
@@ -346,9 +381,14 @@ PanelWindow {
                 selectionColor: Qt.rgba(0.91, 0.78, 0.60, 0.35)
                 clip: true
                 onTextChanged: {
+                    // запоминаем карточку до смены запроса: потом выбор уже уедет на первый результат
+                    if (win.source === "local") {
+                        if (text && !win.query && !win.preSearchPath) win.preSearchPath = win.chosen ? win.chosen.path : "";
+                        if (!text && win.preSearchPath) { win.keepPath = win.preSearchPath; win.preSearchPath = ""; win.query = ""; win.userAct(); return; }
+                    }
                     win.keepPath = ""; win.query = text;
                     if (win.source === "wallhaven") { whDelay.restart(); return; }
-                    win.openPath = ""; list.currentIndex = 0; if (text.trim()) semDelay.restart();
+                    win.userAct(); if (text) list.currentIndex = 0; if (text.trim()) semDelay.restart();
                 }
                 Keys.onEscapePressed: win.settingsOpen ? (win.settingsOpen = false) : text.length ? (text = "") : win.close()
                 Keys.onReturnPressed: win.source === "wallhaven" ? win.whSave() : win.apply()
@@ -418,7 +458,7 @@ PanelWindow {
                     scale: on ? 1.25 : 1
                     Behavior on scale { SpringAnimation { spring: 4; damping: 0.3 } }
                     MouseArea { anchors.fill: parent; anchors.margins: -4
-                                onClicked: { win.keepPath = win.chosen ? win.chosen.path : ""; win.hueFilter = parent.on ? -2 : parent.modelData; } }
+                                onClicked: { win.userAct(); win.keepPath = win.chosen ? win.chosen.path : ""; win.hueFilter = parent.on ? -2 : parent.modelData; } }
                 }
             }
             Item { width: 8; height: 1 }
@@ -426,7 +466,7 @@ PanelWindow {
                 source: Qt.resolvedUrl(win.favOnly ? "icons/star-filled.svg" : "icons/star.svg")
                 sourceSize: Qt.size(18, 18); width: 18; height: 18; anchors.verticalCenter: parent.verticalCenter
                 MouseArea { anchors.fill: parent; anchors.margins: -4
-                            onClicked: { win.keepPath = win.chosen ? win.chosen.path : ""; win.favOnly = !win.favOnly; } }
+                            onClicked: { win.userAct(); win.keepPath = win.chosen ? win.chosen.path : ""; win.favOnly = !win.favOnly; } }
             }
         }
 
@@ -495,7 +535,7 @@ PanelWindow {
             header: Item { width: list.width / 2 - win.cardW / 2; height: 1 }
             footer: Item { width: list.width / 2 - win.cardW / 2; height: 1 }
             function step(d) {
-                win.openPath = "";
+                win.userAct();
                 if (list.count === 0) return;
                 list.currentIndex = Math.max(0, Math.min(list.count - 1, list.currentIndex + d));
             }
@@ -532,7 +572,7 @@ PanelWindow {
                             return p.y >= 0 && p.y <= slot.height && p.x >= off * (1 - t) && p.x <= slot.width - off * t;
                         }
                     }
-                    onClicked: slot.isCur ? win.apply() : (win.openPath = "", list.currentIndex = slot.index)
+                    onClicked: slot.isCur ? win.apply() : (win.userAct(), list.currentIndex = slot.index)
                     onWheel: w => list.wheel(w)
                 }
             }
@@ -585,7 +625,7 @@ PanelWindow {
                 }
                 HoverHandler { id: hover }
                 MouseArea { anchors.fill: parent; acceptedButtons: Qt.LeftButton
-                            onClicked: cell.isCur ? win.apply() : (win.openPath = "", list.currentIndex = cell.index)
+                            onClicked: cell.isCur ? win.apply() : (win.userAct(), list.currentIndex = cell.index)
                             onWheel: w => win.gridWheel(w) }
             }
         }
@@ -631,7 +671,7 @@ PanelWindow {
                                            xScale: 1 + depth.stretch; yScale: 1 - depth.stretch * 0.45 }
                     }
                     MouseArea { anchors.fill: parent; enabled: d.valid; z: -1
-                                onClicked: d.idx === list.currentIndex ? win.apply() : (win.openPath = "", list.currentIndex = d.idx)
+                                onClicked: d.idx === list.currentIndex ? win.apply() : (win.userAct(), list.currentIndex = d.idx)
                                 onWheel: w => list.wheel(w) }
                 }
             }
@@ -915,7 +955,7 @@ PanelWindow {
                 // новая картинка не грузится (Qt не знает формат, файл битый): обои ставим без перехода
                 if (toImg.status === Image.Error || (tries > 60 && toImg.status !== Image.Ready)) {
                     stop(); const t = fx.toPath; fx.reset();
-                    win.shell.setWallpaper(t); win.busy = false; win.shell.pickerScreen = null;
+                    win.setWp(t); win.busy = false; win.shell.pickerScreen = null;
                     return;
                 }
                 if ((fromImg.status === Image.Ready && toImg.status === Image.Ready) || tries > 60) { stop(); run.restart(); }
@@ -945,7 +985,7 @@ PanelWindow {
         SequentialAnimation {
             id: run
             // DMS получает новые обои в начале анимации: его собственный переход идёт под непрозрачным оверлеем
-            ScriptAction { script: win.shell.setWallpaper(fx.toPath) }
+            ScriptAction { script: win.setWp(fx.toPath) }
             NumberAnimation { target: fx; property: "progress"; from: 0; to: 1; duration: fx.kind === "melt" ? 1900 : 1600
                               easing.type: Easing.InOutSine }
             ScriptAction { script: win.handoff(fx.toPath, true) }
